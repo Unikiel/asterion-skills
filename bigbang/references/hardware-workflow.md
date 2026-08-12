@@ -128,3 +128,59 @@ over-current protection, and safe-state behavior as applicable.
 
 Provide a software simulator or mocked input path for early sessions when
 possible, but clearly distinguish simulated validation from physical validation.
+
+## 7. Architecture Freeze and Exact-Target Hardware Lock
+
+This section extends, and does not replace, Sections 1–6 above.
+
+Before generating wiring, firmware, session prompts, or starter code:
+
+1. enumerate every controller and exact controller model;
+2. assign every sensor, actuator, interface board, communication module, and
+   power domain to its owning controller;
+3. distinguish shared buses from physically independent buses;
+4. freeze controller-to-controller/network topology and the data aggregation
+   point;
+5. freeze the firmware platform: IDE/framework, board package/core, board/FQBN
+   or compile target, and relevant library constraints;
+6. freeze pins, bus addresses, reserved pins, boot/strapping constraints, USB
+   behavior, and power boundaries;
+7. record deprecated topology assumptions so that legacy single-controller or
+   generic-family examples cannot leak into the new package.
+
+For every multi-controller project additionally produce:
+
+- `Controller_Inventory`;
+- `Sensor_Ownership_Matrix`;
+- `Firmware_Platform_Lock`;
+- wiring architecture consistent with that ownership;
+- a system concept diagram consistent with the same topology.
+
+### Exact-target rule
+
+Do not treat a generic MCU family example as sufficient evidence for a concrete
+target. For example, ESP32-C3 must not be silently treated as generic ESP32.
+Board-specific APIs, USB/serial behavior, reserved pins, boot constraints, and
+compile target must be checked for the locked board.
+
+When a compiler/toolchain is available, compile the generated firmware for the
+locked target before packaging. If that cannot be run, state the limitation
+explicitly rather than claiming target compatibility.
+
+## 8. Hardware Evidence Blocking for Automatic Sessions
+
+Automatic BigBang orchestration may prepare and validate software-side checks,
+but it must not auto-pass a physical gate.
+
+A hardware session remains `BLOCKED` or `VERIFYING` until the required physical
+evidence exists, such as:
+
+- serial output;
+- measured voltage/current;
+- sensor reading;
+- photo of wiring/placement;
+- continuity or logic-level observation;
+- student/teacher manual acceptance record.
+
+The state system must preserve the active session and resume checkpoint instead
+of advancing automatically.

@@ -277,3 +277,60 @@ Before release:
 
 Do not ship a generic guide containing another project's paths, unit count,
 commands, or assumptions.
+
+## 9. Mandatory START_HERE Entrance
+
+This section extends, and does not replace, Sections 1–8 above.
+
+Every prepared BigBang starter must expose one obvious repository entrance,
+normally:
+
+```text
+00_START_HERE/
+├── START_HERE.md
+├── Start_From_Scratch_Guide.md
+├── Kickoff_and_Environment_Guide.md
+├── Pause_and_Resume_Guide.md
+└── First_Run_Checklist.md
+```
+
+`START_HERE.md` must identify the prepared-starter route versus the
+empty-workspace route and point to the exact next action. The pack must remain
+usable without the original chat transcript.
+
+## 10. Strengthened Per-Session Commit and Resume Contract
+
+For every accepted implementation session, record:
+
+- pre-session checkpoint;
+- changed-file boundary;
+- tests and actual results;
+- evidence path;
+- completion decision;
+- accepted commit hash;
+- optional session tag;
+- rollback checkpoint;
+- resume/next safe action.
+
+A WIP/checkpoint commit created during a planned pause is not an accepted-session
+commit and must not mark the session complete.
+
+On resume, repository state is authoritative. Inspect Git status/diff/history,
+TASKS, SESSION_STATE, the current prompt, decisions/logs, and evidence before
+editing.
+
+## 11. Automatic Continuity Controller
+
+When automatic orchestration is included, it must preserve the same pause/resume
+semantics as the manual workflow:
+
+- only one active session;
+- failure leaves the current session active;
+- blocked physical evidence leaves the current session blocked;
+- a crash/reboot never implies completion;
+- next-session activation occurs only after acceptance and the dedicated Git
+  commit;
+- the controller must be usable from a new coding-agent conversation.
+
+Do not use conversation memory as the source of truth when repository state is
+available.

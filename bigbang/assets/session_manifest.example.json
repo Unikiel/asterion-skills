@@ -1,0 +1,12 @@
+{
+  "architecture_version": "ARCH-v1",
+  "sessions": [
+    {
+      "id": "S01",
+      "prompt": "prompts/S01.md",
+      "prerequisites": [],
+      "commit_pattern": "S01: <outcome>",
+      "tag_pattern": "session/S01"
+    }
+  ]
+}

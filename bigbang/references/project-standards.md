@@ -127,3 +127,64 @@ research notes as evidence. Keep a defect log and do not hide known limitations.
 - Compare the final package against a manifest and traceability matrix.
 - Include source files, generated documents, and configuration samples only
   when relevant; never include credentials, caches, build junk, or private data.
+
+## 8. Architecture Freeze and Change Control
+
+This section extends, and does not replace, Sections 1–7 above.
+
+Before downstream generation, create an authoritative architecture freeze that
+records, as applicable:
+
+- exact controller/service count;
+- component and sensor ownership;
+- network topology;
+- data aggregation and persistence boundaries;
+- deployment topology;
+- exact hardware/firmware target;
+- explicitly excluded and deprecated assumptions.
+
+All project plans, diagrams, session prompts, starter files, TASKS state, tests,
+and deployment documents must reference the same frozen architecture version.
+
+If architecture changes later:
+
+1. log the decision and rationale;
+2. identify every affected downstream artifact;
+3. regenerate or repair those artifacts;
+4. re-run relevant validation;
+5. update the traceability matrix.
+
+Do not preserve stale architecture merely because it appeared in an earlier
+generated pack.
+
+## 9. No-Placeholder Completion Standard
+
+A BigBang package must not be described as `FULL`, `complete`, `final`,
+`production-ready`, or `demo-ready` when a mandatory area consists only of:
+
+- an empty folder;
+- a README-only placeholder;
+- TODO-only implementation;
+- comment-only automation;
+- title-only session prompts;
+- file-presence checks presented as runtime validation.
+
+Prepared starters may be intentionally incomplete according to the approved
+session design, but every mandatory foundation must contain meaningful,
+runnable/testable material appropriate to that stage.
+
+## 10. Demoable Final-System Gate
+
+For build-oriented projects, document count is not the completion criterion.
+
+Define the end-to-end demonstration path early and trace it through the session
+map, starter, tests, and final handoff. Separate clearly:
+
+- generated;
+- validated in the current environment;
+- requires student/manual/physical verification;
+- deployment not exercised;
+- optional future extension.
+
+Do not claim physical operation, cloud deployment, sensor success, or live API
+success without the corresponding evidence.

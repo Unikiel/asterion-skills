@@ -322,3 +322,95 @@ Each phase ends with:
 The final handoff includes setup, run, test, deploy, backup/recovery,
 troubleshooting, architecture, data/model/device notes, known limitations, and a
 rehearsed demo route.
+
+## 8. Mandatory Architecture/Platform Lock in Prompts
+
+This section extends, and does not replace, Sections 1–7 above.
+
+Every concrete implementation prompt must reference the architecture freeze and,
+for hardware work, the exact firmware/platform lock relevant to that unit.
+
+Add these fields to the session contract when applicable:
+
+- Architecture version
+- Controller/module ownership
+- Exact MCU/board target
+- Framework/IDE/core/FQBN or compile target
+- Locked pins/buses/addresses
+- Explicit stale assumptions to reject
+
+The agent must stop rather than silently substitute a generic architecture.
+
+## 9. Mandatory Per-Session Git Commit Gate
+
+The existing checkpoint workflow is strengthened to a mandatory accepted-session
+commit rule:
+
+```text
+inspect -> checkpoint -> implement -> test -> evidence
+        -> TASKS/state update -> session commit -> stop
+```
+
+A session may not transition to complete/accepted until:
+
+1. acceptance checks pass;
+2. required evidence is saved;
+3. TASKS/state is updated in place;
+4. intended changed files are reviewed/staged;
+5. the dedicated session commit exists;
+6. its commit hash is recorded.
+
+Use a project-specific pattern such as:
+
+```text
+S07: add authenticated telemetry ingestion
+```
+
+Do not silently combine multiple accepted sessions into one commit.
+
+## 10. Traceable TASKS.md Session Ledger
+
+Extend the canonical TASKS pattern so every implementation unit can preserve:
+
+- status: pending/active/blocked/verifying/accepted/committed;
+- pre-session checkpoint;
+- acceptance criteria;
+- automated/manual test results;
+- evidence path;
+- changed files;
+- blocker and known issues;
+- accepted commit hash;
+- optional tag;
+- rollback point;
+- exact resume/next safe action.
+
+`TASKS.md` remains the human-readable canonical ledger. A machine-readable state
+file may mirror it for automation, but both must be cross-validated before the
+active session changes.
+
+## 11. Automatic Prompt Orchestration
+
+When the user requests automatic BigBang execution, generate a real
+repository-resident controller rather than a placeholder script.
+
+It must be able to:
+
+- read persistent state and TASKS;
+- discover the current prompt from a session manifest;
+- reject execution of a non-active session;
+- verify prerequisites and architecture lock;
+- record/check validation and evidence status;
+- block on missing manual/hardware evidence;
+- require the per-session Git commit;
+- record the commit hash;
+- activate only the next eligible session;
+- resume from durable repository state after shutdown or a new coding-agent
+  conversation.
+
+Recommended lifecycle:
+
+```text
+READY -> ACTIVE -> BLOCKED|VERIFYING -> ACCEPTED -> COMMITTED -> NEXT
+```
+
+Do not fabricate test results or manual acceptance merely to advance state.

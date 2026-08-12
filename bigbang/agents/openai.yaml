@@ -1,12 +1,4 @@
 interface:
-  display_name: BigBang
-  short_description: Build rigorous InnovationLab project packs
-  default_prompt: Use $bigbang to transform this student proposal into a complete
-    InnovationLab project and teaching pack.
-policy:
-  products:
-  - chatgpt
-  - codex
-  - api
-  - atlas
-  allow_implicit_invocation: true
+  display_name: "BigBang"
+  short_description: "Architecture-frozen InnovationLab full-pack builder with automatic session state, per-session Git checkpoints, recovery, and validated demo-ready delivery."
+  default_prompt: "Use $bigbang to build a complete source-aligned InnovationLab package with mandatory architecture freeze, start-from-scratch entrance, automatic bounded-session execution, stateful TASKS.md, per-session Git commits, pause/resume, validation, and demoable final-system gate."
