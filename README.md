@@ -8,10 +8,9 @@ workflows.
 Each skill has its own purpose and operating model. Future additions may explore
 domains beyond project development and tutoring.
 
-The first skill in this collection is **BigBang**, which transforms a student
-proposal, research idea, application concept, AI or data system, scientific
-project, or hardware prototype into a complete project system that is buildable,
-teachable, testable, and presentable.
+Current skills include **BigBang**, which turns a proposal or concept into a
+buildable project system, and **Amber Kernel**, which operates an Obsidian vault
+as a contract-locked personal knowledge system.
 
 ## Available skills
 
@@ -39,6 +38,26 @@ Its workflow supports:
 English is the default drafting language. Other language versions are generated
 only when explicitly requested.
 
+### Amber Kernel
+
+Amber Kernel locks a small vault contract first, maps the vault onto that
+contract, then keeps operating on the live notes.
+
+Its workflow supports:
+
+- Convention lock and path mapping before any write
+- Vault discovery, audit, empty-vault bootstrap, and safe restructuring
+- Note create, edit, merge, move, rename, delete, and link integrity
+- YAML properties, templates, daily notes, attachments, Canvas, and Bases
+- Research capture into source, atomic, synthesis, and project notes
+- Search, query, plugin, theme, snippet, and cssclass workflows
+- Local-first privacy; no plugin install, Sync change, or external send unless
+  requested
+
+Amber Kernel does not rewrite existing notes until the contract is locked and
+the affected paths are mapped. It invents structure only when a convention slot
+is empty or the user requests a redesign.
+
 ## Repository structure
 
 ```text
@@ -49,13 +68,25 @@ asterion-skills/
 │   ├── SKILL.md
 │   ├── agents/
 │   │   └── openai.yaml
+│   ├── assets/
+│   │   └── icon.svg
 │   └── references/
 │       ├── hardware-workflow.md
 │       ├── project-standards.md
 │       ├── prompt-and-kickoff-system.md
 │       └── start-from-scratch-workflow.md
-└── future-skill/
-    └── SKILL.md
+└── amber-kernel/
+    ├── SKILL.md
+    ├── agents/
+    │   └── openai.yaml
+    ├── assets/
+    │   └── icon.svg
+    └── references/
+        ├── kernel-contract.md
+        ├── vault-bootstrap.md
+        ├── note-operations.md
+        ├── research-to-pkm.md
+        └── plugin-and-query-workflows.md
 ```
 
 Each skill directory directly under the repository root is self-contained and
@@ -115,15 +146,21 @@ For BigBang, copy:
 bigbang/
 ```
 
-Do not copy only `SKILL.md`. BigBang relies on its `references/` files for
-detailed project standards, prompt templates, hardware procedures, and
-start-from-scratch guidance.
+For Amber Kernel, copy:
+
+```text
+amber-kernel/
+```
+
+Do not copy only `SKILL.md`. BigBang and Amber Kernel both rely on their
+`references/` files for operating rules.
 
 The exact installation location depends on the environment in which the skill
 will run. After installation, confirm that the entry file is available at:
 
 ```text
 <skills-directory>/bigbang/SKILL.md
+<skills-directory>/amber-kernel/SKILL.md
 ```
 
 ## Usage
@@ -146,6 +183,22 @@ Other examples:
 BigBang adds competition-specific materials only when the request explicitly
 places the project in a competition context.
 
+Invoke Amber Kernel explicitly with a request such as:
+
+> Use `$amber-kernel` to lock this vault's kernel contract and map the existing
+> notes onto it.
+
+Other examples:
+
+> Use `$amber-kernel` to initialize an empty Obsidian vault with the smallest
+> useful foundation.
+
+> Use `$amber-kernel` to turn these sources into durable notes without creating
+> a second taxonomy.
+
+> Use `$amber-kernel` to add a Bases view for active projects using the locked
+> property schema.
+
 ## BigBang output model
 
 Depending on the request, BigBang can produce:
@@ -166,6 +219,21 @@ BigBang does not impose a fixed 20-session plan and does not label a complete
 project as an MVP unless the source proposal or user explicitly requires MVP
 scope.
 
+## Amber Kernel output model
+
+Depending on the request, Amber Kernel can produce:
+
+- A locked convention fingerprint and path map
+- Vault audits and incremental restructure plans
+- New or updated notes, templates, daily notes, and attachments
+- Source, atomic, synthesis, map-of-content, and project notes
+- Canvas, Bases, Search, and plugin-query artifacts
+- Theme, snippet, or cssclass changes only when appearance work is requested
+
+Amber Kernel reports the lock, map, changed vault-relative paths, and unresolved
+risks. It does not install plugins or send vault content to external services
+unless the user explicitly authorizes that action.
+
 ## Contributing
 
 Contributions are welcome when they preserve the following principles:
@@ -182,6 +250,9 @@ Contributions are welcome when they preserve the following principles:
 
 When proposing changes to BigBang, preserve the student's intellectual ownership
 and keep baseline requirements distinguishable from recommended refinements.
+
+When proposing changes to Amber Kernel, preserve the lock-then-adapt gate and
+keep observed vault conventions distinguishable from adopted ones.
 
 ## License
 

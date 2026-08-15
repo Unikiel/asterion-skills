@@ -1,0 +1,15 @@
+interface:
+  display_name: Amber Kernel
+  short_description: Contract-locked Obsidian vault kernel for bootstrap, note
+    operations, research-to-PKM, and plugin or query workflows.
+  default_prompt: Use $amber-kernel to lock this vault's kernel contract, map
+    existing notes onto it, and keep the knowledge system coherent.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
