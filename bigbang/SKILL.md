@@ -164,6 +164,13 @@ Read `references/hardware-workflow.md`. For every hardware project:
 - create module ownership matrix;
 - lock exact MCU/board and firmware target;
 - validate board-specific APIs;
+- include a mandatory hardware quick-test pack with one isolated test for every
+  controller and approved module, followed by staged subsystem and complete
+  integration tests;
+- provide exact wiring, test firmware/procedure, expected results,
+  troubleshooting, evidence requirements, and pass/fail gates for every quick
+  test;
+- prohibit full integration until all required isolated quick tests pass;
 - provide isolated bring-up per controller/module;
 - test serial before sensors;
 - separate physical from simulated validation;

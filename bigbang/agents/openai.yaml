@@ -1,4 +1,18 @@
 interface:
-  display_name: "BigBang"
-  short_description: "Architecture-frozen InnovationLab full-pack builder with automatic session state, per-session Git checkpoints, recovery, and validated demo-ready delivery."
-  default_prompt: "Use $bigbang to build a complete source-aligned InnovationLab package with mandatory architecture freeze, start-from-scratch entrance, automatic bounded-session execution, stateful TASKS.md, per-session Git commits, pause/resume, validation, and demoable final-system gate."
+  display_name: BigBang
+  short_description: Architecture-frozen InnovationLab full-pack builder with automatic
+    session state, per-session Git checkpoints, recovery, and validated demo-ready
+    delivery.
+  default_prompt: Use $bigbang to build a complete source-aligned InnovationLab package
+    with mandatory architecture freeze, start-from-scratch entrance, automatic bounded-session
+    execution, stateful TASKS.md, per-session Git commits, pause/resume, validation,
+    and demoable final-system gate.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

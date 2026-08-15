@@ -7,7 +7,10 @@
 3. Power and wiring rules
 4. Diagram requirements
 5. Module bring-up guide
-6. Integration and validation
+6. Mandatory hardware quick-test pack
+7. Integration and validation
+8. Architecture freeze and exact-target hardware lock
+9. Hardware evidence blocking for automatic sessions
 
 ## 1. Required outputs
 
@@ -20,6 +23,9 @@ For every hardware-involved project provide:
 - separate system concept/logic diagram in English by default;
 - step-by-step first-connection guide for every controller, interface board,
   sensor, probe, switch, actuator, display, communication module, and supply;
+- a mandatory hardware quick-test pack containing isolated tests for every
+  controller and approved module, staged subsystem tests, and a complete
+  integration test;
 - dry-run path that works before all hardware arrives when feasible;
 - staged integration, calibration, fault injection, safety, and recovery plan;
 - four independent contingency class hours.
@@ -108,7 +114,72 @@ connection. Include:
 
 Never begin full-system wiring before every module passes its isolated gate.
 
-## 6. Integration and validation
+## 6. Mandatory hardware quick-test pack
+
+Every hardware-involved project must include a self-contained quick-test pack.
+It is a release requirement, not an optional appendix. Organize it so a student
+can verify hardware safely before relying on the full application.
+
+### 6.1 Required structure
+
+Provide these layers in order:
+
+1. **Controller baseline tests:** one test per controller covering power, USB or
+   programming connection, exact board selection, upload, reset behavior, and
+   serial output.
+2. **Separated module tests:** one isolated test for every approved sensor,
+   actuator, switch, display, interface board, communication module, and power
+   stage connected only to its owning controller and minimum required support
+   circuit.
+3. **Subsystem tests:** combine only modules that share one bus, power domain,
+   controller, or tightly coupled function; verify addresses, timing, resource
+   conflicts, and power margin.
+4. **Integration test:** connect the frozen complete architecture and verify the
+   end-to-end hardware route, controller-to-controller communication, data
+   flow, actuation, alarms, safe state, restart, and recovery as applicable.
+
+For multi-controller projects, keep controller-specific separated tests in
+distinct folders and include controller-to-controller communication as a
+separate subsystem gate before complete integration.
+
+### 6.2 Required content for every quick test
+
+Each test must state:
+
+- test ID, exact model/SKU, owning controller, and purpose;
+- prerequisites and required tools;
+- exact pin-to-pin wiring and power source;
+- locked IDE/framework, board target, libraries, and relevant versions;
+- minimal standalone firmware or an equally precise test procedure;
+- upload/run steps and serial-monitor settings where applicable;
+- expected serial, electrical, visual, mechanical, or network result;
+- explicit pass/fail criteria and evidence to save;
+- diagnosis order for common failures;
+- safe disconnect, rollback, and next permitted test.
+
+Use real runnable tests rather than pseudocode or placeholder sketches. Keep
+each separated test independent of the dashboard, cloud service, database, and
+unrelated modules unless that dependency is the subject of the test.
+
+### 6.3 Mandatory gates
+
+- Run controller baseline tests before module tests.
+- Do not mark a separated test passed without required physical evidence.
+- Do not begin a subsystem test until all participating separated tests pass.
+- Do not begin the complete integration test until every required separated and
+  subsystem test passes.
+- If integration fails, return to the last passing isolated/subsystem
+  configuration; do not rewrite or discard earlier evidence.
+- Record each result, evidence path, blocker, and next action in `TASKS.md` and
+  the project evidence structure.
+- Distinguish `NOT_RUN`, `BLOCKED`, `FAILED`, and `PASSED`; never translate file
+  presence, compilation, mocks, or simulated readings into physical success.
+
+The project plan and session prompts must allocate explicit time for separated
+tests and integration testing. Hardware contingency hours do not replace these
+planned validation sessions.
+
+## 7. Integration and validation
 
 Integrate in increasing risk order:
 
@@ -129,7 +200,7 @@ over-current protection, and safe-state behavior as applicable.
 Provide a software simulator or mocked input path for early sessions when
 possible, but clearly distinguish simulated validation from physical validation.
 
-## 7. Architecture Freeze and Exact-Target Hardware Lock
+## 8. Architecture Freeze and Exact-Target Hardware Lock
 
 This section extends, and does not replace, Sections 1–6 above.
 
@@ -167,7 +238,7 @@ When a compiler/toolchain is available, compile the generated firmware for the
 locked target before packaging. If that cannot be run, state the limitation
 explicitly rather than claiming target compatibility.
 
-## 8. Hardware Evidence Blocking for Automatic Sessions
+## 9. Hardware Evidence Blocking for Automatic Sessions
 
 Automatic BigBang orchestration may prepare and validate software-side checks,
 but it must not auto-pass a physical gate.
