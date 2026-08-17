@@ -171,6 +171,12 @@ Read `references/hardware-workflow.md`. For every hardware project:
   troubleshooting, evidence requirements, and pass/fail gates for every quick
   test;
 - prohibit full integration until all required isolated quick tests pass;
+- whenever Wi-Fi is used for MQTT, HTTP/HTTPS, WebSocket, or other device
+  communication, require first-boot provisioning through a local SoftAP setup
+  flow; persist credentials securely in device-local nonvolatile storage and
+  provide re-provisioning plus factory-reset recovery;
+- prohibit hardcoded Wi-Fi SSIDs and passwords in firmware, examples, starter
+  code, documentation, tests, and tracked configuration;
 - provide isolated bring-up per controller/module;
 - test serial before sensors;
 - separate physical from simulated validation;

@@ -11,6 +11,7 @@
 7. Integration and validation
 8. Architecture freeze and exact-target hardware lock
 9. Hardware evidence blocking for automatic sessions
+10. Mandatory Wi-Fi provisioning
 
 ## 1. Required outputs
 
@@ -255,3 +256,80 @@ evidence exists, such as:
 
 The state system must preserve the active session and resume checkpoint instead
 of advancing automatically.
+
+## 10. Mandatory Wi-Fi Provisioning
+
+Apply this section whenever a controller uses Wi-Fi for MQTT, HTTP/HTTPS,
+WebSocket, device-to-device communication, cloud upload, dashboard access, or
+another network transport. Do not make hardcoded SSID/password credentials the
+normal setup path.
+
+### 10.1 Required default solution
+
+Implement first-boot provisioning through a local SoftAP:
+
+1. On first boot or when no valid credentials exist, start a uniquely named
+   device-local SoftAP and a local setup page or equivalent local configuration
+   interface.
+2. Let the user select or enter the target Wi-Fi network and password locally.
+3. Store credentials in device-local nonvolatile storage appropriate to the
+   locked platform, such as ESP32 NVS/Preferences.
+4. Close the provisioning service after successful validation and connect in
+   normal station mode.
+5. On later boots, load stored credentials and reconnect without rebuilding or
+   reflashing firmware.
+
+The setup path must not require the final dashboard, MQTT broker, cloud service,
+database, or source-code edit. A captive portal may be used when reliable for
+the selected platform, but a reachable local setup page and documented address
+are sufficient when captive-portal behavior is inconsistent across clients.
+
+### 10.2 Security and privacy rules
+
+- Never commit, print, screenshot, package, or hardcode real SSIDs or passwords.
+- Never log the Wi-Fi password or return it through an API, dashboard, serial
+  console, status endpoint, or error message.
+- Use placeholders only in documentation and test fixtures.
+- Protect the provisioning SoftAP with a project-appropriate setup secret or
+  controlled physical setup condition when feasible; do not leave an
+  indefinitely open configuration network.
+- Bound provisioning mode by timeout or explicit state and disable it after a
+  successful connection unless the user deliberately re-enters it.
+- Keep MQTT/API credentials separate from Wi-Fi credentials and apply the same
+  no-hardcoding and no-logging rules.
+
+### 10.3 Recovery behavior
+
+Provide and document both:
+
+- **Re-provisioning:** a safe physical action, local maintenance command, or
+  bounded boot gesture that clears only network configuration and restarts the
+  SoftAP flow.
+- **Factory reset:** an intentional, guarded action that clears all applicable
+  device configuration, states exactly what is erased, and avoids accidental
+  activation during ordinary reset or power cycling.
+
+Define behavior for invalid credentials, unavailable networks, connection
+timeout, router replacement, DHCP failure, repeated disconnects, and restart.
+The device must fail safely and must not enter an uncontrolled rapid reboot or
+connection loop.
+
+### 10.4 Required project artifacts and tests
+
+Include provisioning in the architecture freeze, firmware, starter repository,
+documentation, session prompts, TASKS state, validation plan, and evidence
+structure. The hardware quick-test pack must contain separate tests for:
+
+1. first boot with empty credential storage;
+2. SoftAP discovery and local setup-page access;
+3. credential submission without secret leakage;
+4. successful station connection and persistence across restart;
+5. failure with invalid or unavailable Wi-Fi;
+6. re-provisioning after network replacement;
+7. factory-reset recovery;
+8. MQTT, HTTP/HTTPS, WebSocket, or other application communication only after
+   Wi-Fi provisioning passes.
+
+Record observable pass/fail criteria and physical evidence. Compilation,
+simulated credentials, or the presence of provisioning files does not prove
+that first-boot, persistence, recovery, or live communication works.

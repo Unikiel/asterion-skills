@@ -69,6 +69,10 @@ to resolve rather than fabricating specifics.
 - Put secrets in `.env`; provide `.env.example` with placeholders only.
 - Add `.env`, credentials, private data, generated secrets, and local databases
   to `.gitignore` as appropriate.
+- For hardware that communicates over Wi-Fi, never hardcode SSIDs or passwords
+  in firmware, starter code, examples, tests, documentation, or tracked
+  configuration. Require first-boot local SoftAP provisioning, device-local
+  nonvolatile credential storage, re-provisioning, and factory-reset recovery.
 - Apply least privilege, server-side authorization, input validation, safe file
   upload handling, rate limits, audit logging, and dependency review as needed.
 - Use synthetic or anonymized sample data.
