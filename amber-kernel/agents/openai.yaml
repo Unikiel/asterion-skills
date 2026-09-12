@@ -1,7 +1,7 @@
 interface:
   display_name: Amber Kernel
-  short_description: "Operate Obsidian vaults and parse incoming ideas"
-  default_prompt: "Use $amber-kernel to parse my incoming ideas and documents, preserving my vault's conventions and original thinking."
+  short_description: "Explore URLs and media; parse ideas into Obsidian"
+  default_prompt: "Use $amber-kernel to explore a URL or parse incoming ideas, preserving my vault's conventions and original thinking."
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

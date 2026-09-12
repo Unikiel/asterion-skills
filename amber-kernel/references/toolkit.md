@@ -28,7 +28,11 @@ The helper does not install or configure plugins, call external services, delete
 
 For parse batches, use `scripts/parse_batch.py` as documented in [parse-runtime.md](parse-runtime.md). It accepts agent-authored semantic decisions, validates a saved edit plan, preserves originals in an external journal, and supports repeat-safe application and recovery. Single-note moves use this same engine. Routine single-file commands other than moves retain their simpler dry-run/apply behavior; they do not provide batch journals.
 
+For URL explorations, research through available web/browser tools following [explore.md](explore.md), then use `scripts/explore_capture.py VAULT REPORT.json` to preview and add `--apply` to create the note. See [explore-capture.md](explore-capture.md) for source-ledger validation, coverage status, duplicate handling, and explicit revisits. This writer makes no network requests and needs no parse recovery state for creating a new file.
+
 ## Safe execution
+
+For multimedia exploration, `scripts/media_extract.py` provides URL routing hints, local text/document/caption extraction, timestamp links, and capability discovery. It never downloads media or pretends to transcribe or inspect images. Follow [explore-media.md](explore-media.md) to use actual media tools and declare gaps.
 
 1. Run `inspect --audit` and retain its result as the baseline.
 2. Run the desired mutation without `--apply`; review the reported paths and reference updates.

@@ -2,6 +2,8 @@
 
 Convert sources into durable knowledge without collapsing evidence, interpretation, and synthesis into one layer. Lock the kernel contract before creating or rewriting notes.
 
+For `explore <url>`, follow [explore.md](explore.md) to read the seed and supporting sources and save one intake capture. Its body provenance and coverage declarations take precedence over the illustrative `status: processed` schema below; completing exploration does not complete parse.
+
 ## Define the research output
 
 Identify the question, intended decision or artifact, acceptable source types, time horizon, and desired depth. Decide whether the vault needs:

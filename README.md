@@ -10,7 +10,8 @@ domains beyond project development and tutoring.
 
 Current skills include **BigBang**, which turns a proposal or concept into a
 buildable project system, and **Amber Kernel**, which operates an Obsidian vault
-in place and processes incoming ideas and documents through its parse subskill.
+in place, researches URLs through explore, and processes incoming ideas and
+documents through parse.
 
 ## Available skills
 
@@ -45,11 +46,24 @@ thinking. Its **parse** subskill digests, tags, links, and files incoming ideas
 and documents. Developing rough ideas and integrating their substance into
 existing notes are independently optional.
 
+Its **explore** subskill takes a URL, reads it and relevant supporting sources,
+and saves one cited research capture in the existing intake directory. It
+records partial or blocked access honestly and leaves final filing to parse.
+
+Explore also handles multimedia URLs: text/files, images, recordings, videos,
+and YouTube channels or playlists. It separates speech/text and visual evidence,
+keeps timestamps or page/slide locators, and records the sampling scope. Channel
+exploration samples actual content rather than treating profile metadata as its
+knowledge. Media interpretation uses available tools; missing extraction
+capabilities remain explicit limitations.
+
 Its workflow supports:
 
 - Scoped convention records and previews before file moves
 - Vault discovery, audit, adoption in place, and empty-vault bootstrap
 - Batch intake through parse, with explicit optional development and integration
+- URL exploration with source trails, deeper explanations, and cited intake captures
+- Multimedia evidence, timed captions, document text, and bounded YouTube channel samples
 - Saved edit plans, recoverable originals, repeat protection, and interruption recovery
 - Note create, edit, merge, move, rename, delete, and link integrity
 - YAML properties, templates, daily notes, attachments, Canvas, and Bases
@@ -92,9 +106,13 @@ asterion-skills/
     ├── scripts/
     │   ├── amber_kernel.py
     │   ├── parse_batch.py
+    │   ├── explore_capture.py
+    │   ├── media_extract.py
     │   ├── vault_links.py
     │   ├── test_amber_kernel.py
-    │   └── test_parse_batch.py
+    │   ├── test_parse_batch.py
+    │   ├── test_explore_capture.py
+    │   └── test_media_extract.py
     └── references/
         ├── kernel-contract.md
         ├── vault-bootstrap.md
@@ -102,6 +120,9 @@ asterion-skills/
         ├── research-to-pkm.md
         ├── parse.md
         ├── parse-runtime.md
+        ├── explore.md
+        ├── explore-capture.md
+        ├── explore-media.md
         ├── toolkit.md
         └── plugin-and-query-workflows.md
 ```
@@ -188,6 +209,20 @@ Invoke BigBang explicitly with a request such as:
 > InnovationLab project and teaching pack.
 
 Other examples:
+
+> `$amber-kernel explore https://example.org/article` — read the page, trace
+> relevant evidence, and save a cited note in LandingField. Replace the example
+> URL with the real target.
+
+> `$amber-kernel explore https://example.org/paper` — focus on the methodology
+> and limitations; explain in Chinese.
+
+> `$amber-kernel explore https://www.youtube.com/@CHANNEL` — sample relevant
+> videos, explain what they teach, and save one cited note in LandingField.
+> Replace CHANNEL with the intended creator's handle.
+
+> `$amber-kernel explore VIDEO_URL` — focus on the mechanisms, inspect speech
+> and relevant visuals, and cite timestamps. Replace VIDEO_URL with the target.
 
 > Use `$bigbang` to evaluate this app concept and create a realistic project
 > plan with session-based implementation prompts.

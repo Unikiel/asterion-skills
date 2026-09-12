@@ -1,6 +1,6 @@
 ---
 name: amber-kernel
-description: Operate Obsidian vaults in place and process incoming ideas or documents with the parse subskill. Use for intake digestion, tagging, linking, filing, optional idea development and integration, note operations, research synthesis, templates, attachments, Canvas, Bases, Search, and installed plugin or appearance workflows. Do not use for ordinary Markdown outside an Obsidian vault.
+description: Operate Obsidian vaults in place with parse for incoming ideas and documents, and explore for deeper URL or multimedia research saved to intake. Explore pages, files, images, audio, videos, and YouTube channels through available extraction tools with cited evidence and explicit coverage. Also use for tagging, linking, filing, optional development and integration, note operations, templates, attachments, Canvas, Bases, Search, and installed plugin or appearance workflows. Do not use for ordinary Markdown outside an Obsidian vault.
 ---
 
 # Amber Kernel
@@ -16,6 +16,7 @@ Read only the references needed for the request:
 - Always read [kernel-contract.md](references/kernel-contract.md) before changing a vault or recommending a broad redesign.
 - Read [vault-bootstrap.md](references/vault-bootstrap.md) when discovering, auditing, initializing, or discussing structure.
 - Read [parse.md](references/parse.md) when the user invokes parse or asks to digest, tag, connect, or file incoming ideas and documents. Development and substantive integration are optional and off unless requested or covered by an explicit standing preference.
+- Read [explore.md](references/explore.md) when the user invokes `explore <url>` or asks to investigate a URL and save its knowledge in the vault. Read the target and supporting sources, then create one cited intake note. For files, images, audio, videos, channels, playlists, or mixed media, also read [explore-media.md](references/explore-media.md). This does not automatically invoke parse.
 - Read [note-operations.md](references/note-operations.md) when creating, editing, moving, renaming, deleting, linking, templating, or changing properties, Canvas, or Bases files.
 - Read [research-to-pkm.md](references/research-to-pkm.md) when converting sources, PDFs, web research, meeting material, or raw captures into durable notes.
 - Read [plugin-and-query-workflows.md](references/plugin-and-query-workflows.md) when working with core plugins, community plugins, Search, Bases, Dataview, Tasks, Templater, query-driven views, themes, snippets, or cssclasses.
@@ -35,3 +36,5 @@ Read [toolkit.md](references/toolkit.md) before using deterministic helpers. For
 7. Return a concise receipt of created, edited, moved, and unresolved files, plus any developed or integrated material.
 
 Do not install plugins, contact external services, publish notes, or alter Sync behavior unless the user explicitly authorizes that action.
+
+An explicit explore request authorizes reading the supplied URL, relevant public supporting sources, focused public searches, and creation of the intake note. It does not authorize external transmission of private vault content, sign-in, or other external mutations.

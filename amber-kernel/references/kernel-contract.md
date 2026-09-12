@@ -55,6 +55,7 @@ Bootstrap scaffolding is permitted only when the target directory is empty.
 - Do not install, enable, disable, or configure plugins unless requested.
 - Scope bulk content operations with a dry-run mapping and collision report before applying them.
 - A requested parse batch authorizes routine source edits, moves between existing directories, and affected-reference repairs. Optional development and substantive integration require a request or an explicit standing preference; do not repeatedly ask after authorization.
+- A requested explore operation authorizes reading its URL and relevant public supporting sources and creating one cited intake note. Preserve the source trail and access limitations. Do not parse, file elsewhere, or integrate that capture unless requested.
 - Use recoverable saved plans for parse mutations and note moves. Keep plans, originals, and run state outside the vault in a configured existing directory on the vault's filesystem for atomic writes.
 - Treat deletion and broad rewrites as destructive; confirm unclear scope and prefer recoverable deletion.
 
