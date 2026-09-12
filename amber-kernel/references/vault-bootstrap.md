@@ -1,11 +1,11 @@
 # Vault bootstrap
 
-Use this workflow to discover an unfamiliar vault, initialize an empty vault, or plan a structural redesign.
+Use this workflow to discover an unfamiliar vault, initialize an empty vault, or discuss a structural redesign without applying one to an existing vault.
 
 ## Discover the current system
 
 1. Locate the vault root by `.obsidian/` or explicit user identification.
-2. Inventory top-level folders and counts of `.md`, `.canvas`, `.base`, and attachment formats. Exclude `.obsidian`, `.trash`, `.git`, and caches from content analysis.
+2. Snapshot the complete directory tree. Inventory top-level folders and counts of `.md`, `.canvas`, `.base`, and attachment formats. Exclude `.obsidian`, `.trash`, `.git`, and caches from content analysis.
 3. Inspect relevant configuration:
    - `app.json` for file/link behavior and default locations.
    - `core-plugins.json` for available native workflows.
@@ -14,18 +14,20 @@ Use this workflow to discover an unfamiliar vault, initialize an empty vault, or
 4. Sample multiple notes from each major folder plus templates. Record observed filename, link, frontmatter, heading, tag, and date conventions.
 5. Identify operational risks: duplicate basenames, unresolved links, inconsistent property types, orphaned attachments, invalid Canvas JSON, and invalid Base YAML.
 
-Summarize the result as a convention fingerprint, not a content dump. Lock that fingerprint before initializing, extending, or migrating anything.
+Summarize the result as a convention fingerprint, not a content dump.
 
-## Choose a bootstrap mode
+## Choose an operating mode
 
-- **Empty vault:** lock the smallest useful foundation, then create only the parts needed now.
-- **Existing coherent vault:** extend its conventions; avoid a parallel taxonomy.
-- **Existing inconsistent vault:** propose phases and a dry-run migration map before changing paths or metadata.
-- **Imported vault:** separate source preservation from later normalization.
+- **Empty directory:** offer the minimal foundation below; apply it only after the user accepts or explicitly requests initialization.
+- **Existing coherent vault:** adopt it in place and extend only its existing conventions and directories.
+- **Existing inconsistent vault:** report inconsistencies and offer non-structural, file-local repairs. A proposed alternate structure may be discussed, but do not apply it.
+- **Imported vault:** preserve the import boundary and current directory tree. Normalize content only within existing files and directories after verification.
+
+The presence of `.obsidian/`, any user content, or any existing directory makes the target an existing vault for structure-preservation purposes.
 
 ## Minimal empty-vault foundation
 
-Use the user's preferred system when provided. Otherwise propose this neutral starting point, lock it as the adopted contract, and create only the parts needed now:
+Use the user's preferred system when provided. Otherwise propose this neutral starting point and create only the parts needed now:
 
 ```text
 Inbox/
@@ -51,21 +53,17 @@ status: active
 
 Do not add every property to every note. Define note-type templates only after repeated usage demonstrates stable fields.
 
-## Establish navigation
+## Establish navigation non-invasively
 
-- Provide one obvious entry note or map of content when the user wants guided navigation.
+- Add an entry note or map of content only in an existing directory selected from observed conventions.
 - Prefer links and properties that serve retrieval over decorative metadata.
-- Use folders for lifecycle or ownership boundaries, links for relationships, and properties for queryable facts.
+- Use the vault's current folder roles; do not overlay a new lifecycle or ownership hierarchy.
 - Keep tags few and purposeful; avoid duplicating the full folder hierarchy as tags.
-- Configure Daily Notes, Templates, and attachments through documented settings or clear user instructions. Do not modify workspace layout files.
+- Do not create new folders for Daily Notes, Templates, or attachments in an existing vault. Use configured existing locations or ask the user to create/configure them in Obsidian.
+- Do not modify workspace layout files.
 
-## Restructure safely
+## Structural redesign requests
 
-1. Define the desired end state and lock it as the kernel contract.
-2. Produce a vault-relative `source -> destination` mapping onto that lock.
-3. Detect collisions, case-only renames, duplicate basenames, and affected references.
-4. Apply a small representative batch first when the migration is broad.
-5. Validate links and queries before continuing.
-6. Leave a concise migration record in the task response; create a vault note only if requested.
+Routine adoption and parse do not restructure directories. Requested file moves or intake batches may use existing directories after collision, basename, and reference checks. Treat an explicit structural redesign request as a separate task governed by that request and applicable permissions; do not infer it from a request to improve or process the vault.
 
-Prefer incremental changes that keep old retrieval paths working through aliases or updated links.
+Always compare the post-operation directory snapshot with the baseline. Any difference in an existing vault is a regression.

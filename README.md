@@ -10,7 +10,7 @@ domains beyond project development and tutoring.
 
 Current skills include **BigBang**, which turns a proposal or concept into a
 buildable project system, and **Amber Kernel**, which operates an Obsidian vault
-as a contract-locked personal knowledge system.
+in place and processes incoming ideas and documents through its parse subskill.
 
 ## Available skills
 
@@ -40,13 +40,17 @@ only when explicitly requested.
 
 ### Amber Kernel
 
-Amber Kernel locks a small vault contract first, maps the vault onto that
-contract, then keeps operating on the live notes.
+Amber Kernel follows the user's vault conventions and preserves their original
+thinking. Its **parse** subskill digests, tags, links, and files incoming ideas
+and documents. Developing rough ideas and integrating their substance into
+existing notes are independently optional.
 
 Its workflow supports:
 
-- Convention lock and path mapping before any write
-- Vault discovery, audit, empty-vault bootstrap, and safe restructuring
+- Scoped convention records and previews before file moves
+- Vault discovery, audit, adoption in place, and empty-vault bootstrap
+- Batch intake through parse, with explicit optional development and integration
+- Saved edit plans, recoverable originals, repeat protection, and interruption recovery
 - Note create, edit, merge, move, rename, delete, and link integrity
 - YAML properties, templates, daily notes, attachments, Canvas, and Bases
 - Research capture into source, atomic, synthesis, and project notes
@@ -54,9 +58,13 @@ Its workflow supports:
 - Local-first privacy; no plugin install, Sync change, or external send unless
   requested
 
-Amber Kernel does not rewrite existing notes until the contract is locked and
-the affected paths are mapped. It invents structure only when a convention slot
-is empty or the user requests a redesign.
+Routine work preserves existing directories and introduces no compulsory
+taxonomy. An explicit structural redesign is a separate task. The Python helpers
+require Python 3.10+ and PyYAML; applying intake plans requires a configured local
+state directory outside the vault on the same filesystem. Unsupported dynamic
+references are deferred rather than rewritten blindly. See
+[parse](amber-kernel/references/parse.md) and the
+[runtime protocol](amber-kernel/references/parse-runtime.md) for usage and limits.
 
 ## Repository structure
 
@@ -81,11 +89,20 @@ asterion-skills/
     │   └── openai.yaml
     ├── assets/
     │   └── icon.svg
+    ├── scripts/
+    │   ├── amber_kernel.py
+    │   ├── parse_batch.py
+    │   ├── vault_links.py
+    │   ├── test_amber_kernel.py
+    │   └── test_parse_batch.py
     └── references/
         ├── kernel-contract.md
         ├── vault-bootstrap.md
         ├── note-operations.md
         ├── research-to-pkm.md
+        ├── parse.md
+        ├── parse-runtime.md
+        ├── toolkit.md
         └── plugin-and-query-workflows.md
 ```
 
@@ -185,10 +202,16 @@ places the project in a competition context.
 
 Invoke Amber Kernel explicitly with a request such as:
 
-> Use `$amber-kernel` to lock this vault's kernel contract and map the existing
-> notes onto it.
+> Use `$amber-kernel` to parse LandingField in my vault, following its existing
+> conventions and preserving my original thinking.
 
 Other examples:
+
+> Use `$amber-kernel` to parse this batch and develop the rough ideas, without
+> integrating their substance into existing notes.
+
+> Use `$amber-kernel` to parse these sources and integrate relevant contributions
+> into existing notes.
 
 > Use `$amber-kernel` to initialize an empty Obsidian vault with the smallest
 > useful foundation.
@@ -225,6 +248,8 @@ Depending on the request, Amber Kernel can produce:
 
 - A locked convention fingerprint and path map
 - Vault audits and incremental restructure plans
+- Intake digests, meaningful links, and a receipt of filed or deferred items
+- Recoverable local edit plans and journals for intake and file moves
 - New or updated notes, templates, daily notes, and attachments
 - Source, atomic, synthesis, map-of-content, and project notes
 - Canvas, Bases, Search, and plugin-query artifacts
@@ -233,6 +258,12 @@ Depending on the request, Amber Kernel can produce:
 Amber Kernel reports the lock, map, changed vault-relative paths, and unresolved
 risks. It does not install plugins or send vault content to external services
 unless the user explicitly authorizes that action.
+
+Run the deterministic helper tests from the repository root with:
+
+```text
+python -m unittest discover -s amber-kernel/scripts -p "test_*.py" -v
+```
 
 ## Contributing
 

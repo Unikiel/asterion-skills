@@ -40,7 +40,7 @@ Record stable identifiers such as DOI, ISBN, or canonical URL when available. Ke
 3. Separate direct evidence, the source author's interpretation, and your synthesis.
 4. Record uncertainty, limitations, conflicts of interest, and meaningful disagreement.
 5. Link claims to existing concepts and projects only when the relationship is substantive.
-6. Promote a claim into an atomic note when it is reusable beyond the source note.
+6. Consider a separate concept note when it has independent value and serves the request. Do not make atomic-note creation mandatory. For parse intake, substantive development and integration follow its explicitly enabled options.
 
 Prefer concise paraphrase. Use direct quotations sparingly and preserve exact attribution.
 
