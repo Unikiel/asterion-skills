@@ -52,10 +52,11 @@ records partial or blocked access honestly and leaves final filing to parse.
 
 Explore also handles multimedia URLs: text/files, images, recordings, videos,
 and YouTube channels or playlists. It separates speech/text and visual evidence,
-keeps timestamps or page/slide locators, and records the sampling scope. Channel
-exploration samples actual content rather than treating profile metadata as its
-knowledge. Media interpretation uses available tools; missing extraction
-capabilities remain explicit limitations.
+keeps timestamps or page/slide locators, and records coverage. Channel and playlist
+exploration defaults to every accessible video, with a deduplicated inventory,
+per-video knowledge, and durable progress across batches. There is no fixed video
+count or duration cap. Media interpretation uses available tools; missing extraction
+capabilities and incomplete discovery remain explicit limitations.
 
 Its workflow supports:
 
@@ -63,7 +64,7 @@ Its workflow supports:
 - Vault discovery, audit, adoption in place, and empty-vault bootstrap
 - Batch intake through parse, with explicit optional development and integration
 - URL exploration with source trails, deeper explanations, and cited intake captures
-- Multimedia evidence, timed captions, document text, and bounded YouTube channel samples
+- Multimedia evidence, timed captions, document text, and resumable exploration of all channel videos
 - Saved edit plans, recoverable originals, repeat protection, and interruption recovery
 - Note create, edit, merge, move, rename, delete, and link integrity
 - YAML properties, templates, daily notes, attachments, Canvas, and Bases
@@ -77,8 +78,8 @@ taxonomy. An explicit structural redesign is a separate task. The Python helpers
 require Python 3.10+ and PyYAML; applying intake plans requires a configured local
 state directory outside the vault on the same filesystem. Unsupported dynamic
 references are deferred rather than rewritten blindly. See
-[parse](amber-kernel/references/parse.md) and the
-[runtime protocol](amber-kernel/references/parse-runtime.md) for usage and limits.
+[parse](amber-kernel/subskills/parse/instructions.md) and the
+[runtime protocol](amber-kernel/subskills/parse/references/parse-runtime.md) for usage and limits.
 
 ## Repository structure
 
@@ -105,24 +106,35 @@ asterion-skills/
     │   └── icon.svg
     ├── scripts/
     │   ├── amber_kernel.py
-    │   ├── parse_batch.py
-    │   ├── explore_capture.py
-    │   ├── media_extract.py
     │   ├── vault_links.py
-    │   ├── test_amber_kernel.py
-    │   ├── test_parse_batch.py
-    │   ├── test_explore_capture.py
-    │   └── test_media_extract.py
+    │   ├── vault_state.py
+    │   ├── run_tests.py
+    │   └── test_amber_kernel.py
+    ├── subskills/
+    │   ├── parse/
+    │   │   ├── instructions.md
+    │   │   ├── references/
+    │   │   │   └── parse-runtime.md
+    │   │   └── scripts/
+    │   │       ├── parse_batch.py
+    │   │       └── test_parse_batch.py
+    │   └── explore/
+    │       ├── instructions.md
+    │       ├── references/
+    │       │   ├── explore-capture.md
+    │       │   ├── explore-collections.md
+    │       │   └── explore-media.md
+    │       └── scripts/
+    │           ├── explore_capture.py
+    │           ├── media_extract.py
+    │           ├── test_explore_capture.py
+    │           ├── test_explore_collections.py
+    │           └── test_media_extract.py
     └── references/
         ├── kernel-contract.md
         ├── vault-bootstrap.md
         ├── note-operations.md
         ├── research-to-pkm.md
-        ├── parse.md
-        ├── parse-runtime.md
-        ├── explore.md
-        ├── explore-capture.md
-        ├── explore-media.md
         ├── toolkit.md
         └── plugin-and-query-workflows.md
 ```
@@ -217,8 +229,9 @@ Other examples:
 > `$amber-kernel explore https://example.org/paper` — focus on the methodology
 > and limitations; explain in Chinese.
 
-> `$amber-kernel explore https://www.youtube.com/@CHANNEL` — sample relevant
-> videos, explain what they teach, and save one cited note in LandingField.
+> `$amber-kernel explore https://www.youtube.com/@CHANNEL` — inventory all videos,
+> extract knowledge from every accessible item, and save a cited capture in LandingField.
+> Large channels continue in resumable batches with explicit coverage and pending work.
 > Replace CHANNEL with the intended creator's handle.
 
 > `$amber-kernel explore VIDEO_URL` — focus on the mechanisms, inspect speech
@@ -297,7 +310,7 @@ unless the user explicitly authorizes that action.
 Run the deterministic helper tests from the repository root with:
 
 ```text
-python -m unittest discover -s amber-kernel/scripts -p "test_*.py" -v
+python amber-kernel/scripts/run_tests.py
 ```
 
 ## Contributing

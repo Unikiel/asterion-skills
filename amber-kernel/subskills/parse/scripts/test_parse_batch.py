@@ -7,7 +7,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import parse_batch as batch
-from vault_links import ReferenceError, link_issues
+from scripts.vault_links import ReferenceError, link_issues
 
 
 class ParseBatchTests(unittest.TestCase):

@@ -15,11 +15,14 @@ import re
 import sys
 import tempfile
 from pathlib import Path
+
+# Locate shared modules when invoked directly from any working directory.
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 from urllib.parse import quote, urlsplit, urlunsplit
 
 import yaml
 
-from parse_batch import BatchError, all_issues, properties, root_path, safe_path, snapshot
+from scripts.vault_state import BatchError, all_issues, properties, root_path, safe_path, snapshot
 from media_extract import route
 
 
@@ -100,6 +103,69 @@ def date(value):
     return value
 
 
+def media_identity(url):
+    """Deduplicate YouTube watch/short/live/share URLs by the actual video ID."""
+    normalized = normalize_url(url)
+    hint = route(normalized)
+    return "youtube:" + hint["video_id"] if hint.get("video_id") else normalized
+
+
+def substantive(source):
+    return any(m.get("type") != "metadata" and m.get("status") in {"observed", "partial"}
+               for m in source.get("modalities", []))
+
+
+def collection_counts(collection):
+    inventory = collection["inventory"]
+    return {"discovered": len(inventory), **{
+        state: sum(item["status"] == state for item in inventory)
+        for state in ("complete", "partial", "pending", "unavailable")}}
+
+
+def validate_collection(collection, identifiers, seed, cited, status):
+    if not isinstance(collection, dict) or collection.get("scope") != "all":
+        raise BatchError("collection scope must be all; an explicit sample uses sampling instead")
+    if collection.get("discovery_status") not in {"complete", "partial"}:
+        raise BatchError("collection discovery_status must be complete or partial")
+    line(collection.get("discovery_note"), "collection discovery evidence and scope")
+    inventory = collection.get("inventory")
+    if not isinstance(inventory, list):
+        raise BatchError("collection inventory must be a list")
+    seen = set()
+    for entry in inventory:
+        if not isinstance(entry, dict):
+            raise BatchError("collection inventory entries must be objects")
+        key = media_identity(entry["url"])
+        if key in seen:
+            raise BatchError("duplicate collection item; merge URL variants by media identity")
+        if key == media_identity(seed["url"]):
+            raise BatchError("collection seed cannot be its own inventory item")
+        seen.add(key)
+        state = entry.get("status")
+        if state not in {"complete", "partial", "pending", "unavailable"}:
+            raise BatchError("unknown collection item status")
+        if state != "complete":
+            line(entry.get("limitation"), "collection item limitation or next step")
+        identifier = entry.get("source_id")
+        if state in {"pending", "unavailable"}:
+            if identifier is not None:
+                raise BatchError("pending/unavailable items have no substantive source_id")
+            continue
+        source = identifiers.get(identifier)
+        if source is None or source is seed or identifier not in cited:
+            raise BatchError("researched collection items require an actually cited non-seed source")
+        if media_identity(source["url"]) != key:
+            raise BatchError("collection item and source must identify the same media")
+        expected = "read" if state == "complete" else "partial"
+        if source["status"] != expected or not substantive(source):
+            raise BatchError("collection item status must match substantive media evidence")
+    if status == "complete":
+        if collection["discovery_status"] != "complete" or not inventory or any(i["status"] != "complete" for i in inventory):
+            raise BatchError("complete collection requires completed discovery and every item complete")
+    else:
+        line(collection.get("resume_note"), "collection checkpoint and resume instructions")
+
+
 def validate_report(report):
     if not isinstance(report, dict) or report.get("version") != 1:
         raise BatchError("report version must be 1")
@@ -154,25 +220,40 @@ def validate_report(report):
         if identifier not in identifiers or identifiers[identifier]["status"] == "unavailable":
             raise BatchError(f"citation has no readable source: {identifier}")
     if source_kind(seed) in {"channel", "playlist"} and status != "blocked":
-        sampling = report.get("sampling")
-        if not isinstance(sampling, dict):
-            raise BatchError("channel/playlist exploration requires a sampling record")
-        line(sampling.get("scope"), "sampling scope")
-        line(sampling.get("rationale"), "sampling rationale")
-        selected = sampling.get("selected_sources")
-        if not isinstance(selected, list) or len(set(selected)) != len(selected):
-            raise BatchError("selected_sources must list unique source IDs")
-        if status == "complete" and not selected:
-            raise BatchError("metadata-only channel research cannot be complete")
-        for identifier in selected:
-            item = identifiers.get(identifier)
-            if item is None or item is seed or identifier not in cited:
-                raise BatchError("each selected item must be an actually cited non-seed source")
-            if not any(m.get("type") != "metadata" and m.get("status") in {"observed", "partial"} for m in item.get("modalities", [])):
-                raise BatchError("sampled items require substantive media evidence, not just metadata")
+        if "collection" in report:
+            if "sampling" in report:
+                raise BatchError("use collection or sampling, not both")
+            validate_collection(report["collection"], identifiers, seed, cited, status)
+        else:
+            validate_sampling(report, identifiers, seed, cited, status)
+    elif "collection" in report or "sampling" in report:
+        raise BatchError("collection/sampling requires an accessible channel or playlist seed")
     if not isinstance(report.get("properties", {}), dict):
         raise BatchError("properties must be a mapping following existing conventions")
     return requested, resolved, title, accessed, status
+
+
+def validate_sampling(report, identifiers, seed, cited, status):
+    # Legacy samples remain readable, but cannot establish full collection coverage.
+    # New sample runs are permitted only when the user explicitly narrows scope.
+    sampling = report.get("sampling")
+    if not isinstance(sampling, dict):
+        raise BatchError("channel/playlist exploration requires a collection or sampling record")
+    line(sampling.get("scope"), "sampling scope")
+    line(sampling.get("rationale"), "sampling rationale")
+    selected = sampling.get("selected_sources")
+    if not isinstance(selected, list) or len(set(selected)) != len(selected):
+        raise BatchError("selected_sources must list unique source IDs")
+    if status == "complete" and not selected:
+        raise BatchError("metadata-only channel research cannot be complete")
+    for identifier in selected:
+        item = identifiers.get(identifier)
+        if item is None or item is seed or identifier not in cited:
+            raise BatchError("each selected item must be an actually cited non-seed source")
+        if not substantive(item):
+            raise BatchError("sampled items require substantive media evidence, not just metadata")
+    if status == "complete":
+        raise BatchError("a sample cannot establish complete channel/playlist coverage")
 
 
 def markdown_label(value):
@@ -193,6 +274,20 @@ def render(report):
     source_urls = {source["id"]: normalize_url(source["url"]) for source in report["sources"]}
     body = re.sub(r"\[(S[1-9]\d*)\]", lambda match: f"[{match[1]}](<{source_urls[match[1]]}>)", report["body"].strip())
     lines += ["", body]
+    if report.get("collection"):
+        collection = report["collection"]
+        counts = collection_counts(collection)
+        lines += ["", "## Collection coverage", "", "Scope: all discoverable items.",
+                  "Discovery: " + collection["discovery_status"] + ". " + collection["discovery_note"],
+                  "Progress: " + "; ".join(f"{name}: {value}" for name, value in counts.items()) + "."]
+        if collection.get("resume_note"):
+            lines += ["Resume: " + line(collection["resume_note"], "resume_note")]
+        lines += [""]
+        for entry in collection["inventory"]:
+            detail = f"- [{entry.get('source_id', 'Item')}](<{normalize_url(entry['url'])}>) — {entry['status']}"
+            if entry.get("limitation"):
+                detail += "; " + entry["limitation"]
+            lines.append(detail)
     if report.get("sampling"):
         sampling = report["sampling"]
         lines += ["", "## Exploration scope", "", "Scope: " + line(sampling["scope"], "sampling scope"),
@@ -303,6 +398,9 @@ def capture(vault, report, *, intake="LandingField", apply=False, new_capture=Fa
               "sources_read": sum(s["status"] in {"read", "partial"} for s in report["sources"]),
               "sources_partial": sum(s["status"] == "partial" for s in report["sources"]),
               "earlier_captures": previous}
+    if report.get("collection"):
+        result["collection"] = {"discovery_status": report["collection"]["discovery_status"],
+                                **collection_counts(report["collection"])}
     if apply:
         # A single new file is staged and linked exclusively; existing notes are never overwritten.
         fd, temporary = tempfile.mkstemp(prefix=".amber-explore-", suffix=".tmp", dir=directory)
@@ -335,7 +433,7 @@ def main(argv=None):
     parser.add_argument("report", help="agent-authored JSON report from actually read sources")
     parser.add_argument("--intake", default="LandingField")
     parser.add_argument("--apply", action="store_true")
-    parser.add_argument("--new-capture", action="store_true", help="only for an explicitly requested revisit; never overwrites prior notes")
+    parser.add_argument("--new-capture", action="store_true", help="requested revisit or resumed collection snapshot; never overwrites prior notes")
     args = parser.parse_args(argv)
     try:
         report = json.loads(Path(args.report).read_text(encoding="utf-8-sig"))

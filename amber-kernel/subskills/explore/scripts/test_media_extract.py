@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 import explore_capture as capture
 import media_extract as media
-from parse_batch import BatchError
+from scripts.vault_state import BatchError
 
 
 class MediaExtractionTests(unittest.TestCase):

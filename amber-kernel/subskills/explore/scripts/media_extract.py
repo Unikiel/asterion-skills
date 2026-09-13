@@ -17,9 +17,12 @@ import xml.etree.ElementTree as ET
 import zipfile
 from html.parser import HTMLParser
 from pathlib import Path
+
+# Locate shared modules when invoked directly from any working directory.
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 from urllib.parse import parse_qs, urlsplit, urlencode, urlunsplit
 
-from parse_batch import BatchError
+from scripts.vault_state import BatchError
 
 LIMIT = 20 * 1024 * 1024
 EXTENSIONS = {

@@ -1,11 +1,11 @@
 # parse runtime
 
-`scripts/parse_batch.py` applies decisions authored by the agent using [parse.md](parse.md). It does not infer semantics, generate digests, or read binary documents. Python 3.10+ and PyYAML are required. Commands emit JSON and errors return exit code 2.
+`subskills/parse/scripts/parse_batch.py` applies decisions authored by the agent using [parse.md](../instructions.md). It does not infer semantics, generate digests, or read binary documents. Python 3.10+ and PyYAML are required. Commands emit JSON and errors return exit code 2.
 
 ## Inventory and semantic planning
 
 ```text
-python scripts/parse_batch.py inventory VAULT --intake LandingField --state-dir STATE
+python subskills/parse/scripts/parse_batch.py inventory VAULT --intake LandingField --state-dir STATE
 ```
 
 `STATE` is optional for inventory. The result lists source fingerprints, readable text candidates, completion markers from verified journals, and note titles, aliases, tags, and fingerprints. Read relevant content separately; this index is not a semantic classifier. Files under settings, trash, Git, and cache directories are excluded. Symlinked content and paths outside the vault are refused.
@@ -60,9 +60,9 @@ Pass it with `plan --preferences FILE`. Only persist preferences the user actual
 ## Save, preview, apply
 
 ```text
-python scripts/parse_batch.py plan MANIFEST --output PLAN
-python scripts/parse_batch.py apply PLAN --state-dir STATE
-python scripts/parse_batch.py apply PLAN --state-dir STATE --apply
+python subskills/parse/scripts/parse_batch.py plan MANIFEST --output PLAN
+python subskills/parse/scripts/parse_batch.py apply PLAN --state-dir STATE
+python subskills/parse/scripts/parse_batch.py apply PLAN --state-dir STATE --apply
 ```
 
 `plan` writes only the explicitly requested new plan file outside the vault and prints a compact preview. The second command is also read-only; only `--apply` mutates vault content. Show the preview to the user before the authorized apply; it is not a new approval gate.
@@ -78,9 +78,9 @@ An exclusive state-directory lock prevents cooperating runs from overlapping. Ha
 Save and reuse the same plan until its run is verified. Reapplying a verified plan returns `already-verified` and does not overwrite subsequent edits. Inventory with the same state directory recognizes unchanged retained sources, including the resulting source text after enrichment.
 
 ```text
-python scripts/parse_batch.py recover PLAN --state-dir STATE
-python scripts/parse_batch.py recover PLAN --state-dir STATE --apply
-python scripts/parse_batch.py recover PLAN --state-dir STATE --rollback --apply
+python subskills/parse/scripts/parse_batch.py recover PLAN --state-dir STATE
+python subskills/parse/scripts/parse_batch.py recover PLAN --state-dir STATE --apply
+python subskills/parse/scripts/parse_batch.py recover PLAN --state-dir STATE --rollback --apply
 ```
 
 Recovery requires an existing journal. Resume accepts each affected file only if it equals its recorded before or after version, and checks unchanged context. Rollback reverses only the affected changes, preserves unrelated later work, and refuses to overwrite a subsequently edited affected file. A rolled-back run is not silently reapplied; create a fresh plan with an explicit `run_nonce` if retrying intentionally. Use these operations within the user's requested recovery scope.

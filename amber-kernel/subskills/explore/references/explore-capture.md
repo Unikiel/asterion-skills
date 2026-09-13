@@ -1,6 +1,6 @@
 # Writing an explore capture
 
-Use `scripts/explore_capture.py` after following [explore.md](explore.md) and actually reading the sources. Browsing, following citations, and synthesis are agent work using the available web/browser tools; this helper makes no network requests and cannot establish that a claim is true.
+Use `subskills/explore/scripts/explore_capture.py` after following [explore.md](../instructions.md) and actually reading the sources. Browsing, following citations, and synthesis are agent work using the available web/browser tools; this helper makes no network requests and cannot establish that a claim is true.
 
 The helper requires the existing Python/PyYAML runtime. It creates one Markdown file in an existing intake directory, with no parse state-directory requirement and no edits to established notes.
 
@@ -41,7 +41,7 @@ Each source has a unique `S1`, `S2`, … ID, a URL, title, and access status. It
 
 | Status | Requirements |
 | --- | --- |
-| Report `complete` | The bounded exploration is complete; all listed sources are read. This does not mean exhaustive research or proven truth. |
+| Report `complete` | The requested exploration is complete; all listed sources are read. For a collection, discovery and every inventory item must also be complete. This does not prove truth or access to hidden content. |
 | Report `partial` | Nonempty `coverage_note`; the seed is at least partially read; cite only available material. |
 | Report `blocked` | Nonempty `coverage_note`; seed status is `unavailable`; body describes access limitations and next steps, not guessed source claims. |
 | Source `read` | Relevant source content was actually read. |
@@ -81,25 +81,41 @@ Required declarations: video has audio and visual; audio has audio; image has vi
 
 A source with partial or unavailable modalities cannot use `status: read`, and a wholly inaccessible media source uses `unavailable`. The report's existing partial/blocked rules still apply. Known media sources require these declarations even when `kind` was inferred. These checks establish consistency, not independent proof of tool use.
 
-For a channel or playlist seed with any access, include a top-level sampling record:
+For a channel or playlist seed with any access, use a top-level `collection` record. This is also durable research state; follow [explore-collections.md](explore-collections.md). The following partial fixture illustrates the shape, not actual research:
 
 ```json
 {
-  "sampling": {
-    "scope": "Three selected videos; no claim of whole-channel coverage",
-    "rationale": "Two relevant recent explanations and one foundational topic",
-    "selected_sources": ["S2", "S3", "S4"]
+  "collection": {
+    "scope": "all",
+    "discovery_status": "partial",
+    "discovery_note": "Videos listing inspected through the saved continuation; Shorts and archived streams remain to enumerate.",
+    "resume_note": "Checkpoint: D:/task-work/channel-report.json; finish Videos pagination, enumerate Shorts and Streams, then process pending videos.",
+    "inventory": [
+      {"url": "https://youtube.com/watch?v=abcdefghijk", "status": "partial", "source_id": "S2", "limitation": "Full captions inspected; visual explanations remain inaccessible."},
+      {"url": "https://youtube.com/watch?v=lmnopqrstuv", "status": "pending", "limitation": "Discovered in Videos listing; extract speech and inspect visuals next."}
+    ]
   }
 }
 ```
 
-Selected IDs must identify cited non-seed sources with substantive text/audio/visual evidence, not only titles/thumbnails. Describe unavailable or excluded items in the coverage note/body. With no inspectable media, use an empty sample and partial coverage; metadata-only channel research cannot be complete. A fully blocked seed needs no sampling record. The generated note includes the scope, selection rationale, source IDs, and modality ledger.
+`discovery_status` is `complete` only with evidence of full enumeration of the intended public catalog; otherwise use `partial`. `discovery_note` records surfaces, dates, pagination evidence/cursors, scope boundaries, and unidentified unavailable slots. Keep known item URLs in `inventory` even when unavailable. Deduplicate YouTube URLs by video ID. Counts are derived by the writer, not supplied totals.
+
+Inventory states:
+
+- `pending`: discovered but not yet researched; requires `limitation` with the next step, and no `source_id`.
+- `complete`: requires a cited non-seed `source_id` with matching media identity, `status: read`, and substantive media evidence.
+- `partial`: requires a matching cited source with `status: partial`, substantive media evidence, and a `limitation` explaining missing coverage.
+- `unavailable`: no substantive media could be inspected after access attempts; requires a concrete `limitation` and no `source_id`. Metadata can be described separately as metadata, never as extracted video knowledge.
+
+Any noncomplete report requires `resume_note` with the durable checkpoint path and next actions or retry conditions. An empty inventory, partial discovery, or any unfinished/unavailable item prevents report `complete`. This intentionally distinguishes finishing accessible work from having full coverage. A fully blocked seed needs no collection record. The generated note includes all inventory URLs, status counts, discovery evidence, resume instructions, and the modality/source ledger.
+
+Legacy `sampling` records remain supported for partial captures. Use them for new work only when the user explicitly requests a sample: provide `scope`, `rationale`, and `selected_sources` (unique cited non-seed IDs with substantive media evidence). Never supply both `collection` and `sampling`. Samples cannot claim complete channel coverage. Default channel exploration always uses the full inventory.
 
 ### Commands
 
 ```text
-python scripts/explore_capture.py VAULT REPORT.json
-python scripts/explore_capture.py VAULT REPORT.json --apply
+python subskills/explore/scripts/explore_capture.py VAULT REPORT.json
+python subskills/explore/scripts/explore_capture.py VAULT REPORT.json --apply
 ```
 
 The first command validates and previews the path without writing to the vault. The second saves the requested note. `--intake EXISTING_DIRECTORY` overrides `LandingField` when appropriate. The normal agent workflow shows the preview then applies within the authorized explore request; only an explicit preview-only request stops before saving.
@@ -109,10 +125,10 @@ Filenames use `Explore - <descriptive title> - <URL hash>.md`, with portable cha
 An unchanged repeated request returns `already-captured` with the prior note paths. For an explicit revisit, refresh, or new angle:
 
 ```text
-python scripts/explore_capture.py VAULT REPORT.json --new-capture --apply
+python subskills/explore/scripts/explore_capture.py VAULT REPORT.json --new-capture --apply
 ```
 
-This produces a separate dated capture and links earlier ones. Same-day revisits receive a numeric suffix. Existing notes remain intact. If a previously blocked capture now needs another attempt, that is a revisit; request scope can establish that intent without a repeated approval prompt.
+This produces a separate dated capture and links earlier ones. Same-day revisits receive a numeric suffix. Existing notes remain intact. Also use this flag for a cumulative snapshot after resuming an unfinished collection; existing request scope authorizes continuation without per-batch approval. First load the checkpoint and do the remaining research: the flag alone does not perform resumption. If a previously blocked capture now needs another attempt, that is a revisit; request scope can establish that intent without a repeated approval prompt.
 
 ## Verification and limitations
 

@@ -1,6 +1,6 @@
 # Multimedia exploration
 
-Use this workflow for files, images, recordings, video, creator channels, playlists, and pages containing relevant mixed media. Follow [explore.md](explore.md); the output remains one cited knowledge capture in existing intake for later parse.
+Use this workflow for files, images, recordings, video, creator channels, playlists, and pages containing relevant mixed media. Follow [explore.md](../instructions.md); the output remains one cited knowledge capture in existing intake for later parse.
 
 ## Discover content and capabilities
 
@@ -38,26 +38,22 @@ Recognize watch URLs, short links, Shorts, and live/archive video links. A watch
 
 ## YouTuber/channel or playlist
 
-A channel URL calls for exploration of its content, not just its profile. Inspect the channel, visible video list, and relevant playlists. Distinguish self-description from observations about sampled content.
+A channel or playlist URL defaults to researching every accessible video. This is the user's standing preference: do not substitute a representative sample, a relevance cutoff, or a fixed item/duration limit. A focus changes research emphasis and processing order; it excludes videos only when the user explicitly narrows scope. Read [explore-collections.md](explore-collections.md) for discovery, durable progress, and resumption.
 
-Default to up to three accessible videos. Choose for the user's focus, or explain a mix of current and foundational/recurring topics visible in the listing. Apply the video workflow to each; record every video as its own source. Do not claim statistical representativeness or full-channel coverage. If fewer are accessible, say so.
+Apply the video workflow to every item. Read the full available transcript in chunks for long recordings; inspect meaningful visual explanations throughout the recording and retain exact coverage gaps. Chunk size controls execution, not the amount of knowledge to cover. A fully read transcript does not mean every frame was inspected.
 
-Synthesize what sampled videos teach, recurring concepts, disagreements or changes over time, and a useful learning path. Ground generalizations in those videos; do not equate popularity with correctness or invent expertise or private motives. Topics inferred only from titles remain metadata observations.
-
-Record scope, selection rationale, selected source IDs, and important omissions. If only profile text and titles were accessible, create a partial metadata capture instead of claiming video knowledge extraction. For a playlist, preserve meaningful ordering and sample a few relevant entries; do not automatically consume all entries.
-
-The normal research budget still applies. Additional media defaults: up to three items and up to 60 minutes of selected material. For long recordings, select relevant chapters/ranges and declare omissions. These are adjustable bounds, not quotas. A fully read transcript does not mean every frame was inspected.
+Synthesize per-video lessons as well as recurring concepts, changes over time, disagreements, and a useful learning path. Preserve unique contributions from less popular or older videos. Ground generalizations in inspected content; titles alone remain metadata observations. Save paraphrased knowledge and citations, not raw transcript copies. Keep catalog completeness separate from speech, visual, and research coverage.
 
 ## Coverage and local extraction
 
 Use source `kind` and `modalities` as documented in [explore-capture.md](explore-capture.md). Record text, audio, visuals, and metadata separately, including methods, locators, and limitations. Missing required evidence makes coverage partial even if another modality was useful. Save synthesized knowledge rather than raw transcript dumps or hundreds of frame descriptions.
 
 ```text
-python scripts/media_extract.py capabilities
-python scripts/media_extract.py route URL
-python scripts/media_extract.py extract LOCAL_FILE
-python scripts/media_extract.py extract LOCAL_TEXT --encoding utf-16
-python scripts/media_extract.py timestamp-url YOUTUBE_VIDEO_URL 192
+python subskills/explore/scripts/media_extract.py capabilities
+python subskills/explore/scripts/media_extract.py route URL
+python subskills/explore/scripts/media_extract.py extract LOCAL_FILE
+python subskills/explore/scripts/media_extract.py extract LOCAL_TEXT --encoding utf-16
+python subskills/explore/scripts/media_extract.py timestamp-url YOUTUBE_VIDEO_URL 192
 ```
 
 Built-in extraction covers decoded text, HTML text, SRT/WebVTT timed cues, DOCX body paragraphs, and PPTX slide text. Optional `pypdf` supplies PDF text extraction. The helper never executes macros or page scripts. Local inputs and expanded Office content are bounded to 20 MiB. Images/audio/video and unsupported files return `needs-backend`; use actual media tools or retain partial coverage. It does not download, interpret visuals, run ASR, or perform OCR. Dependency presence and URL routing are discovery hints, not evidence of successful extraction.

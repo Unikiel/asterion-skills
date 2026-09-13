@@ -12,7 +12,7 @@ Development and substantive integration default to off. Apply an explicit standi
 
 ## Read and understand
 
-1. Read the [kernel contract](kernel-contract.md), [note operations](note-operations.md), and [runtime protocol](parse-runtime.md). Read [research guidance](research-to-pkm.md) for source documents. Inspect current conventions and relevant existing notes before assigning tags, destinations, or links.
+1. Read the [kernel contract](../../references/kernel-contract.md), [note operations](../../references/note-operations.md), and [runtime protocol](references/parse-runtime.md). Read [research guidance](../../references/research-to-pkm.md) for source documents. Inspect current conventions and relevant existing notes before assigning tags, destinations, or links.
 2. Inventory the selected batch and reuse its title, alias, tag, path, and fingerprint index. Search relevant content once and reuse it across items; expand searches where evidence calls for it. Consider relationships among new items too.
 3. Read actual content. Distinguish a personal idea, question, reflection, project intention, source claim, and synthesis when useful. These distinctions do not mandate properties, templates, or note types.
 4. Preserve a short idea's original wording. Add only context needed to understand it later. For documents, produce a concise digest with central claims, useful evidence, limitations, open questions, and available source locators. Preserve original bytes and a link from the digest to its source.
@@ -48,7 +48,7 @@ Examples:
 
 ## Execute and report
 
-Use [parse-runtime.md](parse-runtime.md) to prepare agent-authored decisions, save a validated plan, show its preview, and apply it with local recovery state. Inspect journal outcomes before processing retained sources again. Unchanged completed inputs do not need a second digest; edited sources must be reread and reconciled.
+Use [parse-runtime.md](references/parse-runtime.md) to prepare agent-authored decisions, save a validated plan, show its preview, and apply it with local recovery state. Inspect journal outcomes before processing retained sources again. Unchanged completed inputs do not need a second digest; edited sources must be reread and reconciled.
 
 A plan is an all-or-nothing preflight unit, not necessarily the entire intake batch. If preflight identifies an ambiguous reference or unsupported dependency, remove/defer the affected item and replan independent clear work. Rebuild after each applied unit so later plans use fresh context. Do not bypass a failed preflight with raw moves.
 

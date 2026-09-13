@@ -15,15 +15,17 @@ Read only the references needed for the request:
 
 - Always read [kernel-contract.md](references/kernel-contract.md) before changing a vault or recommending a broad redesign.
 - Read [vault-bootstrap.md](references/vault-bootstrap.md) when discovering, auditing, initializing, or discussing structure.
-- Read [parse.md](references/parse.md) when the user invokes parse or asks to digest, tag, connect, or file incoming ideas and documents. Development and substantive integration are optional and off unless requested or covered by an explicit standing preference.
-- Read [explore.md](references/explore.md) when the user invokes `explore <url>` or asks to investigate a URL and save its knowledge in the vault. Read the target and supporting sources, then create one cited intake note. For files, images, audio, videos, channels, playlists, or mixed media, also read [explore-media.md](references/explore-media.md). This does not automatically invoke parse.
+- Read [parse instructions](subskills/parse/instructions.md) when the user invokes parse or asks to digest, tag, connect, or file incoming ideas and documents. Development and substantive integration are optional and off unless requested or covered by an explicit standing preference.
+- Read [explore instructions](subskills/explore/instructions.md) when the user invokes `explore <url>` or asks to investigate a URL and save its knowledge in the vault. Read the target and supporting sources, then create a cited intake capture. For files, images, audio, videos, channels, playlists, or mixed media, also read [explore-media.md](subskills/explore/references/explore-media.md). Channels and playlists default to all accessible videos, using a durable inventory and resumable batches, without an arbitrary sampling cap. This does not automatically invoke parse.
 - Read [note-operations.md](references/note-operations.md) when creating, editing, moving, renaming, deleting, linking, templating, or changing properties, Canvas, or Bases files.
 - Read [research-to-pkm.md](references/research-to-pkm.md) when converting sources, PDFs, web research, meeting material, or raw captures into durable notes.
 - Read [plugin-and-query-workflows.md](references/plugin-and-query-workflows.md) when working with core plugins, community plugins, Search, Bases, Dataview, Tasks, Templater, query-driven views, themes, snippets, or cssclasses.
 
 Read multiple references when the task crosses those boundaries.
 
-Read [toolkit.md](references/toolkit.md) before using deterministic helpers. For parse manifests, saved plans, and recovery, also read [parse-runtime.md](references/parse-runtime.md).
+Each subskill owns its instructions, references, scripts, and tests under `subskills/<name>/`. Shared rules and vault utilities remain in the root `references/` and `scripts/`. Invoke these modes through `$amber-kernel parse ...` and `$amber-kernel explore ...`; `instructions.md` files are routed resources within this single installed skill. Resolve command paths from the amber-kernel package root, regardless of the current vault directory.
+
+Read [toolkit.md](references/toolkit.md) before using deterministic helpers. For parse manifests, saved plans, and recovery, also read [parse-runtime.md](subskills/parse/references/parse-runtime.md).
 
 ## Execute
 

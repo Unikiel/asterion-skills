@@ -17,6 +17,9 @@ import shutil
 import sys
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
+
+# Locate shared modules when invoked directly from any working directory.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from typing import Any, Iterable
 from urllib.parse import unquote
 
@@ -72,7 +75,7 @@ def rel(root: Path, path: Path) -> str:
 
 
 def safe_path(root: Path, value: str, *, suffix: str | None = None) -> Path:
-    from parse_batch import safe_path as checked_path
+    from scripts.vault_state import safe_path as checked_path
     if suffix and not PurePosixPath(value).suffix:
         value += suffix
     return checked_path(root, value)
@@ -126,7 +129,7 @@ def split_frontmatter(text: str) -> tuple[dict[str, Any], str, bool]:
     match = re.match(r"^---\r?\n(.*?)\r?\n---(?:\r?\n|$)", text, re.DOTALL)
     if not match:
         raise AmberError("unterminated YAML frontmatter")
-    from parse_batch import UniqueLoader
+    from scripts.vault_state import UniqueLoader
     data = yaml.load(match.group(1), Loader=UniqueLoader) or {}
     if not isinstance(data, dict):
         raise AmberError("frontmatter must be a YAML mapping")
@@ -309,8 +312,8 @@ def validate_base(root: Path, path: Path) -> list[dict[str, Any]]:
 
 
 def audit(root: Path) -> dict[str, Any]:
-    from parse_batch import snapshot
-    from vault_links import link_issues
+    from scripts.vault_state import snapshot
+    from scripts.vault_links import link_issues
     files, _ = snapshot(root)
     issues = [{"path": p, "kind": k + "-link" if k in {"unresolved", "ambiguous"} else k, "detail": d}
               for p, k, d in sorted(link_issues(files))]
@@ -427,7 +430,7 @@ def cmd_append(args: argparse.Namespace) -> None:
 
 
 def cmd_move(args: argparse.Namespace) -> None:
-    from parse_batch import build_plan, digest, execute, preview
+    from subskills.parse.scripts.parse_batch import build_plan, digest, execute, preview
     root = vault_root(args.vault)
     source = safe_path(root, args.source, suffix=".md")
     target = note_target(root, args.destination)

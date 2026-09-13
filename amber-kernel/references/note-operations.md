@@ -47,7 +47,7 @@ Official references: [Properties](https://obsidian.md/help/properties), [Interna
 
 ## Move or rename
 
-Use the saved-plan runtime described in [parse-runtime.md](parse-runtime.md), including for single-note moves through `amber_kernel.py move-note`. Applying a move requires an existing state directory outside the vault on the same filesystem. Do not fall back to raw filesystem moves when the helper defers an ambiguous or unsupported reference.
+Use the saved-plan runtime described in [parse-runtime.md](../subskills/parse/references/parse-runtime.md), including for single-note moves through `amber_kernel.py move-note`. Applying a move requires an existing state directory outside the vault on the same filesystem. Do not fall back to raw filesystem moves when the helper defers an ambiguous or unsupported reference.
 
 1. Check destination collisions, case-only behavior, duplicate basenames, and target filename safety.
 2. Find incoming wikilinks, Markdown links, embeds, Canvas file nodes, and Base/plugin queries containing the old path.

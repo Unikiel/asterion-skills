@@ -26,17 +26,17 @@ Run `python scripts/amber_kernel.py --help` or a subcommand with `--help` for ex
 
 The helper does not install or configure plugins, call external services, delete content, create folders in an existing vault, or perform broad migrations. Handle richer synthesis and plugin-specific query authoring through the relevant reference workflow after inspecting the vault.
 
-For parse batches, use `scripts/parse_batch.py` as documented in [parse-runtime.md](parse-runtime.md). It accepts agent-authored semantic decisions, validates a saved edit plan, preserves originals in an external journal, and supports repeat-safe application and recovery. Single-note moves use this same engine. Routine single-file commands other than moves retain their simpler dry-run/apply behavior; they do not provide batch journals.
+For parse batches, use `subskills/parse/scripts/parse_batch.py` as documented in [parse-runtime.md](../subskills/parse/references/parse-runtime.md). It accepts agent-authored semantic decisions, validates a saved edit plan, preserves originals in an external journal, and supports repeat-safe application and recovery. Single-note moves use this same engine. Routine single-file commands other than moves retain their simpler dry-run/apply behavior; they do not provide batch journals.
 
-For URL explorations, research through available web/browser tools following [explore.md](explore.md), then use `scripts/explore_capture.py VAULT REPORT.json` to preview and add `--apply` to create the note. See [explore-capture.md](explore-capture.md) for source-ledger validation, coverage status, duplicate handling, and explicit revisits. This writer makes no network requests and needs no parse recovery state for creating a new file.
+For URL explorations, research through available web/browser tools following [explore.md](../subskills/explore/instructions.md), then use `subskills/explore/scripts/explore_capture.py VAULT REPORT.json` to preview and add `--apply` to create the note. See [explore-capture.md](../subskills/explore/references/explore-capture.md) for source-ledger validation, coverage status, duplicate handling, and explicit revisits. This writer makes no network requests and needs no parse recovery state for creating a new file.
 
 ## Safe execution
 
-For multimedia exploration, `scripts/media_extract.py` provides URL routing hints, local text/document/caption extraction, timestamp links, and capability discovery. It never downloads media or pretends to transcribe or inspect images. Follow [explore-media.md](explore-media.md) to use actual media tools and declare gaps.
+For multimedia exploration, `subskills/explore/scripts/media_extract.py` provides URL routing hints, local text/document/caption extraction, timestamp links, and capability discovery. It never downloads media or pretends to transcribe or inspect images. Follow [explore-media.md](../subskills/explore/references/explore-media.md) to use actual media tools and declare gaps.
 
 1. Run `inspect --audit` and retain its result as the baseline.
 2. Run the desired mutation without `--apply`; review the reported paths and reference updates.
-3. For intake and moves, apply the saved plan through `parse_batch.py apply PLAN --state-dir STATE --apply`. For other commands, run again with `--apply` only when the preview matches the request.
+3. For intake and moves, apply the saved plan through `python subskills/parse/scripts/parse_batch.py apply PLAN --state-dir STATE --apply`. For other commands, run again with `--apply` only when the preview matches the request.
 4. Run `validate` and compare findings with the baseline.
 5. Verify the directory snapshot is unchanged.
 

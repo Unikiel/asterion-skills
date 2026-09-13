@@ -8,7 +8,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import explore_capture as explore
-from parse_batch import BatchError, snapshot
+from scripts.vault_state import BatchError, snapshot
 
 
 class ExploreCaptureTests(unittest.TestCase):
