@@ -1,0 +1,21 @@
+{
+  "destination": "Kyoto",
+  "country": "Japan",
+  "start_date": "2026-11-05",
+  "end_date": "2026-11-11",
+  "flights": {
+    "outbound": {"flight_number": "REPLACE_WITH_OUTBOUND_FLIGHT_NUMBER", "status": "booked"},
+    "return": {"flight_number": "REPLACE_WITH_RETURN_FLIGHT_NUMBER", "status": "booked"}
+  },
+  "hotel": null,
+  "customization": {
+    "interests": ["architecture", "photography", "museums", "railways", "coffee"],
+    "must_visit": [],
+    "avoid": [],
+    "pace": "balanced",
+    "walking_limit": "Prefer short walks with convenient rail access",
+    "language": "zh-CN",
+    "formats": ["docx", "pdf"],
+    "notes": "Give qualified Around Area same-day round trips and rain-friendly alternatives."
+  }
+}

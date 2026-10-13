@@ -9,9 +9,9 @@ Each skill has its own purpose and operating model. Future additions may explore
 domains beyond project development and tutoring.
 
 Current skills include **BigBang**, which turns a proposal or concept into a
-buildable project system, and **Amber Kernel**, which operates an Obsidian vault
-in place, researches URLs through explore, and processes incoming ideas and
-documents through parse.
+buildable project system, **Amber Kernel**, which operates an Obsidian vault
+in place, and **Periplus**, which researches a trip and writes a finished
+Seven Ninths Travel Brochure.
 
 ## Available skills
 
@@ -81,6 +81,34 @@ references are deferred rather than rewritten blindly. See
 [parse](amber-kernel/subskills/parse/instructions.md) and the
 [runtime protocol](amber-kernel/subskills/parse/references/parse-runtime.md) for usage and limits.
 
+### Periplus
+
+Periplus researches a destination and writes a complete Seven Ninths Travel
+Brochure in the same request. The required inputs are the destination, inclusive
+trip dates, and outbound and return flights. Interests, pace, lodging, and other
+preferences are optional.
+
+It accepts the request in any language. The brochure narrative defaults to
+Simplified Chinese unless another output language is requested. Important
+places use Chinese and English names; Japan also includes the original script,
+verified kana, and Hepburn romanization.
+
+Its workflow supports:
+
+- Live research with source URLs, retrieval dates, and uncertainty labels
+- The historic Seven Ninths section set, adapted to the destination
+- Attraction catalogues, maps, hotels, dining, shopping, and transport
+- Same-day Around Area excursions that leave and return on the same date
+- A day-by-day itinerary anchored to the supplied flights
+- Finished DOCX and PDF with the legacy cover, a real three-level contents
+  table, the brochure header, and page numbers
+- A local Codex runner, `scripts/generate.py`, when the skill is invoked from
+  the command line
+
+Periplus does not book travel. It does not invent schedules, prices, addresses,
+or availability. If research or export cannot run, it reports that blocker
+instead of treating a scaffold or Markdown draft as the finished guide.
+
 ## Repository structure
 
 ```text
@@ -98,7 +126,7 @@ asterion-skills/
 │       ├── project-standards.md
 │       ├── prompt-and-kickoff-system.md
 │       └── start-from-scratch-workflow.md
-└── amber-kernel/
+├── amber-kernel/
     ├── SKILL.md
     ├── agents/
     │   └── openai.yaml
@@ -137,6 +165,32 @@ asterion-skills/
         ├── research-to-pkm.md
         ├── toolkit.md
         └── plugin-and-query-workflows.md
+└── periplus/
+    ├── SKILL.md
+    ├── agents/
+    │   └── openai.yaml
+    ├── assets/
+    │   ├── icon.svg
+    │   └── Seven_Ninths_Master_Skeleton.md
+    ├── examples/
+    │   ├── natural_language_requests.md
+    │   └── trip_request.json
+    ├── prompts/
+    ├── references/
+    │   ├── request.schema.json
+    │   ├── content_specifications.md
+    │   ├── around_area.md
+    │   ├── itinerary_engine.md
+    │   ├── source_protocol.md
+    │   ├── legacy_layout_contract.md
+    │   ├── multilingual_names_and_pronunciation.md
+    │   ├── coverage_matrix.md
+    │   └── delivery_qa.md
+    └── scripts/
+        ├── generate.py
+        ├── export_brochure.py
+        ├── validate.py
+        └── test_skill.py
 ```
 
 Each skill directory directly under the repository root is self-contained and
@@ -152,8 +206,8 @@ Use this checklist whenever a new skill joins Asterion Skills:
    repository root.
 3. Put the required `SKILL.md` at the root of that directory.
 4. Add `agents/openai.yaml` for user-facing skill metadata.
-5. Add only the supporting directories the skill actually needs:
-   `references/`, `scripts/`, and/or `assets/`.
+5. Add only the supporting directories the skill actually needs, such as
+   `references/`, `scripts/`, `assets/`, `prompts/`, or `examples/`.
 6. Validate the complete skill directory with the current official skill
    validator.
 7. Test at least one realistic invocation before publishing.
@@ -163,7 +217,9 @@ Use this checklist whenever a new skill joins Asterion Skills:
 
 Do not put a separate `README.md`, installation guide, changelog, or other
 repository-facing documentation inside an installable skill directory. Keep
-those materials at the Asterion Skills repository level.
+those materials at the Asterion Skills repository level. Periplus keeps a short
+`README.md` and `INSTALL.md` because its instructions and Codex installers
+already refer to them; collection discovery still lives in this README.
 
 ### README maintenance checklist
 
@@ -202,8 +258,22 @@ For Amber Kernel, copy:
 amber-kernel/
 ```
 
-Do not copy only `SKILL.md`. BigBang and Amber Kernel both rely on their
-`references/` files for operating rules.
+For Periplus, copy:
+
+```text
+periplus/
+```
+
+Do not copy only `SKILL.md`. BigBang and Amber Kernel rely on their
+`references/` files. Periplus also relies on `prompts/`, `examples/`,
+`assets/`, and `scripts/`.
+
+Periplus includes `install_codex.ps1` and `install_codex.sh` for installing a
+packaged ZIP into the local Codex skills directory. Inside this repository,
+copying the `periplus/` folder is the install path. Rendering the brochure
+needs Python with `python-docx`, `markdown-it-py`, and `pymupdf`, plus
+LibreOffice for DOCX-to-PDF. The command-line runner also needs an
+authenticated Codex CLI with web research available.
 
 The exact installation location depends on the environment in which the skill
 will run. After installation, confirm that the entry file is available at:
@@ -211,6 +281,7 @@ will run. After installation, confirm that the entry file is available at:
 ```text
 <skills-directory>/bigbang/SKILL.md
 <skills-directory>/amber-kernel/SKILL.md
+<skills-directory>/periplus/SKILL.md
 ```
 
 ## Usage
@@ -270,6 +341,17 @@ Other examples:
 > Use `$amber-kernel` to add a Bases view for active projects using the locked
 > property schema.
 
+Invoke Periplus explicitly with a request such as:
+
+> `$periplus` Prepare Kyoto, Japan for November 5–11, 2026. Outbound flight
+> MU123 and return MU124. Focus on architecture, museums, trains, photography,
+> and minimal walking.
+
+The flight numbers only show the input shape. Replace them with the traveler's
+actual flights. The same request can be written in Chinese, Japanese, or
+another language; the brochure stays in Simplified Chinese unless the request
+names another output language.
+
 ## BigBang output model
 
 Depending on the request, BigBang can produce:
@@ -313,6 +395,28 @@ Run the deterministic helper tests from the repository root with:
 python amber-kernel/scripts/run_tests.py
 ```
 
+## Periplus output model
+
+A finished Periplus run produces a trip project whose user-facing files are:
+
+- `exports/Seven_Ninths_Travel_Brochure.docx`
+- `exports/Seven_Ninths_Travel_Brochure.pdf`
+
+The guide keeps the Seven Ninths cover, a clickable three-level contents
+table with real page numbers, the header **Seven Ninths Travel Brochure** on
+every page, and a current/total page footer. The Markdown manuscript under
+`exports/` is an assembly source, not a default download.
+
+Working files may include a normalized request, a task record, an evidence
+ledger, and a quality report. Recommendations for hotels and unbooked transport
+stay labeled as recommendations.
+
+Run the offline helper tests from `periplus/scripts` with:
+
+```text
+python -m unittest test_skill.py -v
+```
+
 ## Contributing
 
 Contributions are welcome when they preserve the following principles:
@@ -320,7 +424,8 @@ Contributions are welcome when they preserve the following principles:
 1. Keep each skill self-contained.
 2. Place its `SKILL.md` at the root of its skill folder.
 3. Keep reusable detailed guidance in `references/`, deterministic helpers in
-   `scripts/`, and output resources in `assets/`.
+   `scripts/`, output resources in `assets/`, and phase prompts or examples
+   only when the skill actually uses them.
 4. Do not include credentials, private or personal information, local absolute
    paths, internal skill identifiers, generated caches, or project-specific
    residue.
@@ -332,6 +437,11 @@ and keep baseline requirements distinguishable from recommended refinements.
 
 When proposing changes to Amber Kernel, preserve the lock-then-adapt gate and
 keep observed vault conventions distinguishable from adopted ones.
+
+When proposing changes to Periplus, keep autonomous brochure generation, the
+Seven Ninths section coverage, source traceability, and the DOCX plus PDF
+completion gate. Do not turn a missing flight, an unreadable source, or a
+failed export into invented facts or a claimed final guide.
 
 ## License
 

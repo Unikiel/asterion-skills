@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Periplus Travel Request",
+  "type": "object",
+  "required": [
+    "destination",
+    "start_date",
+    "end_date",
+    "flights"
+  ],
+  "properties": {
+    "destination": {
+      "type": "string",
+      "minLength": 2
+    },
+    "country": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "flights": {
+      "type": "object",
+      "required": [
+        "outbound",
+        "return"
+      ],
+      "properties": {
+        "outbound": {
+          "$ref": "#/$defs/flight"
+        },
+        "return": {
+          "$ref": "#/$defs/flight"
+        }
+      },
+      "additionalProperties": false
+    },
+    "hotel": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "check_in": {
+          "type": "string"
+        },
+        "check_out": {
+          "type": "string"
+        }
+      }
+    },
+    "customization": {
+      "type": "object",
+      "properties": {
+        "interests": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "must_visit": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "avoid": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pace": {
+          "enum": [
+            "relaxed",
+            "balanced",
+            "intensive"
+          ]
+        },
+        "walking_limit": {
+          "type": "string"
+        },
+        "transport_preferences": {
+          "type": "string"
+        },
+        "food_preferences": {
+          "type": "string"
+        },
+        "photo_preferences": {
+          "type": "string"
+        },
+        "budget": {
+          "type": "string"
+        },
+        "companion_notes": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string",
+          "default": "zh-CN",
+          "description": "Requested narrative output language (any BCP-47 language tag); input can be in any language."
+        },
+        "formats": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "md",
+              "docx",
+              "pdf"
+            ]
+          },
+          "default": [
+            "docx",
+            "pdf"
+          ]
+        },
+        "notes": {
+          "type": "string"
+        },
+        "name_languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "zh-CN",
+            "en",
+            "local"
+          ]
+        },
+        "pronunciation": {
+          "type": "string",
+          "default": "verified-local-script-and-romanization"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "flight": {
+      "type": "object",
+      "required": [
+        "flight_number"
+      ],
+      "properties": {
+        "flight_number": {
+          "type": "string",
+          "minLength": 2
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "departure_airport": {
+          "type": "string"
+        },
+        "arrival_airport": {
+          "type": "string"
+        },
+        "departure_local_time": {
+          "type": "string"
+        },
+        "arrival_local_time": {
+          "type": "string"
+        },
+        "departure_terminal": {
+          "type": "string"
+        },
+        "arrival_terminal": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "booked",
+            "planned",
+            "unspecified"
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
