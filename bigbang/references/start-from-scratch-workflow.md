@@ -37,7 +37,7 @@ Use this invariant:
 ```text
 prepare -> extract -> open root -> baseline checkpoint -> audit only
         -> activate one unit -> implement -> test -> inspect -> accept
-        -> checkpoint -> next unit
+        -> checkpoint -> automatic next unit or declared blocker
 ```
 
 State which of these two routes applies:
@@ -53,8 +53,9 @@ Never combine both routes or ask `INIT` to overwrite a prepared starter.
 
 Only one implementation unit may be active. Store the full approved unit
 checklist in one persistent `TASKS.md`. Store unit prompts as separate files.
-Never ask the user to paste every prompt at once or replace `TASKS.md` with a
-fresh template at each session.
+Never ask the user to paste prompts individually or replace `TASKS.md` with a
+fresh template at each session. For build-oriented projects, the normal route
+uses one repository-root kickoff command that dispatches prompts automatically.
 
 The coding agent assists implementation; the student or teacher owns acceptance.
 At least one relevant test or manual check must be personally run and understood
@@ -117,7 +118,13 @@ The first coding-agent interaction is audit-only:
 
 Commit the environment record separately after human review.
 
-### Stage F - Execute exactly one unit
+### Stage F - Start automatic bounded execution
+
+The guide must provide one checked command that launches or resumes the
+repository-resident dispatcher. The dispatcher, not the user, supplies the
+active detailed prompt to the configured coding agent.
+
+Each internal dispatch executes exactly one unit:
 
 Before changes:
 
@@ -162,7 +169,10 @@ agent says it is complete.
 ### Stage H - Advance
 
 Activate the next approved unit only after the current checkpoint passes.
-Repeat the same controller pattern through the final release gate.
+The dispatcher then invokes the next active prompt automatically and repeats
+the same controller pattern through the final release gate. Stop and request
+human action only for a declared manual/physical/credential/safety gate or a
+truthful blocker. Resume with the same kickoff command after resolution.
 
 ## 4. One-time audit prompt
 
@@ -319,10 +329,10 @@ On resume, repository state is authoritative. Inspect Git status/diff/history,
 TASKS, SESSION_STATE, the current prompt, decisions/logs, and evidence before
 editing.
 
-## 11. Automatic Continuity Controller
+## 11. Mandatory Automatic Continuity Controller
 
-When automatic orchestration is included, it must preserve the same pause/resume
-semantics as the manual workflow:
+Every build-oriented project includes automatic orchestration by default. It
+must preserve the same pause/resume semantics as the manual fallback workflow:
 
 - only one active session;
 - failure leaves the current session active;
@@ -330,6 +340,9 @@ semantics as the manual workflow:
 - a crash/reboot never implies completion;
 - next-session activation occurs only after acceptance and the dedicated Git
   commit;
+- the controller invokes the configured coding agent itself and never requires
+  the user to copy/paste the active prompt;
+- one repository-root command starts and resumes the bounded-session loop;
 - the controller must be usable from a new coding-agent conversation.
 
 Do not use conversation memory as the source of truth when repository state is

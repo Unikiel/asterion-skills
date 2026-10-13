@@ -7,9 +7,14 @@
 5. Generate internally consistent documents.
 6. Materialize a non-empty prepared starter with meaningful code/config/tests; do not use ritual placeholder folders.
 7. Generate INIT, WORKSPACE_AUDIT, GlobalEngineeringContract, one prompt per session, TASKS/STATUS/SESSION_STATE, evidence directories, and session manifest.
-8. In automatic mode implement real transitions:
+8. For every build-oriented project, implement a runnable dispatcher that
+   invokes the configured coding agent with the active prompt and implements
+   real transitions:
    `AUDIT -> READY -> ACTIVE -> BLOCKED|VALIDATING -> ACCEPTED -> COMMITTED -> NEXT`.
    COMMITTED requires validation, evidence, state update, and recorded Git commit hash.
+   The dispatcher must continue one bounded session at a time until completion
+   or a real human/manual/physical/credential/safety blocker. It must expose one
+   repository-root kickoff command and must not require prompt copy-and-paste.
 9. Run exact-target validation where possible.
-10. Reject release for stale architecture, missing entrance, missing pause/resume, untraceable TASKS, missing session Git governance, comment-only automation, title-only prompts, or placeholder-only starter modules.
+10. Reject release for stale architecture, missing entrance, missing pause/resume, untraceable TASKS, missing session Git governance, comment-only automation, prompt-printing/state-only controllers, manual copy-and-paste as the primary route, title-only prompts, or placeholder-only starter modules.
 11. Package full release + starter ZIP where applicable, SHA-256 manifest, extraction test, truthful release notes.

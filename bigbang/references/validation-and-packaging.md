@@ -4,6 +4,9 @@ Release blockers:
 - mandatory missing/empty folders;
 - README-only mandatory implementation modules;
 - comment-only automation;
+- prompt-printing or state-only controllers that never invoke a coding agent;
+- manual prompt copy-and-paste as the primary execution route;
+- missing single-command automatic kickoff/resume path;
 - title-only session prompts;
 - stale architecture/controller ownership;
 - generic hardware API assumptions;

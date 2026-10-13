@@ -388,15 +388,19 @@ Extend the canonical TASKS pattern so every implementation unit can preserve:
 file may mirror it for automation, but both must be cross-validated before the
 active session changes.
 
-## 11. Automatic Prompt Orchestration
+## 11. Mandatory Automatic Prompt Orchestration
 
-When the user requests automatic BigBang execution, generate a real
-repository-resident controller rather than a placeholder script.
+For every build-oriented BigBang project, generate a real repository-resident
+dispatcher. Automatic execution is the default; the user does not have to ask
+for it separately.
 
 It must be able to:
 
 - read persistent state and TASKS;
 - discover the current prompt from a session manifest;
+- invoke the configured coding-agent CLI/API non-interactively with that prompt;
+- run from one documented repository-root kickoff command;
+- capture exit status, execution log/transcript, changed files, and test output;
 - reject execution of a non-active session;
 - verify prerequisites and architecture lock;
 - record/check validation and evidence status;
@@ -404,6 +408,7 @@ It must be able to:
 - require the per-session Git commit;
 - record the commit hash;
 - activate only the next eligible session;
+- repeat dispatch one bounded session at a time until DONE or a truthful blocker;
 - resume from durable repository state after shutdown or a new coding-agent
   conversation.
 
@@ -414,3 +419,13 @@ READY -> ACTIVE -> BLOCKED|VERIFYING -> ACCEPTED -> COMMITTED -> NEXT
 ```
 
 Do not fabricate test results or manual acceptance merely to advance state.
+Stop at gates requiring human judgment, credentials, external approval,
+deployment authority, safety confirmation, or physical hardware evidence;
+record the blocker and exact resume command. After the user satisfies the gate,
+the same kickoff command must resume from repository state.
+
+Prompt files are immutable/auditable runner inputs. Do not make the user open,
+copy, or paste them during the normal route. A script that only prints the next
+prompt, updates state, or tells the user what to paste is not automatic
+orchestration. Manual prompt execution may exist only as a labeled fallback
+when the chosen agent has no supported non-interactive interface.

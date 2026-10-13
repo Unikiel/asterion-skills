@@ -73,18 +73,33 @@ Pause records active session, completed steps, changed/uncommitted files, actual
 Resume reads Git state, TASKS, active prompt, global contract, decisions/logs, and evidence; continues only the active session; preserves failed evidence/history; works in a fresh agent conversation.
 
 ### 7. Automatic Prompt Orchestration
-When automatic mode is requested, generate real repository-resident orchestration:
+Automatic execution is the default for every build-oriented BigBang project.
+Generate real repository-resident orchestration that includes:
 - session manifest;
 - machine-readable state;
 - durable TASKS.md;
 - active-prompt discovery;
+- invokes the configured coding agent non-interactively with the active prompt;
+- captures the agent exit status, transcript/log, changed files, and test results;
 - prerequisite and architecture guards;
 - block/resume behavior;
 - evidence state;
 - per-session Git commit verification;
-- state transition and next-session activation.
+- state transition and next-session activation;
+- loops through eligible sessions until the project finishes or reaches a real
+  human, credential, deployment, safety, or physical-evidence gate.
 
-Do not fake automation with comment-only scripts or placeholders.
+Expose one documented kickoff command from the repository root. The user must
+not need to open, copy, or paste individual session prompts. Prompt files remain
+auditable inputs to the runner, not manual operating instructions.
+
+If the selected agent cannot be invoked non-interactively, stop during kickoff
+and report that capability gap. Provide manual prompt execution only as a
+clearly labeled fallback; never call a prompt selector or state-only transition
+script automatic execution.
+
+Do not fake automation with comment-only scripts, prompt printers, clipboard
+instructions, state-only controllers, or placeholders.
 
 ### 8. No-Placeholder Completion
 Do not label a pack FULL/complete/final/demo-ready if mandatory areas contain empty folders, README-only placeholders, TODO-only implementations, comment-only automation, or title-only prompts.
@@ -102,7 +117,8 @@ When requirements are sufficient:
 6. generate substantive DOCX/PDF project documentation when formal packs are requested;
 7. materialize a meaningful prepared starter repository;
 8. generate INIT contract, WORKSPACE_AUDIT, GlobalEngineeringContract, and one prompt per session;
-9. create TASKS/STATUS/SESSION_STATE, evidence conventions, manifest, and automatic controller when requested;
+9. create TASKS/STATUS/SESSION_STATE, evidence conventions, manifest, and a
+   runnable automatic session dispatcher by default for build-oriented projects;
 10. run available exact-target validation;
 11. render/visually inspect documents;
 12. audit placeholders, secrets, absolute paths, stale architecture, generic hardware APIs, and session drift;
@@ -117,11 +133,15 @@ Preferred route:
 3. verify environment;
 4. create baseline Git checkpoint if needed;
 5. run WORKSPACE_AUDIT once;
-6. execute S01 only;
-7. test, save evidence, update state, commit, stop;
-8. repeat one session at a time.
+6. run the single documented automation kickoff command;
+7. let the dispatcher execute one bounded session at a time, test, save
+   evidence, update state, commit, and activate the next eligible session;
+8. intervene only at a declared manual/physical/credential/safety gate or a
+   truthful blocker, then resume with the same command.
 
 Never rerun INIT against a materialized prepared starter.
+Never require copy-and-paste of per-session prompts in the prepared-starter
+route.
 
 ## Session Prompt Contract
 Every session prompt must contain:
@@ -154,7 +174,7 @@ Create at minimum:
 - decision log
 - co-build log
 - evidence/<UnitID>/
-- session manifest in automatic mode
+- session manifest and automatic runner configuration for build-oriented projects
 
 A machine-readable state file may mirror TASKS, but both must agree before transitions.
 
@@ -172,9 +192,10 @@ Read `references/hardware-workflow.md`. For every hardware project:
   test;
 - prohibit full integration until all required isolated quick tests pass;
 - whenever Wi-Fi is used for MQTT, HTTP/HTTPS, WebSocket, or other device
-  communication, require first-boot provisioning through a local SoftAP setup
-  flow; persist credentials securely in device-local nonvolatile storage and
-  provide re-provisioning plus factory-reset recovery;
+  communication, make dynamic Wi-Fi provisioning a mandatory release gate;
+  use first-boot provisioning through a local SoftAP setup flow, persist
+  credentials securely in device-local nonvolatile storage, and provide
+  re-provisioning plus factory-reset recovery;
 - prohibit hardcoded Wi-Fi SSIDs and passwords in firmware, examples, starter
   code, documentation, tests, and tracked configuration;
 - provide isolated bring-up per controller/module;

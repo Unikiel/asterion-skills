@@ -257,12 +257,12 @@ evidence exists, such as:
 The state system must preserve the active session and resume checkpoint instead
 of advancing automatically.
 
-## 10. Mandatory Wi-Fi Provisioning
+## 10. Mandatory Dynamic Wi-Fi Provisioning
 
 Apply this section whenever a controller uses Wi-Fi for MQTT, HTTP/HTTPS,
 WebSocket, device-to-device communication, cloud upload, dashboard access, or
-another network transport. Do not make hardcoded SSID/password credentials the
-normal setup path.
+another network transport. Dynamic provisioning is a mandatory project and
+release gate. Hardcoded SSID/password credentials are prohibited.
 
 ### 10.1 Required default solution
 
@@ -332,4 +332,6 @@ structure. The hardware quick-test pack must contain separate tests for:
 
 Record observable pass/fail criteria and physical evidence. Compilation,
 simulated credentials, or the presence of provisioning files does not prove
-that first-boot, persistence, recovery, or live communication works.
+that first-boot, persistence, recovery, or live communication works. Do not
+classify the hardware project as complete, integrated, demo-ready, or releasable
+until the applicable dynamic-provisioning tests pass.
