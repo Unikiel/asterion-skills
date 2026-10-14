@@ -1,5 +1,10 @@
 # Periplus v2.4.1 — Installation and execution
 
+Periplus 2.4.1 is the `periplus/` skill in the Asterion Skills repository. The
+collection install is to copy that complete folder into a supported skills
+directory. See the repository [README](../README.md). The ZIP installers below
+are an optional path when you already have a packaged archive.
+
 ## Codex installation on your own computer
 
 This conversation runs in a separate container and cannot write into your Windows/macOS machine. Run the installer on that machine after downloading the ZIP.

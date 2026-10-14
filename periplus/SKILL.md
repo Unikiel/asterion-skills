@@ -128,6 +128,6 @@ The script invokes **multiple Codex agent executions automatically** for researc
 - `scripts/export_brochure.py` — generate DOCX + matching PDF with a verified auto-updatable three-level Content/TOC field, actual page numbers, branded page headers and PAGE/NUMPAGES footers
 - `references/media_acquisition_and_maps.md` — genuine visual assets, OSM/licensing and map specifications
 - `scripts/media_utils.py` — image provenance/embedding acceptance gate
-- `scripts/validate.py` — structural, evidence, completeness and flight anchoring checks
+- `scripts/validate.py` — structural, evidence, completeness, journey-endpoint, and media checks
 - `references/` — content, route, round-trip, evidence and QA rules, plus `multilingual_names_and_pronunciation.md` and `legacy_layout_contract.md`
 - `assets/Seven_Ninths_Master_Skeleton.md` — section taxonomy reference, not deliverable

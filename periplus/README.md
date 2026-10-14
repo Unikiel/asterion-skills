@@ -22,7 +22,7 @@ $periplus
 
 ## 安装到本地 Codex
 
-解压包中的 `periplus/` 目录复制到 Windows `%USERPROFILE%\.codex\skills\periplus\`，macOS/Linux `~/.codex/skills/periplus/`。或使用 ZIP 同级 `install_codex.ps1`/`.sh` 安装脚本；见 `INSTALL.md`。ChatGPT 账户的安装需通过其支持的 Skill 导入操作执行。
+本目录是 Asterion Skills 仓库中的 Periplus 2.4.1。集合级说明见仓库根目录 [README](../README.md)。把完整的 `periplus/` 目录复制到 Windows `%USERPROFILE%\.codex\skills\periplus\`，macOS/Linux `~/.codex/skills/periplus/`。若已有包含 `periplus/SKILL.md` 的 ZIP，也可用同目录的 `install_codex.ps1` 或 `install_codex.sh`；见 `INSTALL.md`。ChatGPT 账户的安装需通过其支持的 Skill 导入操作执行。
 
 ## 本地一键执行（可选）
 
@@ -46,8 +46,12 @@ periplus/
   references/*.md
   prompts/01-07_*.md
   assets/Seven_Ninths_Master_Skeleton.md
+  references/media_acquisition_and_maps.md
   scripts/generate.py
   scripts/export_brochure.py
+  scripts/fetch_media.py
+  scripts/map_from_geojson.py
+  scripts/media_utils.py
   scripts/validate.py
   scripts/test_skill.py
 ```

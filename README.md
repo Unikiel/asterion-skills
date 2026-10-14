@@ -83,10 +83,12 @@ references are deferred rather than rewritten blindly. See
 
 ### Periplus
 
-Periplus researches a destination and writes a complete Seven Ninths Travel
-Brochure in the same request. The required inputs are the destination, inclusive
-trip dates, and outbound and return flights. Interests, pace, lodging, and other
-preferences are optional.
+Periplus 2.4.1 researches a destination and writes a complete Seven Ninths
+Travel Brochure in the same request. The required inputs are the destination,
+inclusive trip dates, the outbound origin, the return destination, and the
+outbound and return transport. Each leg may be flight, rail, bus, ferry,
+driving, or a combination, and the two endpoints may be different cities.
+A booked hotel and other preferences are optional.
 
 It accepts the request in any language. The brochure narrative defaults to
 Simplified Chinese unless another output language is requested. Important
@@ -97,11 +99,14 @@ Its workflow supports:
 
 - Live research with source URLs, retrieval dates, and uncertainty labels
 - The historic Seven Ninths section set, adapted to the destination
-- Attraction catalogues, maps, hotels, dining, shopping, and transport
+- Attraction catalogues, hotels, dining, shopping, and transport
+- Licensed photographs and a real map for each area, with a media manifest
 - Same-day Around Area excursions that leave and return on the same date
-- A day-by-day itinerary anchored to the supplied flights
+- A day-by-day itinerary anchored to the supplied journey and hotel, when given
 - Finished DOCX and PDF with the legacy cover, a real three-level contents
-  table, the brochure header, and page numbers
+  table, the brochure header, page numbers, and a new page for every level-1
+  and level-2 heading
+- English text in Oswald, with Chinese and Japanese on a CJK font
 - A local Codex runner, `scripts/generate.py`, when the skill is invoked from
   the command line
 
@@ -184,11 +189,15 @@ asterion-skills/
     │   ├── source_protocol.md
     │   ├── legacy_layout_contract.md
     │   ├── multilingual_names_and_pronunciation.md
+    │   ├── media_acquisition_and_maps.md
     │   ├── coverage_matrix.md
     │   └── delivery_qa.md
     └── scripts/
         ├── generate.py
         ├── export_brochure.py
+        ├── fetch_media.py
+        ├── map_from_geojson.py
+        ├── media_utils.py
         ├── validate.py
         └── test_skill.py
 ```
@@ -271,9 +280,10 @@ Do not copy only `SKILL.md`. BigBang and Amber Kernel rely on their
 Periplus includes `install_codex.ps1` and `install_codex.sh` for installing a
 packaged ZIP into the local Codex skills directory. Inside this repository,
 copying the `periplus/` folder is the install path. Rendering the brochure
-needs Python with `python-docx`, `markdown-it-py`, and `pymupdf`, plus
-LibreOffice for DOCX-to-PDF. The command-line runner also needs an
-authenticated Codex CLI with web research available.
+needs Python with `python-docx`, `markdown-it-py`, `Pillow`, and `pymupdf`,
+plus LibreOffice for DOCX-to-PDF. English type is Oswald; install that font
+on the rendering computer before publishing. The command-line runner also
+needs an authenticated Codex CLI with web research available.
 
 The exact installation location depends on the environment in which the skill
 will run. After installation, confirm that the entry file is available at:
@@ -343,14 +353,15 @@ Other examples:
 
 Invoke Periplus explicitly with a request such as:
 
-> `$periplus` Prepare Kyoto, Japan for November 5–11, 2026. Outbound flight
-> MU123 and return MU124. Focus on architecture, museums, trains, photography,
-> and minimal walking.
+> `$periplus` Prepare Kyoto, Japan for November 5–11, 2026. Outbound by
+> shinkansen from Tokyo Station to Kyoto Station. Return by shinkansen from
+> Kyoto Station to Osaka Station. Hotel: booked hotel name and address.
+> Focus on architecture, museums, trains, photography, and minimal walking.
 
-The flight numbers only show the input shape. Replace them with the traveler's
-actual flights. The same request can be written in Chinese, Japanese, or
-another language; the brochure stays in Simplified Chinese unless the request
-names another output language.
+Service numbers in examples only show the input shape. Replace them with the
+traveler's actual journey. The same request can be written in Chinese,
+Japanese, or another language; the brochure stays in Simplified Chinese unless
+the request names another output language.
 
 ## BigBang output model
 
@@ -404,12 +415,15 @@ A finished Periplus run produces a trip project whose user-facing files are:
 
 The guide keeps the Seven Ninths cover, a clickable three-level contents
 table with real page numbers, the header **Seven Ninths Travel Brochure** on
-every page, and a current/total page footer. The Markdown manuscript under
-`exports/` is an assembly source, not a default download.
+every page, and a current/total page footer. Every level-1 and level-2 heading
+starts a new page. Photographs and area maps are embedded image files, with
+credits in `research/MEDIA_MANIFEST.json`. English text uses Oswald. The
+Markdown manuscript under `exports/` is an assembly source, not a default
+download.
 
 Working files may include a normalized request, a task record, an evidence
-ledger, and a quality report. Recommendations for hotels and unbooked transport
-stay labeled as recommendations.
+ledger, and a quality report. A supplied booked hotel is the travel base.
+Hotel and transport recommendations stay labeled as unbooked.
 
 Run the offline helper tests from `periplus/scripts` with:
 
@@ -439,9 +453,10 @@ When proposing changes to Amber Kernel, preserve the lock-then-adapt gate and
 keep observed vault conventions distinguishable from adopted ones.
 
 When proposing changes to Periplus, keep autonomous brochure generation, the
-Seven Ninths section coverage, source traceability, and the DOCX plus PDF
-completion gate. Do not turn a missing flight, an unreadable source, or a
-failed export into invented facts or a claimed final guide.
+Seven Ninths section coverage, source traceability, embedded licensed media,
+and the DOCX plus PDF completion gate. Do not turn a missing journey endpoint,
+an unreadable source, or a failed export into invented facts or a claimed
+final guide.
 
 ## License
 
