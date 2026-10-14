@@ -8,14 +8,17 @@ workflows.
 Each skill has its own purpose and operating model. Future additions may explore
 domains beyond project development and tutoring.
 
-Current skills include **BigBang**, which turns a proposal or concept into a
-buildable project system, **Amber Kernel**, which operates an Obsidian vault
-in place, and **Periplus**, which researches a trip and writes a finished
-Seven Ninths Travel Brochure.
+| | Skill | Use it when you need to |
+| --- | --- | --- |
+| 💥 | **[BigBang](#skill-bigbang)** | Turn a proposal into a buildable project and teaching pack |
+| 🔶 | **[Amber Kernel](#skill-amber-kernel)** | Operate an existing Obsidian vault in place |
+| 🧭 | **[Periplus](#skill-periplus)** | Research a trip and write a finished Seven Ninths brochure |
 
-## Available skills
+🗂️ [Skills](#available-skills) · 🌳 [Structure](#repository-structure) · 📥 [Install](#installation) · ▶️ [Usage](#usage) · 🛠️ [Contributing](#contributing)
 
-### BigBang
+## <a id="available-skills"></a>🗂️ Available skills
+
+### <a id="skill-bigbang"></a>💥 BigBang
 
 BigBang helps preserve an original proposal as the authoritative baseline while
 adding the engineering and teaching structure needed to complete the project.
@@ -39,7 +42,7 @@ Its workflow supports:
 English is the default drafting language. Other language versions are generated
 only when explicitly requested.
 
-### Amber Kernel
+### <a id="skill-amber-kernel"></a>🔶 Amber Kernel
 
 Amber Kernel follows the user's vault conventions and preserves their original
 thinking. Its **parse** subskill digests, tags, links, and files incoming ideas
@@ -81,7 +84,7 @@ references are deferred rather than rewritten blindly. See
 [parse](amber-kernel/subskills/parse/instructions.md) and the
 [runtime protocol](amber-kernel/subskills/parse/references/parse-runtime.md) for usage and limits.
 
-### Periplus
+### <a id="skill-periplus"></a>🧭 Periplus
 
 Periplus 2.4.1 researches a destination and writes a complete Seven Ninths
 Travel Brochure in the same request. The required inputs are the destination,
@@ -114,7 +117,7 @@ Periplus does not book travel. It does not invent schedules, prices, addresses,
 or availability. If research or export cannot run, it reports that blocker
 instead of treating a scaffold or Markdown draft as the finished guide.
 
-## Repository structure
+## <a id="repository-structure"></a>🌳 Repository structure
 
 ```text
 asterion-skills/
@@ -205,7 +208,7 @@ asterion-skills/
 Each skill directory directly under the repository root is self-contained and
 installable. Its entry point must be `SKILL.md`.
 
-## Adding a new skill
+## ➕ Adding a new skill
 
 Use this checklist whenever a new skill joins Asterion Skills:
 
@@ -250,24 +253,24 @@ Keep the README concise. Describe what users need to discover, install, and
 invoke each skill; keep operational instructions for the AI agent inside that
 skill's `SKILL.md` and bundled references.
 
-## Installation
+## <a id="installation"></a>📥 Installation
 
 Copy the complete folder for the skill you want to install into a skills
 directory supported by your ChatGPT or Codex environment.
 
-For BigBang, copy:
+**💥 BigBang** — copy:
 
 ```text
 bigbang/
 ```
 
-For Amber Kernel, copy:
+**🔶 Amber Kernel** — copy:
 
 ```text
 amber-kernel/
 ```
 
-For Periplus, copy:
+**🧭 Periplus** — copy:
 
 ```text
 periplus/
@@ -294,29 +297,12 @@ will run. After installation, confirm that the entry file is available at:
 <skills-directory>/periplus/SKILL.md
 ```
 
-## Usage
+## <a id="usage"></a>▶️ Usage
 
-Invoke BigBang explicitly with a request such as:
+### 💥 BigBang
 
 > Use `$bigbang` to transform this student proposal into a complete
 > InnovationLab project and teaching pack.
-
-Other examples:
-
-> `$amber-kernel explore https://example.org/article` — read the page, trace
-> relevant evidence, and save a cited note in LandingField. Replace the example
-> URL with the real target.
-
-> `$amber-kernel explore https://example.org/paper` — focus on the methodology
-> and limitations; explain in Chinese.
-
-> `$amber-kernel explore https://www.youtube.com/@CHANNEL` — inventory all videos,
-> extract knowledge from every accessible item, and save a cited capture in LandingField.
-> Large channels continue in resumable batches with explicit coverage and pending work.
-> Replace CHANNEL with the intended creator's handle.
-
-> `$amber-kernel explore VIDEO_URL` — focus on the mechanisms, inspect speech
-> and relevant visuals, and cite timestamps. Replace VIDEO_URL with the target.
 
 > Use `$bigbang` to evaluate this app concept and create a realistic project
 > plan with session-based implementation prompts.
@@ -329,12 +315,10 @@ Other examples:
 BigBang adds competition-specific materials only when the request explicitly
 places the project in a competition context.
 
-Invoke Amber Kernel explicitly with a request such as:
+### 🔶 Amber Kernel
 
 > Use `$amber-kernel` to parse LandingField in my vault, following its existing
 > conventions and preserving my original thinking.
-
-Other examples:
 
 > Use `$amber-kernel` to parse this batch and develop the rough ideas, without
 > integrating their substance into existing notes.
@@ -351,7 +335,22 @@ Other examples:
 > Use `$amber-kernel` to add a Bases view for active projects using the locked
 > property schema.
 
-Invoke Periplus explicitly with a request such as:
+> `$amber-kernel explore https://example.org/article` — read the page, trace
+> relevant evidence, and save a cited note in LandingField. Replace the example
+> URL with the real target.
+
+> `$amber-kernel explore https://example.org/paper` — focus on the methodology
+> and limitations; explain in Chinese.
+
+> `$amber-kernel explore https://www.youtube.com/@CHANNEL` — inventory all videos,
+> extract knowledge from every accessible item, and save a cited capture in LandingField.
+> Large channels continue in resumable batches with explicit coverage and pending work.
+> Replace CHANNEL with the intended creator's handle.
+
+> `$amber-kernel explore VIDEO_URL` — focus on the mechanisms, inspect speech
+> and relevant visuals, and cite timestamps. Replace VIDEO_URL with the target.
+
+### 🧭 Periplus
 
 > `$periplus` Prepare Kyoto, Japan for November 5–11, 2026. Outbound by
 > shinkansen from Tokyo Station to Kyoto Station. Return by shinkansen from
@@ -363,7 +362,7 @@ traveler's actual journey. The same request can be written in Chinese,
 Japanese, or another language; the brochure stays in Simplified Chinese unless
 the request names another output language.
 
-## BigBang output model
+## 💥 BigBang output model
 
 Depending on the request, BigBang can produce:
 
@@ -383,7 +382,7 @@ BigBang does not impose a fixed 20-session plan and does not label a complete
 project as an MVP unless the source proposal or user explicitly requires MVP
 scope.
 
-## Amber Kernel output model
+## 🔶 Amber Kernel output model
 
 Depending on the request, Amber Kernel can produce:
 
@@ -406,7 +405,7 @@ Run the deterministic helper tests from the repository root with:
 python amber-kernel/scripts/run_tests.py
 ```
 
-## Periplus output model
+## 🧭 Periplus output model
 
 A finished Periplus run produces a trip project whose user-facing files are:
 
@@ -431,7 +430,7 @@ Run the offline helper tests from `periplus/scripts` with:
 python -m unittest test_skill.py -v
 ```
 
-## Contributing
+## <a id="contributing"></a>🛠️ Contributing
 
 Contributions are welcome when they preserve the following principles:
 
@@ -458,7 +457,7 @@ and the DOCX plus PDF completion gate. Do not turn a missing journey endpoint,
 an unreadable source, or a failed export into invented facts or a claimed
 final guide.
 
-## License
+## 📄 License
 
 The Asterion Skills collection is available under the
 [MIT License](LICENSE.md).
