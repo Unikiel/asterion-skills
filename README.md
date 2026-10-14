@@ -132,44 +132,44 @@ asterion-skills/
 │       ├── prompt-and-kickoff-system.md
 │       └── start-from-scratch-workflow.md
 ├── amber-kernel/
-    ├── SKILL.md
-    ├── agents/
-    │   └── openai.yaml
-    ├── assets/
-    │   └── icon.svg
-    ├── scripts/
-    │   ├── amber_kernel.py
-    │   ├── vault_links.py
-    │   ├── vault_state.py
-    │   ├── run_tests.py
-    │   └── test_amber_kernel.py
-    ├── subskills/
-    │   ├── parse/
-    │   │   ├── instructions.md
-    │   │   ├── references/
-    │   │   │   └── parse-runtime.md
-    │   │   └── scripts/
-    │   │       ├── parse_batch.py
-    │   │       └── test_parse_batch.py
-    │   └── explore/
-    │       ├── instructions.md
-    │       ├── references/
-    │       │   ├── explore-capture.md
-    │       │   ├── explore-collections.md
-    │       │   └── explore-media.md
-    │       └── scripts/
-    │           ├── explore_capture.py
-    │           ├── media_extract.py
-    │           ├── test_explore_capture.py
-    │           ├── test_explore_collections.py
-    │           └── test_media_extract.py
-    └── references/
-        ├── kernel-contract.md
-        ├── vault-bootstrap.md
-        ├── note-operations.md
-        ├── research-to-pkm.md
-        ├── toolkit.md
-        └── plugin-and-query-workflows.md
+│   ├── SKILL.md
+│   ├── agents/
+│   │   └── openai.yaml
+│   ├── assets/
+│   │   └── icon.svg
+│   ├── scripts/
+│   │   ├── amber_kernel.py
+│   │   ├── vault_links.py
+│   │   ├── vault_state.py
+│   │   ├── run_tests.py
+│   │   └── test_amber_kernel.py
+│   ├── subskills/
+│   │   ├── parse/
+│   │   │   ├── instructions.md
+│   │   │   ├── references/
+│   │   │   │   └── parse-runtime.md
+│   │   │   └── scripts/
+│   │   │       ├── parse_batch.py
+│   │   │       └── test_parse_batch.py
+│   │   └── explore/
+│   │       ├── instructions.md
+│   │       ├── references/
+│   │       │   ├── explore-capture.md
+│   │       │   ├── explore-collections.md
+│   │       │   └── explore-media.md
+│   │       └── scripts/
+│   │           ├── explore_capture.py
+│   │           ├── media_extract.py
+│   │           ├── test_explore_capture.py
+│   │           ├── test_explore_collections.py
+│   │           └── test_media_extract.py
+│   └── references/
+│       ├── kernel-contract.md
+│       ├── vault-bootstrap.md
+│       ├── note-operations.md
+│       ├── research-to-pkm.md
+│       ├── toolkit.md
+│       └── plugin-and-query-workflows.md
 └── periplus/
     ├── SKILL.md
     ├── agents/
