@@ -86,36 +86,35 @@ references are deferred rather than rewritten blindly. See
 
 ### <a id="skill-periplus"></a>🧭 Periplus
 
-Periplus 2.4.1 researches a destination and writes a complete Seven Ninths
+Periplus 2.5.0 researches a destination and writes a complete Seven Ninths
 Travel Brochure in the same request. The required inputs are the destination,
-inclusive trip dates, the outbound origin, the return destination, and the
-outbound and return transport. Each leg may be flight, rail, bus, ferry,
-driving, or a combination, and the two endpoints may be different cities.
-A booked hotel and other preferences are optional.
+the trip dates, the outbound origin, the return destination, and the outbound
+and return transport. Each leg may be flight, rail, bus, ferry, driving, or a
+combination, and the two endpoints may be different cities. Service numbers are
+optional. A booked hotel and other preferences are optional. A trip may contain
+more than one date period.
 
-It accepts the request in any language. The brochure narrative defaults to
-Simplified Chinese unless another output language is requested. Important
-places use Chinese and English names; Japan also includes the original script,
-verified kana, and Hepburn romanization.
+The skill text and examples are English. A traveler may write the request in
+any language. The brochure narrative defaults to Simplified Chinese unless
+another output language is requested. Important places use Chinese and English
+names; Japan also includes the original script, verified kana, and Hepburn
+romanization.
 
 Its workflow supports:
 
 - Live research with source URLs, retrieval dates, and uncertainty labels
+- Date-applicable services, with arrival, immigration, baggage, and boarding buffers
 - The historic Seven Ninths section set, adapted to the destination
-- Attraction catalogues, hotels, dining, shopping, and transport
-- Licensed photographs and a real map for each area, with a media manifest
-- Same-day Around Area excursions that leave and return on the same date
-- A day-by-day itinerary anchored to the supplied journey and hotel, when given
-- Finished DOCX and PDF with the legacy cover, a real three-level contents
-  table, the brochure header, page numbers, and a new page for every level-1
-  and level-2 heading
+- A licensed photo card for every attraction, nested facility, shop, restaurant, and hotel
+- A separate hotel access map, plus a real map for each area
+- Same-day Around Area excursions titled by destination name
+- A day-by-day itinerary for the active dates, anchored to the supplied journey and hotel when given
+- Finished DOCX and PDF named from the year, country, city, and every date period
+- The legacy cover, a real three-level contents table, the brochure header, page numbers, and a new page for every level-1 and level-2 heading
 - English text in Oswald, with Chinese and Japanese on a CJK font
-- A local Codex runner, `scripts/generate.py`, when the skill is invoked from
-  the command line
+- A local Codex runner, `scripts/generate.py`, when the skill is invoked from the command line
 
-Periplus does not book travel. It does not invent schedules, prices, addresses,
-or availability. If research or export cannot run, it reports that blocker
-instead of treating a scaffold or Markdown draft as the finished guide.
+Periplus does not book travel. It does not invent schedules, prices, addresses, or availability, and it keeps internal reasoning out of the guide. If research or export cannot run, it reports that blocker instead of treating a scaffold or Markdown draft as the finished guide.
 
 ## <a id="repository-structure"></a>🌳 Repository structure
 
@@ -175,6 +174,7 @@ asterion-skills/
 │       └── plugin-and-query-workflows.md
 └── periplus/
     ├── SKILL.md
+    ├── VERSION
     ├── agents/
     │   └── openai.yaml
     ├── assets/
@@ -193,6 +193,10 @@ asterion-skills/
     │   ├── legacy_layout_contract.md
     │   ├── multilingual_names_and_pronunciation.md
     │   ├── media_acquisition_and_maps.md
+    │   ├── filename_and_date_periods.md
+    │   ├── reader_contract.md
+    │   ├── service_selection.md
+    │   ├── kobe_reference_contract.md
     │   ├── coverage_matrix.md
     │   └── delivery_qa.md
     └── scripts/
@@ -201,6 +205,9 @@ asterion-skills/
         ├── fetch_media.py
         ├── map_from_geojson.py
         ├── media_utils.py
+        ├── reader_qa.py
+        ├── trip_dates.py
+        ├── version.py
         ├── validate.py
         └── test_skill.py
 ```
@@ -354,13 +361,13 @@ places the project in a competition context.
 
 > `$periplus` Prepare Kyoto, Japan for November 5–11, 2026. Outbound by
 > shinkansen from Tokyo Station to Kyoto Station. Return by shinkansen from
-> Kyoto Station to Osaka Station. Hotel: booked hotel name and address.
-> Focus on architecture, museums, trains, photography, and minimal walking.
+> Kyoto Station to Osaka Station. Hotel: booked hotel name and address, if
+> known. Focus on architecture, museums, trains, photography, and minimal walking.
 
-Service numbers in examples only show the input shape. Replace them with the
-traveler's actual journey. The same request can be written in Chinese,
-Japanese, or another language; the brochure stays in Simplified Chinese unless
-the request names another output language.
+A service number is optional. The same request can be written in Chinese,
+Japanese, or another language. The brochure stays in Simplified Chinese unless
+the request names another output language. Split stays keep every date period
+in the published filename.
 
 ## 💥 BigBang output model
 
@@ -407,27 +414,21 @@ python amber-kernel/scripts/run_tests.py
 
 ## 🧭 Periplus output model
 
-A finished Periplus run produces a trip project whose user-facing files are:
+A finished Periplus 2.5.0 run produces a trip project whose public files are named from the year, country, city, and every date period:
 
-- `exports/Seven_Ninths_Travel_Brochure.docx`
-- `exports/Seven_Ninths_Travel_Brochure.pdf`
+- `2026.Japan.Tokyo.0711-0712.0717-0719.docx`
+- `2026.Japan.Tokyo.0711-0712.0717-0719.pdf`
 
-The guide keeps the Seven Ninths cover, a clickable three-level contents
-table with real page numbers, the header **Seven Ninths Travel Brochure** on
-every page, and a current/total page footer. Every level-1 and level-2 heading
-starts a new page. Photographs and area maps are embedded image files, with
-credits in `research/MEDIA_MANIFEST.json`. English text uses Oswald. The
-Markdown manuscript under `exports/` is an assembly source, not a default
-download.
+The internal manuscript stays at `exports/Seven_Ninths_Travel_Brochure.md`. A public Markdown copy uses the same date-based filename only when the traveler asks for Markdown.
 
-Working files may include a normalized request, a task record, an evidence
-ledger, and a quality report. A supplied booked hotel is the travel base.
-Hotel and transport recommendations stay labeled as unbooked.
+The guide keeps the Seven Ninths cover, a clickable three-level contents table with real page numbers, the header **Seven Ninths Travel Brochure** on every page, and a current/total page footer. Every level-1 and level-2 heading starts a new page. Each catalogue entry has its own licensed photo. Hotels also have an access map, and each area has a geographic map. Credits live in `research/MEDIA_MANIFEST.json`. English text uses Oswald. The guide does not include the assistant's internal reasoning.
 
-Run the offline helper tests from `periplus/scripts` with:
+Working files may include a normalized request, a task record, an evidence ledger, an entry catalogue, and a quality report. A supplied booked hotel is the travel base. Hotel and transport recommendations stay labeled as unbooked.
+
+Run the release tests from the repository root with:
 
 ```text
-python -m unittest test_skill.py -v
+python -m unittest discover -s periplus/scripts -p "test_*.py"
 ```
 
 ## <a id="contributing"></a>🛠️ Contributing
@@ -452,10 +453,10 @@ When proposing changes to Amber Kernel, preserve the lock-then-adapt gate and
 keep observed vault conventions distinguishable from adopted ones.
 
 When proposing changes to Periplus, keep autonomous brochure generation, the
-Seven Ninths section coverage, source traceability, embedded licensed media,
-and the DOCX plus PDF completion gate. Do not turn a missing journey endpoint,
-an unreadable source, or a failed export into invented facts or a claimed
-final guide.
+Seven Ninths section coverage, source traceability, one licensed photo per
+catalogue entry, date-period filenames, and the DOCX plus PDF completion gate.
+Do not turn a missing journey endpoint, an unreadable source, or a failed
+export into invented facts or a claimed final guide.
 
 ## 📄 License
 
