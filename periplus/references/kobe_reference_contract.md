@@ -1,0 +1,12 @@
+# Kobe reference — transferable observations
+
+Source: user-supplied `2025.Japan.Kobe.1002-1007(1).docx`, reviewed 2026-10-14. SHA256: 4cd798ae9ad9644897c538ea45ef25b154f06178c811378baeab5b0ce32826df. Original DOCX contains 200 media parts. Body XML and rendered representative pages were inspected. Rendered page counts can change with local fonts; do not treat converted pagination as original fact.
+
+- Arrival/Departure gives the named flight, terminals, dated local departure/arrival, then concrete airport-bus boarding/arrival and stop diagrams. Retain that specificity; apply current connection buffers rather than copying its old times.
+- Accommodation is a hotel card (name, address, telephone, contact/web, JR/airport/other access) and a large geographical access map. Latest user instruction adds a mandatory actual hotel photo even though this reference’s card only has a map.
+- Around Aera (normalize to Around Area) uses city titles `Okayama`, `Kurashiki`, `Himeji`. No “one-day round trip” repeated title suffix. Retain internally validated return routes in concise travel directions.
+- Tours features `Kobe Hanabi` and `Arima Onsen`, including distinct bath experiences, facilities and pictures; the category is experiential and seasonal.
+- Restaurant cards use specific venue titles, large real photos, substantive descriptions, branch/address/web/access facts. The Nosta page puts the venue photograph beneath its heading. Shopping is likewise a distinct venue-by-venue illustrated catalogue, not a one-row recommendations list.
+- Tickets & Prices contains Kansai Area Pass, Kansai WIDE, Kobe loop bus tickets, Kobe Tourism Smart Passport, Kansai Railway Pass, Sanyo discounts, Haruka promotional tickets and IC-card information. It shows coverage illustrations and product prices, not a total trip budget. These names illustrate category breadth only: all products and tariffs require date-specific independent verification.
+- Keep A4 portrait, restrained cover, real three-level page-numbered clickable Content, recurring Seven Ninths header and current/total footer. Keep the latest Oswald Latin + readable CJK requirement; do not reproduce font-rendering loss, stale facts or inconsistent original page caches.
+- When uncertain about scope, use the illustrated detailed compendium and concise venue cards as the baseline. Preserve complete destination background, all catalogue sections and geographic maps. New explicit user requirements override older reference details.

@@ -1,12 +1,14 @@
 # Seven Ninths Travel Brochure — Master Markdown Skeleton
 
-> **注意：仅作为内容章节分类参考，不得复制本模板作为最终文稿。** 封面与带页码的三级目录由 DOCX/PDF 导出脚本生成，最终正文稿里不要再写 `# COVER` 和 `# Content`。地名必须中文 + English；日本还需日文原名、假名和罗马字。
+> **Internal structural reference only: never copy this template into a finished brochure or publish a blank guide.** The DOCX/PDF exporter generates the cover and the three-level, page-numbered table of contents; omit `# COVER` and `# Content` from the final body manuscript. Generated brochures default to Simplified Chinese and accept Chinese, English, or mixed-language inputs. Place names in the generated guide require Chinese and English; Japanese destinations additionally require original Japanese writing, verified kana pronunciation, and Hepburn romanization. The skill and all template instructions, labels, and examples remain English.
 
-> 排版强制规则：**Heading 1 与 Heading 2 必须新起一页**；各地图区域和重要景点必须嵌入真实、来源可追溯的图片 / 地图（不是URL占位）。去返程实际交通方式不限；已提供酒店时应直接使用。
+> Require at least one corresponding photograph for every attraction, nested facility, shopping venue, restaurant, cafe, bar, and hotel. A map does not substitute for a photograph. Tours emphasize experiences and themes; Tickets & Prices covers passes, combined tickets, and combination discounts, never an estimated trip budget. Keep internal rules, eligibility labels, and reasoning monologues out of the reader-facing brochure. Nearby-area headings contain only place names.
 
-> 基于既有 **Nagoya 2024 / Kobe 2025 / Tokyo 2026** 三份攻略整理出的统一骨架。  
-> 目标：保留三份文档中出现过的所有一级、二级与功能性模块，并将重复出现的内容抽象为可复用模板。  
-> 原文中使用的栏目名尽量保留，例如 `Around Aera`。
+> Mandatory layout: **Heading 1 and Heading 2 start on a new page.** Embed actual source-traceable images and geographic maps for each mapped area and important attraction; URL placeholders are insufficient. Arrival and departure may use any actual mode or combination of modes. Use the user-specified hotel directly.
+
+> This unified skeleton derives from the existing **Nagoya 2024 / Kobe 2025 / Tokyo 2026** brochures.\
+> Preserve every first-level, second-level, and functional module inherited from those brochures, abstracting repeated content into a reusable structure.\
+> Preserve inherited category scope and established column names; normalize the historical misspelling `Around Aera` to `Around Area`.
 
 ---
 
@@ -14,7 +16,10 @@
 
 - Country: `JAPAN`
 - Destination / City: `[CITY / REGION]`
-- Travel Date: `[YYYY.MM.DD – YYYY.MM.DD]`
+- Travel Dates: `[YYYY.MM.DD – YYYY.MM.DD]` for each of any number of separate visit segments
+- English Export Filenames: `[YEAR].[COUNTRY].[DESTINATION].[MMDD-MMDD].[MMDD-MMDD]...docx` and the matching `.pdf`
+- Filename Example: `2026.Japan.Tokyo.0711-0712.0717-0719.docx`
+- Preserve segment order and gaps; do not impose a fixed segment count. Use English country and destination names.
 - Series / Footer Identity: `Seven Ninths Travel Brochure`
 - Cover Image / Flag / Destination Visual: `[IMAGE]`
 
@@ -22,7 +27,7 @@
 
 # Content
 
-> 最终排版时自动生成目录。建议至少显示至三级标题。
+> Generate the actual table of contents during export, displaying at least three heading levels.
 
 ---
 
@@ -30,150 +35,157 @@
 
 ## Arrival - `[YYYYMMDD]`
 
-### Flight（仅当实际使用飞机）
+### Flight (only when the actual journey uses air travel)
 
-- 航班 / Airline & Flight No.:
-- 机型 / Aircraft:
-- 出发机场 / Departure Airport:
-- 出发航站楼 / Terminal:
-- 抵达机场 / Arrival Airport:
-- 抵达航站楼 / Terminal:
-- 起飞时间:
-- 抵达时间:
-- 飞行时长:
-- 时差:
-- 备注: `※所有时间为当地时间`
+> If no flight number is supplied, research and recommend suitable concrete services for the travel date, with practical alternatives and connection buffers. Distinguish verified schedules from schedules not yet published; never invent a service or imply a booking.
 
-### Primary Journey — Rail / Bus / Ferry / Drive / Mixed（选择实际使用方式）
+- Airline & Flight Number:
+- Aircraft:
+- Departure Airport:
+- Departure Terminal:
+- Arrival Airport:
+- Arrival Terminal:
+- Departure Time:
+- Arrival Time:
+- Flight Duration:
+- Time Difference:
+- Notes: `All times are local`
 
-- 交通方式与班次 / Travel Mode & Service:
-- 出发点（中文/英文/当地名称）:
-- 到达点（中文/英文/当地名称）:
-- 出发与抵达当地时间:
-- 车站、站台、码头、巴士站、停车点:
-- 运营商、换乘、预订状态及行李信息:
-- 真实来源的站台/地理地图图像（本地 JPG/PNG，含图注与出处）:
+### Primary Journey — Rail / Bus / Ferry / Drive / Mixed (use the actual modes)
+
+- Travel Mode & Service (recommend a verified concrete service when unspecified):
+- Origin (Chinese / English / Local Names in Generated Guide):
+- Destination (Chinese / English / Local Names in Generated Guide):
+- Departure and Arrival Local Times:
+- Stations, Platforms, Terminals, Bus Stops, Parking Points:
+- Operator, Transfers, Booking Status, Luggage Information:
+- Actual Source-Traceable Platform / Geographic Map (Local JPG/PNG with Caption and Source):
 
 ### Airport / Station Transfer
 
-> 按实际情况选择一种或多种：`Railway / Airport Bus / Bus / Metro / Ferry / Taxi / Auto`
+> Compare all practical modes, including `Railway / Airport Bus / Bus / Metro / Ferry / Taxi / Auto`; use one or several as appropriate. When services are unspecified, recommend verified concrete departures and alternatives. Allow realistic time for preceding activities, immigration, baggage reclaim, walking distances, terminal changes, and transfers before selecting a departure.
 
 #### Railway
 
-- 交通 / Service:
-- 线路:
-- 出发:
-- 抵达:
-- 出发时间:
-- 抵达时间:
-- 资费:
-- 行程时长:
-- 站台 / Platform:
-- 购票方式:
-- 换乘:
-- 备注:
+- Service:
+- Routes:
+- Departure:
+- Arrival:
+- Departure Time:
+- Arrival Time:
+- Fare:
+- Journey Duration:
+- Platform:
+- Ticket Purchase Method:
+- Transfers:
+- Notes:
 - `[AIRPORT / STATION MAP IMAGE]`
 
 #### Airport Bus
 
-- 运营公司:
-- 线路 / Route:
-- 乘车点:
-- 下车点:
-- 出发时间:
-- 抵达时间:
-- 资费:
-- 往返票 / 有效期:
-- 行程时长:
-- 站台 / Bus Stop:
-- 备注:
+- Operator:
+- Route:
+- Boarding Point:
+- Alighting Point:
+- Departure Time:
+- Arrival Time:
+- Fare:
+- Return Ticket / Validity:
+- Journey Duration:
+- Bus Stop:
+- Notes:
 - `[BUS STOP / TIMETABLE IMAGE]`
 
 #### Other Transfer
 
-- 类型:
-- 运营公司:
-- 出发:
-- 抵达:
-- 资费:
-- 行程时长:
-- 备注:
+- Type:
+- Operator:
+- Departure:
+- Arrival:
+- Fare:
+- Journey Duration:
+- Notes:
 
 ---
 
 ## Departure - `[YYYYMMDD]`
 
-> 与 Arrival 同样支持 Rail / Bus / Ferry / Drive / Mixed；不得强制飞行方式。
+> Support Rail / Bus / Ferry / Drive / Mixed, just as for Arrival; never force an air-travel format. Identify the outbound origin and the final departure destination separately, since they may differ.
 
-### Primary Journey — Rail / Bus / Ferry / Drive / Mixed（选择实际使用方式）
+### Primary Journey — Rail / Bus / Ferry / Drive / Mixed (use the actual modes)
 
-- 交通方式与班次 / Travel Mode & Service:
-- 出发点（中文/英文/当地名称）:
-- 到达点（中文/英文/当地名称）:
-- 出发与抵达当地时间:
-- 车站、站台、码头、巴士站、停车点:
-- 运营商、换乘、预订状态及行李信息:
-- 真实来源的站台/地理地图图像（本地 JPG/PNG，含图注与出处）:
+- Travel Mode & Service (recommend a verified concrete service when unspecified):
+- Origin (Chinese / English / Local Names in Generated Guide):
+- Destination (Chinese / English / Local Names in Generated Guide):
+- Departure and Arrival Local Times:
+- Stations, Platforms, Terminals, Bus Stops, Parking Points:
+- Operator, Transfers, Booking Status, Luggage Information:
+- Actual Source-Traceable Platform / Geographic Map (Local JPG/PNG with Caption and Source):
 
 ### Airport / Station Transfer
 
-> 结构同 Arrival，按实际交通方式填写。
+> Use the Arrival transfer structure, adapted to the actual modes and realistic preceding-activity buffers.
 
 #### Railway
 
-- 交通 / Service:
-- 出发:
-- 抵达:
-- 出发时间:
-- 抵达时间:
-- 资费:
-- 行程时长:
-- 站台 / Platform:
-- 备注:
+- Service:
+- Departure:
+- Arrival:
+- Departure Time:
+- Arrival Time:
+- Fare:
+- Journey Duration:
+- Platform:
+- Notes:
 - `[STATION / PLATFORM MAP IMAGE]`
 
 #### Airport Bus
 
-- 运营公司:
-- 乘车点:
-- 下车点:
-- 出发时间:
-- 抵达时间:
-- 资费:
-- 行程时长:
-- 备注:
+- Operator:
+- Boarding Point:
+- Alighting Point:
+- Departure Time:
+- Arrival Time:
+- Fare:
+- Journey Duration:
+- Notes:
 
 #### Other Transfer
 
-- 类型:
-- 出发:
-- 抵达:
-- 资费:
-- 行程时长:
-- 备注:
+- Type:
+- Departure:
+- Arrival:
+- Fare:
+- Journey Duration:
+- Notes:
 
-### Flight（仅当实际使用飞机）
+### Flight (only when the actual journey uses air travel)
 
-- 航班 / Airline & Flight No.:
-- 机型 / Aircraft:
-- 出发机场 / Departure Airport:
-- 出发航站楼 / Terminal:
-- 抵达机场 / Arrival Airport:
-- 抵达航站楼 / Terminal:
-- 起飞时间:
-- 抵达时间:
-- 飞行时长:
-- 时差:
-- 备注: `※所有时间为当地时间`
+> If no flight number is supplied, research and recommend suitable concrete services for the travel date, with practical alternatives and connection buffers. Distinguish verified schedules from schedules not yet published; never invent a service or imply a booking.
+
+- Airline & Flight Number:
+- Aircraft:
+- Departure Airport:
+- Departure Terminal:
+- Arrival Airport:
+- Arrival Terminal:
+- Departure Time:
+- Arrival Time:
+- Flight Duration:
+- Time Difference:
+- Notes: `All times are local`
 
 ---
 
 # Accommodation
 
-> 已提供 `request.hotel` 时直接以用户酒店为住宿与路线中心；没有时才研究推荐，且不得暗示已预订。
+> If `request.hotel` is provided, use that hotel as the accommodation and route base. Otherwise research suitable recommendations without implying a booking. Accommodation is optional input; every listed hotel still requires at least one actual photograph and its own access/location map.
 
 - Hotel Name:
-- Japanese Name:
+- Chinese Name (generated guide):
+- Local / Japanese Name (generated guide):
+- Kana Pronunciation / Hepburn Romanization (Japanese destinations):
+- English Name:
 - Address:
 - Postal Code:
 - TEL:
@@ -194,7 +206,8 @@
 - Walking Time:
 - Entrance / Elevator / Reception Notes:
 - Luggage / Storage Notes:
-- `[HOTEL PHOTO]`
+- `[CORRESPONDING HOTEL PHOTO]`
+- Photograph Subject / Source / License:
 - `[HOTEL LOCATION MAP]`
 - `[STATION-TO-HOTEL ACCESS MAP]`
 
@@ -202,7 +215,7 @@
 
 # Brief Sketch
 
-> 目的地的城市 / 地区背景资料总章。
+> Main background chapter for the destination city or region.
 
 ## History
 
@@ -212,7 +225,7 @@
 
 ### `[Historical Period / Era 3]`
 
-> 如不需要按时期拆分，可直接在 `History` 下连续书写。Tokyo 版本使用过“江户时代 / 东京府时代 / 东京都时代”式分期结构。
+> If period subdivisions are unnecessary, write continuous prose under `History`. The Tokyo reference used period headings such as Edo Era, Tokyo Prefecture Era, and Tokyo Metropolis Era.
 
 ---
 
@@ -220,46 +233,46 @@
 
 ### Administrative Region
 
-- 行政区划:
-- 核心区域:
-- 周边区域:
-- 地理分区:
+- Administrative Divisions:
+- Core Areas:
+- Nearby Areas:
+- Geographic Divisions:
 - `[ADMINISTRATIVE MAP]`
 
 ### Climate
 
-- 气候类型:
-- 春:
-- 夏:
-- 秋:
-- 冬:
-- 降水:
-- 风:
-- 台风 / 降雪 / 极端天气:
-- 旅行季节提示:
+- Climate Type:
+- Spring:
+- Summer:
+- Autumn:
+- Winter:
+- Precipitation:
+- Wind:
+- Typhoons / Snowfall / Extreme Weather:
+- Seasonal Travel Notes:
 
 ---
 
 ## Population
 
-- 总人口:
-- 人口变化:
-- 人口分布:
-- 老龄化 / 少子化:
-- 外国人口:
-- 其他人口特征:
+- Total Population:
+- Population Change:
+- Population Distribution:
+- Population Aging / Low Birth Rates:
+- Foreign Residents:
+- Other Demographic Features:
 
 ---
 
 ## Religion
 
-> Tokyo 版本出现的独立模块。若目的地宗教背景重要则保留。
+> A standalone module inherited from the Tokyo reference. Retain it when religion is significant to the destination background.
 
-- 主要宗教:
-- 神社 / 寺院体系:
-- 宗教历史:
-- 宗教与城市文化:
-- 参拜礼仪提示:
+- Major Religions:
+- Shrine / Temple Traditions:
+- Religious History:
+- Religion and Urban Culture:
+- Visiting Etiquette:
 
 ---
 
@@ -267,58 +280,58 @@
 
 ### Local / Prefectural / Municipal Politics
 
-- 行政体系:
-- 地方政府:
-- 市 / 都 / 府 / 县层级:
-- 地方议会:
-- 主要政治议题:
+- Administrative System:
+- Local Government:
+- Municipal / Metropolitan / Prefectural Levels:
+- Local Assembly:
+- Main Political Issues:
 
 ### National Politics
 
-- 国政选区:
-- 与中央政府关系:
-- 其他必要背景:
+- National Electoral Districts:
+- Relationship with Central Government:
+- Other Relevant Background:
 
-> 若无需拆分，可直接使用 `Politics`。
+> Use an undivided `Politics` section when separate levels are unnecessary.
 
 ---
 
 ## Economy
 
-### 第一产业 / Primary Industry
+### Primary Industry
 
-- 农业:
-- 渔业:
-- 地方特色农产品:
-- 其他:
+- Agriculture:
+- Fisheries:
+- Distinctive Local Agricultural Products:
+- Other:
 
-### 第二产业 / Secondary Industry
+### Secondary Industry
 
-- 制造业:
-- 传统产业:
-- 重工业:
-- 高科技:
-- 代表企业:
+- Manufacturing:
+- Traditional Industries:
+- Heavy Industry:
+- High Technology:
+- Representative Companies:
 
-### 第三产业 / Tertiary Industry
+### Tertiary Industry
 
-- 商业:
-- 金融:
+- Commerce:
+- Finance:
 - IT:
-- 医疗:
-- 旅游:
-- 服务业:
-- 代表企业 / 商圈:
+- Healthcare:
+- Tourism:
+- Services:
+- Representative Companies / Commercial Districts:
 
 ---
 
 ## Education
 
-- 主要大学:
-- 国立 / 公立 / 私立:
-- 科研机构:
-- 教育与城市历史:
-- 代表性研究成果:
+- Major Universities:
+- National / Public / Private Institutions:
+- Research Institutions:
+- Education and Urban History:
+- Representative Research Achievements:
 
 ---
 
@@ -326,73 +339,74 @@
 
 ### Language & Dialect
 
-- 方言:
-- 语言特征:
-- 常用地方表达:
+- Dialect:
+- Language Features:
+- Common Local Expressions:
 
 ### Travel
 
-- 核心观光资源:
-- 城市旅游特征:
-- 自然 / 历史 / 都市 / 港湾 / 山岳等:
-- 代表性景点:
+- Main Tourism Resources:
+- Urban Tourism Characteristics:
+- Nature / History / Urban Life / Waterfront / Mountains:
+- Representative Attractions:
 
 ### Literature
 
-- 代表作家:
-- 与城市相关的文学作品:
-- 文学史地位:
+- Representative Writers:
+- Literary Works Associated with the City:
+- Place in Literary History:
 
 ### Literature & Art
 
-> Tokyo 版本使用的合并栏目。若已分别写 `Literature` 与 `Art`，可不重复。
+> A combined category inherited from the Tokyo reference. Avoid duplication if `Literature` and `Art` are already covered separately.
 
 ### Localism
 
-- 地方认同:
-- 地方习惯:
-- 方言:
-- 地域文化:
-- 城市性格:
+- Local Identity:
+- Local Customs:
+- Dialect:
+- Regional Culture:
+- City Character:
 
 ### Art
 
-- 美术:
-- 当代艺术:
-- 公共艺术:
-- 代表艺术家 / 艺术活动:
+- Visual Arts:
+- Contemporary Art:
+- Public Art:
+- Representative Artists / Art Activities:
 
 ### Art & Craft
 
-- 传统工艺:
-- 制作方法:
-- 历史:
-- 代表工坊:
-- 可购买地点:
-- 体验活动:
+- Traditional Crafts:
+- Making Techniques:
+- History:
+- Representative Workshops:
+- Purchase Locations:
+- Participatory Experiences:
 
 ### Architecture
 
-- 城市建筑风格:
-- 历史建筑:
-- 现代建筑:
-- 代表建筑师:
-- 建筑路线:
+- Urban Architectural Styles:
+- Historic Architecture:
+- Modern Architecture:
+- Representative Architects:
+- Architecture Routes:
 
 ### Museum
 
 #### `[Museum / Gallery / Cultural Facility 1]`
 
-- 简介:
-- 馆藏 / 主题:
-- 地址:
-- 营业时间:
-- 休馆日:
-- 门票:
-- 交通:
+- Summary:
+- Collection / Theme:
+- Address:
+- Opening Hours:
+- Closed Days:
+- Admission:
+- Access:
 - Website:
-- 备注:
-- `[IMAGE]`
+- Notes:
+- `[CORRESPONDING VENUE PHOTO]`
+- Photograph Source / License:
 
 #### `[Museum / Gallery / Cultural Facility 2]`
 
@@ -400,56 +414,56 @@
 
 ### Events & Festivals
 
-- 节庆:
-- 花火大会:
-- 季节活动:
-- 艺术节:
-- 灯光活动:
-- 举办时间:
-- 地点:
-- 交通:
-- 购票 / 预约:
+- Festivals:
+- Fireworks Festivals:
+- Seasonal Events:
+- Art Festivals:
+- Illumination Events:
+- Dates and Times:
+- Location:
+- Access:
+- Tickets / Reservations:
 
 ### Events
 
-> Tokyo 版本使用的简化栏目名；与 `Events & Festivals` 二选一即可。
+> A shorter category name inherited from the Tokyo reference; use either this heading or `Events & Festivals`.
 
 ### Delicacy
 
-- 地方代表食物:
-- 甜点:
-- 饮品:
-- B级美食:
-- 名产:
-- 推荐吃法:
+- Signature Local Foods:
+- Sweets:
+- Beverages:
+- Everyday Regional Specialties:
+- Local Specialties:
+- Recommended Ways to Enjoy:
 
 ### Diet & Cuisine
 
-> Tokyo 版本使用的栏目名，可与 `Delicacy` 合并。
+> A category name inherited from the Tokyo reference; it may be combined with `Delicacy`.
 
 ### Media
 
-- 电视:
-- 广播:
-- 报纸:
-- 出版:
-- 与城市相关影视作品:
+- Television:
+- Radio:
+- Newspapers:
+- Publishing:
+- Films / Television Associated with the City:
 
 ### Sports
 
-- 代表球队:
-- 主要场馆:
-- 地方体育文化:
-- 重要赛事:
+- Representative Teams:
+- Main Venues:
+- Local Sports Culture:
+- Major Sporting Events:
 
 ### Subculture
 
-- 动漫:
-- 游戏:
-- 音乐:
-- 二次元街区:
-- 地方亚文化:
-- 独立书店 / Live House / 小剧场等:
+- Anime / Manga:
+- Games:
+- Music:
+- Anime / Manga Districts:
+- Local Subcultures:
+- Independent Bookshops / Live Music Venues / Small Theaters:
 
 ---
 
@@ -457,63 +471,63 @@
 
 ### Public Transportation
 
-- 交通体系概述:
-- 票价体系:
-- IC卡:
-- 主要换乘中心:
-- 运营商:
+- Transport System Overview:
+- Fare System:
+- IC Cards:
+- Main Interchanges:
+- Operators:
 
 ### Highway
 
-- 高速公路:
-- 城市快速路:
-- 自驾注意事项:
+- Expressways:
+- Urban Express Roads:
+- Driving Notes:
 
 ### Roads
 
-> Tokyo 版本使用 `Roads`，可与 `Highway` 合并或并列。
+> The Tokyo reference used `Roads`; combine it with `Highway` or retain both as appropriate.
 
 ### Railways
 
 - JR:
-- 私铁:
-- 新干线:
-- 主要枢纽:
-- 区域铁路:
+- Private Railways:
+- Shinkansen:
+- Main Hubs:
+- Regional Railways:
 
 ### Railways & Metro
 
 - JR:
 - Metro / Subway:
 - Private Railway:
-- 主要车站:
-- 换乘提示:
+- Main Stations:
+- Transfer Notes:
 
 ### Metro
 
-- 线路:
-- 运营商:
-- 票制:
-- 主要游客线路:
+- Routes:
+- Operators:
+- Ticketing:
+- Main Visitor Routes:
 
 ### Bus
 
-- 市巴士:
-- 私营巴士:
-- 观光巴士:
+- Municipal Buses:
+- Private Buses:
+- Sightseeing Buses:
 - Airport Bus:
 
 ### Bus & Auto
 
-> Nagoya 版本使用的栏目，可按目的地实际情况合并 `Bus` 与汽车交通。
+> A category inherited from the Nagoya reference; combine `Bus` and automobile transport according to destination conditions.
 
 ### Ports
 
-- 港口:
-- 客运码头:
-- 观光船:
+- Ports:
+- Passenger Terminals:
+- Sightseeing Boats:
 - Cruise:
-- 国际航线:
+- International Routes:
 
 #### Ferry
 
@@ -540,14 +554,14 @@
 
 ### International Exchange
 
-> Kobe 版本出现的独立模块。
+> A standalone module inherited from the Kobe reference.
 
-- 姊妹城市:
-- 姊妹港:
-- 国际组织:
-- 外国领事机构:
-- 国际交流历史:
-- 国际社区:
+- Sister Cities:
+- Sister Ports:
+- International Organizations:
+- Foreign Consular Offices:
+- International Exchange History:
+- International Communities:
 
 ---
 
@@ -555,16 +569,16 @@
 
 ## Attractions
 
-> 按地理区域拆分地图。每张地图建议对应一组高度相关的景点。
+> Organize maps by geographic area, with each map covering a closely related group of attractions.
 
 ### Map A – `[AREA / DISTRICT]`
 
-> 必须实际内嵌真实地图 JPEG/PNG，图注注明地图来源、使用许可、地理数据来源。
+> Embed an actual geographic map as a local JPEG/PNG. Its caption identifies the map source, usage license, and geographic data source.
 
-- 覆盖区域:
-- 地图:
-- 景点编号:
-- 交通节点:
+- Coverage Area:
+- Map:
+- Attraction Numbers:
+- Transport Nodes:
 - Hotel:
 - Food:
 - Photo Spot:
@@ -588,14 +602,14 @@
 
 ### Map J – `[AREA / DISTRICT]`
 
-> 如目的地较大继续扩展：`Map K / L / M / N / O / P ...`。  
-> Tokyo 版本曾扩展至 Map P。
+> Extend larger destinations with `Map K / L / M / N / O / P ...` as needed.\
+> The Tokyo reference extended through Map P.
 
 ---
 
 ## Schedule
 
-> 建议使用总览表；现有三份攻略均存在 Day-by-Day 行程概览。
+> Use a day-by-day overview table, as in all three reference brochures. Extend the table for any number of days and date segments; preserve gaps between separate visit segments.
 
 | Day | Date | Morning | Afternoon | Evening | Main Area | Backup / Flexible Plan |
 |---|---|---|---|---|---|---|
@@ -614,7 +628,9 @@
 
 ### `[Attraction 1]`
 
-- Local / Japanese Name:
+- Chinese Name (generated guide):
+- Local / Japanese Name (generated guide):
+- Kana Pronunciation / Hepburn Romanization (Japanese destinations):
 - English Name:
 - Category:
 - Summary:
@@ -642,6 +658,7 @@
 
 #### `[Sub-attraction / Building / Viewpoint / Facility]`
 
+- Corresponding Photograph (required, even when nested):
 - Summary:
 - Hours:
 - Ticket:
@@ -658,12 +675,12 @@
 
 ## Around Area
 
-> **定义：从主目的地（通常为住宿地）出发，当天往返的周边城市、城镇或独立景区推荐。**这不是主目的地的别名。历史攻略曾拼作 `Around Aera`，现统一为 `Around Area`；日文/英文地名以实际目的地为准。每个推荐必须同时核验去程、回程、可游览时间、末班交通与备选方案。若不能当天可行往返，应转入“延长住宿 / Overnight Candidates”，不可当作已确认的 Around Area。
+> **Internal eligibility rule:** Around Area contains nearby cities, towns, or separate scenic areas reachable from the main base, usually the hotel, with a feasible return on the same day. It is not another name for the primary destination. Normalize the inherited spelling `Around Aera` to `Around Area`. Verify outbound travel, return travel, realistic visiting time, last practical connections, and contingencies for every candidate. Move candidates without a feasible same-day return to a separately labeled overnight-extension section. Store qualification evidence in working research, never as eligibility labels or reasoning commentary in the finished brochure. Reader-facing nearby-area headings contain only the place name; do not append repeated round-trip qualifiers.
 
 ### `[Nearby City / Region 1]`
 
 - Main Base / Hotel:
-- Excursion Type: **One-day round trip**
+- Internal Excursion Type (research only): **Same-day return**
 - Why Visit:
 - Estimated Difficulty: Easy / Moderate / Demanding / Unverified
 - Outbound: operator, service, departure / arrival station, fare, transfers, visit date, source
@@ -671,20 +688,21 @@
 - Arrival + realistic time on site:
 - Return: operator, route, departure and arrival at main base, last-practical departure
 - Return contingency / backup:
-- Day-trip qualification: VERIFIED / UNVERIFIED / EXCLUDED
+- Internal Qualification (research only): VERIFIED / UNVERIFIED / EXCLUDED
 - Sources and last checked date:
 
 #### `[Attraction 1]`
 
-- 简介:
-- 地址:
-- 营业时间:
-- 休息日:
-- 门票:
-- 交通:
+- Summary:
+- Address:
+- Opening Hours:
+- Closed Days:
+- Admission:
+- Access:
 - Website:
 - Phone:
 - Photo Notes:
+- `[CORRESPONDING ATTRACTION PHOTO]`
 
 #### `[Attraction 2]`
 
@@ -698,6 +716,12 @@
 
 ### `[Tour / Themed Route / Seasonal Event 1]`
 
+> Describe a coherent theme and concrete visitor experiences: what participants do, see, make, ride, taste, or learn. Avoid presenting a simple list of attractions as a tour. Every separately listed venue requires its corresponding photograph.
+
+- Experience / What to do, see or learn:
+- Provider / Self-guided:
+- Participation / Accessibility:
+- Weather Alternative:
 - Tour Theme:
 - Recommended Season:
 - Duration:
@@ -726,18 +750,22 @@
 
 ### `[Restaurant / Café / Bar 1]`
 
-- Japanese Name:
+- Chinese Name (generated guide):
+- Local / Japanese Name (generated guide):
+- Kana Pronunciation / Hepburn Romanization (Japanese destinations):
+- English Name:
 - Category:
 - Specialty:
 - Summary:
 - Recommended Dishes:
+- Photograph Subject / Source / License:
 - Branch:
 - Address:
 - Phone:
 - Opening Hours:
 - Last Order:
 - Closed:
-- Average Budget:
+- Published Menu Prices (if sourced; no estimated budget):
 - Reservation:
 - Card:
 - Cashless:
@@ -769,7 +797,8 @@
 - Tax Free:
 - Website:
 - Notes:
-- `[IMAGE]`
+- `[CORRESPONDING VENUE PHOTO]`
+- Photograph Source / License:
 
 ### `[Store / Mall / Market / Shopping Street 2]`
 
@@ -802,7 +831,9 @@
 
 ### Tickets & Prices
 
-#### 交通IC卡 / IC Cards
+> Cover destination transport passes, attraction passes, bundled admission, combination offers, and discounts. Give sourced prices, coverage, validity, exclusions, purchase methods, and reservation rules. Do not create a trip budget or an estimated spending total.
+
+#### IC Cards
 
 ##### `[IC Card 1]`
 
@@ -818,7 +849,7 @@
 
 ---
 
-#### 优惠车票 / Travel Passes
+#### Travel Passes & Combination Offers
 
 ##### `[Pass / Ticket 1]`
 
@@ -838,13 +869,13 @@
 
 | Item | Detail |
 |---|---|
-| 票价 |  |
-| 有效期限 |  |
-| 可乘范围 |  |
-| 售票地点 |  |
-| 使用方式 |  |
-| 除外线路 |  |
-| 优惠 |  |
+| Price |  |
+| Validity |  |
+| Eligible Routes |  |
+| Sales Locations |  |
+| How to Use |  |
+| Excluded Routes |  |
+| Discounts |  |
 
 ##### `[Pass / Ticket 2]`
 
@@ -918,7 +949,7 @@
 
 ---
 
-# Appendix / Working Notes
+# Appendix / Working Notes (internal; do not publish blank checklists)
 
 ## Booking & Reservation Checklist
 
@@ -938,15 +969,15 @@
 - [ ] Cover
 - [ ] Airport terminal map
 - [ ] Airport / station platform map
-- [ ] Hotel exterior
+- [ ] At least one photograph for every listed hotel
 - [ ] Hotel location map
 - [ ] City / administrative map
 - [ ] Area maps A–J
 - [ ] Additional maps K–P when needed
-- [ ] Major attraction photos
+- [ ] At least one photograph for every attraction and nested facility
 - [ ] Museum photos
-- [ ] Food / restaurant photos
-- [ ] Shopping / market photos
+- [ ] At least one photograph for every restaurant, cafe, and bar
+- [ ] At least one photograph for every shopping venue, store, and market
 - [ ] Ticket / pass diagrams
 - [ ] Timetable screenshots
 - [ ] Schedule overview table
@@ -970,6 +1001,12 @@
 - [ ] Nearest station / exit included
 - [ ] Weather-dependent attractions flagged
 - [ ] Reservation-required items flagged
+- [ ] Every attraction, nested facility, shopping venue, dining venue, and hotel has a corresponding embedded photograph
+- [ ] Photographs, captions, and associated entries have clean pagination
+- [ ] No internal reasoning, qualification labels, or blank template fields appear in the finished brochure
+- [ ] Tickets & Prices contains passes and combination offers, without an estimated budget
+- [ ] Tours describe themes and actual visitor experiences
+- [ ] English filenames preserve any number of separate date segments
 - [ ] All visual assets inserted
 - [ ] TOC updated
 - [ ] Page numbers / footer updated
@@ -978,7 +1015,7 @@
 
 # Structural Coverage Audit
 
-以下模块来自三份既有攻略的并集，已全部纳入本骨架：
+The following inherited modules are the union of the three reference brochures and are all retained in this skeleton:
 
 - `Arrival & Departure`
   - Arrival / Departure
@@ -1033,7 +1070,7 @@
 - `Sightseeing & Adventure`
   - Primary City
   - Nested attraction / facility
-  - Around Aera
+  - Around Area
   - Tours
 - `Delicacy & Shopping`
   - Restaurant & Café & Bar

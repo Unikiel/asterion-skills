@@ -4,8 +4,6 @@
   "type": "object",
   "required": [
     "destination",
-    "start_date",
-    "end_date",
     "journey"
   ],
   "properties": {
@@ -135,7 +133,8 @@
           "type": "string"
         },
         "budget": {
-          "type": "string"
+          "type": "string",
+          "description": "Optional spending constraint for choices; do not produce a budget unless explicitly requested."
         },
         "companion_notes": {
           "type": "string"
@@ -214,6 +213,46 @@
         }
       },
       "additionalProperties": false
+    },
+    "date_ranges": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Arbitrary number of inclusive destination stay periods; sort chronologically, preserve adjacent periods, reject overlaps; do not schedule gaps.",
+      "items": {
+        "type": "object",
+        "required": [
+          "start_date",
+          "end_date"
+        ],
+        "properties": {
+          "start_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "hotel": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "journey": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "country_en": {
+      "type": "string",
+      "description": "Verified English publication label; agent researches and populates this if original input is not English. Not a required traveler input."
+    },
+    "destination_en": {
+      "type": "string",
+      "description": "Verified English publication label; agent researches and populates this if original input is not English. Not a required traveler input."
     }
   },
   "$defs": {
@@ -331,6 +370,34 @@
         },
         "notes": {
           "type": "string"
+        },
+        "preceding_activity": {
+          "type": "object",
+          "description": "Optional user-known prior flight/activity and end datetime/location; agent infers researched buffers without requiring them as user input.",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "ends_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "location": {
+              "type": "string"
+            },
+            "checked_baggage": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        },
+        "earliest_departure": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "latest_arrival": {
+          "type": "string",
+          "format": "date-time"
         }
       },
       "additionalProperties": true
@@ -372,5 +439,18 @@
       "additionalProperties": true
     }
   },
-  "additionalProperties": true
+  "additionalProperties": true,
+  "anyOf": [
+    {
+      "required": [
+        "date_ranges"
+      ]
+    },
+    {
+      "required": [
+        "start_date",
+        "end_date"
+      ]
+    }
+  ]
 }

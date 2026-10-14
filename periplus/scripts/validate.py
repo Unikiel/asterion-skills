@@ -10,6 +10,7 @@ import argparse
 from datetime import date, timedelta
 import json
 from pathlib import Path
+from trip_dates import trip_days, audit_schedule_periods
 import re
 import sys
 
@@ -27,7 +28,7 @@ TRACKED = ("Administrative Region", "Religion", "International Exchange", "Subcu
            "Art & Craft", "Architecture", "Museum", "Language & Dialect",
            "Localism", "Sports", "Media", "Literature", "Events & Festivals")
 PLACEHOLDERS = (r"\[(?:Attraction|Area|Map|Hotel|Name|Destination|City|Date|YYYY|PHOTO|IMAGE|Restaurant|Store|Tour)[^\]]*\]",
-                r"\b(?:TODO|TBD|TBC)\b", r"REPLACE_WITH", r"(?:在此填写|待补充|待研究)")
+                r"\b(?:TODO|TBD|TBC)\b", r"REPLACE_WITH", r"(?:\u5728\u6b64\u586b\u5199|\u5f85\u8865\u5145|\u5f85\u7814\u7a76)")
 
 
 def assess(project: Path, mode: str):
@@ -79,10 +80,9 @@ def assess(project: Path, mode: str):
             if value and value.casefold() not in text.casefold():
                 errors.append(f"User-provided hotel {key} omitted from brochure: {value}")
     try:
-        start = date.fromisoformat(request["start_date"])
-        end = date.fromisoformat(request["end_date"])
-        for offset in range((end - start).days + 1):
-            day = (start + timedelta(days=offset)).isoformat()
+        errors.extend(audit_schedule_periods(text, request))
+        for travel_day in trip_days(request):
+            day = travel_day.isoformat()
             if day not in text:
                 errors.append(f"Missing day in finished date-specific itinerary: {day}")
     except (KeyError, ValueError):
@@ -96,7 +96,7 @@ def assess(project: Path, mode: str):
     match = re.search(r"^##\s+Around Area(?:\s|$)(.*?)(?=^#{1,2}\s+|\Z)", text, re.M | re.S | re.I)
     if match:
         block = match.group(1)
-        if not re.search(r"(往返|当天返回|当日返回|same.day|round.trip|return journey|返回)", block, re.I):
+        if not re.search(r"(\u5f80\u8fd4|\u5f53\u5929\u8fd4\u56de|\u5f53\u65e5\u8fd4\u56de|same.day|round.trip|return journey|\u8fd4\u56de)", block, re.I):
             errors.append("Around Area lacks same-day return-trip analysis")
         place = request.get("destination", "").strip().casefold()
         trips = [h.strip().casefold() for h in re.findall(r"^###\s+([^\n]+)", block, re.M)]
@@ -105,10 +105,13 @@ def assess(project: Path, mode: str):
     else:
         errors.append("Around Area must be a real H2 section under Sightseeing & Adventure")
     for pattern in PLACEHOLDERS:
-        hit = re.search(pattern, text, re.I)
+        hit = re.search(pattern, re.sub(r"!\[[^\]]*\]\([^\n]*?\)", "", text), re.I)
         if hit:
             errors.append("Unfilled skeleton placeholder: " + hit.group(0))
     if mode == "final":
+        from reader_qa import audit_reader_text, audit_transport_plan
+        errors.extend(audit_reader_text(text, request))
+        errors.extend(audit_transport_plan(project, text, request))
         cjk = len(re.findall(r"[\u3400-\u9fff]", text))
         words = len(text.split())
         if len(text) < 7000 or len(re.findall(r"\w", text, re.UNICODE)) < 4500:
@@ -131,15 +134,15 @@ def assess(project: Path, mode: str):
             errors.append("Missing complete research/NAME_INDEX.md for bilingual naming and local pronunciations")
         else:
             idx_text = name_index.read_text(encoding="utf-8")
-            if "English" not in idx_text and "英文" not in idx_text:
+            if "English" not in idx_text and "\u82f1\u6587" not in idx_text:
                 errors.append("NAME_INDEX.md missing English name column")
-            if "中文" not in idx_text:
+            if "\u4e2d\u6587" not in idx_text and "Chinese" not in idx_text:
                 errors.append("NAME_INDEX.md missing Chinese name column")
             destination_country = str(request.get("country", "")).casefold()
-            if "japan" in destination_country or "日本" in destination_country:
-                if not ("かな" in idx_text or "假名" in idx_text or "よみ" in idx_text):
+            if "japan" in destination_country or "\u65e5\u672c" in destination_country:
+                if not ("\u304b\u306a" in idx_text or "\u5047\u540d" in idx_text or "\u3088\u307f" in idx_text or "kana" in idx_text.casefold()):
                     errors.append("Japanese NAME_INDEX.md must track kana readings")
-                if not ("romaji" in idx_text.casefold() or "罗马字" in idx_text):
+                if not ("romaji" in idx_text.casefold() or "\u7f57\u9a6c\u5b57" in idx_text):
                     errors.append("Japanese NAME_INDEX.md must track romaji pronunciation")
         quality = project / "research/QUALITY_REPORT.md"
         if not quality.is_file() or quality.stat().st_size < 250:

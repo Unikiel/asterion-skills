@@ -1,6 +1,6 @@
 # Content Contracts and Section Coverage
 
-Full taxonomic skeleton: `../assets/Seven_Ninths_Travel_Brochure_Master_Skeleton.md`.
+Full taxonomic skeleton: `../assets/Seven_Ninths_Master_Skeleton.md`.
 
 ## Mandatory publication spine (order)
 
@@ -52,7 +52,7 @@ Operator, covered lines, exclusions, duration, price and refund rules with valid
 
 ### Tours
 
-Themes/season, itinerary of stops, admission, event timing, booking rules and links. Tours are activity-based; do not use as a container for all geographically neighboring cities.
+Design experiences: what to do, see, learn or participate in, distinctive theme, season/event date, duration, provider or self-guided status, booking, participation/mobility rules and weather alternative. Follow `reader_contract.md`. Do not reuse the geographical catalogue as generic thematic stop lists.
 
 ## Depth and editorial quality
 
@@ -62,14 +62,14 @@ Themes/season, itinerary of stops, admission, event timing, booking rules and li
 - A research note is not a finished brochure. In final status, no unresolved template markers and all claims tied to sources.
 
 
-## 多语言标注与三级目录（固定要求）
+## Multilingual labels and three-level contents (mandatory)
 
-用户请求语言不限，攻略默认简体中文。每个重要地点、景点、交通站和路线必须中文＋英文；日本还须含日文原名、假名发音及罗马字；不能核实的读音不得编造。参照 `multilingual_names_and_pronunciation.md`。最终 DOCX/PDF 的目录需 Heading 1–3、真实页码与可点击链接；参照 `legacy_layout_contract.md`。
+Requests may use any language, including Chinese; guide narrative defaults to Simplified Chinese. Every important place, attraction, transport station and route needs Chinese + English. Japanese destinations also need original Japanese names, verified kana pronunciation and romanization; never invent unverified readings. See `multilingual_names_and_pronunciation.md`. Final DOCX/PDF contents require Heading 1-3, actual page numbers and clickable links; see `legacy_layout_contract.md`. The English language of skill documentation and examples does not change generated-guide defaults.
 
 
 ## Visual obligations
 
-Real, source-verified licensed photos and actual sourced geographic maps must be downloaded to `photos/` and `maps/` and embedded inline in the manuscript, DOCX, and PDF. Multiple regional map illustrations are mandatory; minimum visual counts depend on trip length (see `media_acquisition_and_maps.md`). A citation hyperlink is not an image.
+Real, source-verified licensed photos and actual sourced geographic maps must be downloaded to `photos/` and `maps/` and embedded inline in the manuscript, DOCX, and PDF. Multiple regional map illustrations are mandatory; every individual attraction, shopping/dining venue and hotel requires at least one corresponding photo beside its entry, including nested facilities and Around Area/Tours venues. Use the entry catalogue and markers from `reader_contract.md`; aggregate counts cannot satisfy missing entries (see `media_acquisition_and_maps.md`). A citation hyperlink is not an image.
 
 ## Pagination obligations
 

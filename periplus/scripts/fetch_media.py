@@ -13,6 +13,7 @@ from pathlib import Path
 import sys
 from urllib.request import Request, urlopen
 from PIL import Image, ImageOps
+from version import SKILL_VERSION
 
 MAX_BYTES=20*1024*1024
 
@@ -27,7 +28,7 @@ def fetch_assets(project, timeout=25):
     for a in assets:
         path=Path(a.get('file',''))
         kind=a.get('kind')
-        if kind not in ('photo','map') or path.is_absolute() or '..' in path.parts or path.parts[0] != ('photos' if kind=='photo' else 'maps'):
+        if kind not in ('photo','illustration','map') or path.is_absolute() or '..' in path.parts or path.parts[0] != ('maps' if kind=='map' else 'photos'):
             errors.append(f'Invalid local media path: {path}');continue
         dest=project/path
         if dest.is_file():
@@ -40,7 +41,7 @@ def fetch_assets(project, timeout=25):
         if any(x in (a.get('license','')+' '+a.get('source_url','')).lower() for x in ('test only','example.org','test.invalid')):
             errors.append(f'Test/example provenance is not a publication source: {path}');continue
         try:
-            req=Request(url,headers={'User-Agent':'PeriplusTravelBrochure/2.4.0 (media usage audit; non-bulk)','Accept':'image/png,image/jpeg,image/webp'})
+            req=Request(url,headers={'User-Agent':f'PeriplusTravelBrochure/{SKILL_VERSION} (media usage audit; non-bulk)','Accept':'image/png,image/jpeg,image/webp'})
             with urlopen(req,timeout=timeout) as resp:
                 if not str(resp.headers.get('Content-Type','')).startswith('image/'):
                     raise ValueError('URL did not serve an image')

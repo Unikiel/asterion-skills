@@ -16,6 +16,8 @@ import shutil
 import subprocess
 import tempfile
 
+from trip_dates import display_trip_dates, publication_stem
+
 BRAND = "Seven Ninths Travel Brochure"
 WESTERN_FONT = "Oswald"
 EAST_ASIAN_FONT = "Noto Sans CJK SC"
@@ -107,7 +109,7 @@ def parse_headings(tokens):
     for i, tok in enumerate(tokens[:-1]):
         if tok.type != 'heading_open' or i == cover_index: continue
         label = tokens[i+1].content.strip()
-        if not label or label.lower() in ('content', 'contents', 'table of contents', '目录'): continue
+        if not label or label.lower() in ('content', 'contents', 'table of contents', '\u76ee\u5f55'): continue
         out.append((i, min(int(tok.tag[1]), 4), label))
     return out, cover_index
 
@@ -145,9 +147,14 @@ def inline(par, token, manuscript):
                 w,h=im.size
                 if w < 600 or h < 400: raise ValueError(f'Illustration too small to print: {pic.name} ({w}x{h})')
                 if im.format not in ('PNG','JPEG'): raise ValueError(f'Convert image to PNG/JPEG for Word: {pic.name}')
-            max_w,max_h = 15.8, 17.0
+            # Keep photos useful beside venue prose; full maps need more vertical room.
+            max_w,max_h = 15.8, (12.5 if "maps" in pic.parts else 9.0)
+            par.paragraph_format.keep_together = True
+            par.paragraph_format.keep_with_next = True
             scale = min(max_w / w, max_h / h)
             par.add_run().add_picture(str(pic), width=Cm(w*scale), height=Cm(h*scale))
+            from docx.enum.text import WD_ALIGN_PARAGRAPH
+            par.alignment = WD_ALIGN_PARAGRAPH.CENTER
         elif k == 'softbreak': par.add_run(' ')
         elif k == 'hardbreak': par.add_run('\n')
 
@@ -155,12 +162,7 @@ def inline(par, token, manuscript):
 def cover_text(request, first_title):
     country = str(request.get('country') or '').strip() or 'TRAVEL'
     place = str(request.get('destination') or '').strip() or first_title
-    start = request.get('start_date', '')
-    end = request.get('end_date', '')
-    def fmt(s):
-        try: return date.fromisoformat(s).strftime('%Y.%m.%d')
-        except (ValueError, TypeError): return str(s)
-    return country.upper(), place.upper(), f'{fmt(start)} – {fmt(end)}'
+    return country.upper(), place.upper(), display_trip_dates(request)
 
 
 def write_docx(markdown: Path, dest: Path, *, request=None, page_map=None):
@@ -273,8 +275,31 @@ def write_docx(markdown: Path, dest: Path, *, request=None, page_map=None):
         elif typ in ('td_open','th_open'):
             cell=row.cells[col]; col+=1;current=cell.paragraphs[0]
         elif typ in ('td_close','th_close'): current=None;cell=None
-        elif typ=='table_close': table=None;row=None;cell=None
+        elif typ=='table_close':
+            # Repeat headings and prohibit split rows when photos increase page flow.
+            for idx, tr in enumerate(table.rows):
+                pr = tr._tr.get_or_add_trPr(); pr.append(OxmlElement('w:cantSplit'))
+                if idx == 0: pr.append(OxmlElement('w:tblHeader'))
+            table=None;row=None;cell=None
         elif typ in ('heading_close','paragraph_close','blockquote_close'): current=None
+    # An image paragraph keeps the immediately adjacent caption on the same page.
+    previous_image = False
+    for par in doc.paragraphs:
+        has_image = bool(par._p.xpath('.//w:drawing'))
+        if previous_image and not has_image and not par.style.name.startswith('Heading'):
+            par.paragraph_format.keep_together = True
+        previous_image = has_image
+    # Table/hyperlink built-in styles can silently override the Normal font.
+    for part in [doc.element, sec.header._element, sec.footer._element]:
+        for run in part.xpath('.//w:r'):
+            pr = run.find(qn('w:rPr'))
+            if pr is None:
+                pr = OxmlElement('w:rPr'); run.insert(0, pr)
+            fonts = pr.find(qn('w:rFonts'))
+            if fonts is None:
+                fonts = OxmlElement('w:rFonts'); pr.insert(0, fonts)
+            for key in ('ascii', 'hAnsi', 'cs'): fonts.set(qn('w:' + key), WESTERN_FONT)
+            fonts.set(qn('w:eastAsia'), EAST_ASIAN_FONT)
     dest.parent.mkdir(parents=True, exist_ok=True); doc.save(dest)
     return toc
 
@@ -348,8 +373,12 @@ def export_project(project: Path, formats=None):
     if not source.is_file(): raise FileNotFoundError(f'Missing researched manuscript: {source}')
     req_file = project/'request.json'
     request = json.loads(req_file.read_text(encoding='utf-8')) if req_file.is_file() else {}
-    docx = project/'exports'/f'{ROOT_NAME}.docx'
-    pdf_file = project/'exports'/f'{ROOT_NAME}.pdf'
+    from reader_qa import audit_reader_text, audit_transport_plan
+    problems = audit_reader_text(source.read_text(encoding='utf8'), request) + audit_transport_plan(project, source.read_text(encoding='utf8'), request)
+    if problems: raise RuntimeError('Reader/transport QA failed: ' + '; '.join(problems[:12]))
+    stem = publication_stem(request)
+    docx = project/'exports'/f'{stem}.docx'
+    pdf_file = project/'exports'/f'{stem}.pdf'
     try:
         import fitz
     except ImportError as ex:
@@ -372,7 +401,9 @@ def export_project(project: Path, formats=None):
     results = []
     if 'docx' in formats: results.append(docx)
     if 'pdf' in formats: results.append(pdf_file)
-    if 'md' in formats: results.append(source)
+    if 'md' in formats:
+        public_md = project/'exports'/f'{stem}.md'
+        shutil.copy2(source, public_md); results.append(public_md)
     return results
 
 

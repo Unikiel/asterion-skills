@@ -16,7 +16,8 @@ try {
     }
     Copy-Item -LiteralPath $src -Destination $dest -Recurse
     if (-not (Test-Path (Join-Path $dest 'SKILL.md'))) { throw 'Installation integrity check failed' }
-    Write-Host "Installed Periplus to $dest" -ForegroundColor Green
+    $installedVersion = (Get-Content -LiteralPath (Join-Path $dest 'VERSION') -Raw).Trim()
+    Write-Host "Installed Periplus $installedVersion to $dest" -ForegroundColor Green
     Write-Host 'Restart Codex. Then invoke $periplus with travel inputs.'
 } finally {
     if (Test-Path $tmp) { Remove-Item $tmp -Force -Recurse }

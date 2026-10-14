@@ -1,0 +1,35 @@
+# Reader-facing guide and reference contract
+
+## Authority and reference use
+
+Apply the traveler’s latest explicit instructions first, then the attached reference for uncertain presentation/detail choices, then this skill’s defaults. Inspect a supplied DOCX in document order, including tables, images and headings, and render representative pages. Store a concise structural/content observation in the research notes. Use the reference for format, scope and entry depth; research all destination facts independently. Never copy old service times, fares, medical claims, licenses or inaccurate facts into another trip. Reference photos are examples of placement, not permission to redistribute them.
+
+Use `kobe_reference_contract.md` when the historical Word files are unavailable. Keep the broad compendium: lack of a photo is not a reason to silently shrink the catalogue.
+
+## Publish useful travel information
+
+Write factual destination descriptions and actionable guidance. Keep selection rationale, feasibility calculations, coverage audits, tool limitations, taxonomy definitions and compliance talk in `research/`, never as first-person or skill-policy narration in the guide. Do not publish "This handbook requires...", "To satisfy the skill...", "Here we only consider...", "Editorial suggestion/estimate" labels, internal feasibility ratings or status enums. Practical estimates and material uncertainty still need brief reader-useful wording: "Allow about 20 minutes for the ride; if delayed, take the next service" or "The original July timetable could not be found; use this route as orientation, not to purchase dated tickets". Do not conceal uncertainty or invent facts to sound definitive.
+
+Use `Around Area` once as the chapter label; use only destination names or a meaningful attraction/theme in its H3 titles, e.g. `Hirosaki`, not `Hirosaki one-day round trip`. Show departure, return, visit time and missed-connection recovery as actual travel directions; do not explain the internal same-day eligibility rule. Detailed calculations stay in research notes.
+
+## Accommodation
+
+Keep a concise hotel information card: Chinese/English/local names and readings, address/postcode, official telephone, website, verified email/fax if useful, check-in/out, exact entrance/reception floor, nearest station/exit, realistic bag-carrying access and luggage services. Provide at least one specific real hotel photo, preferably exterior/entrance, plus a separate genuine access/location map. A map does not satisfy the hotel photo. Do not default to daily hotel routines, repeated planning-anchor tables or a packing lecture. Include breakfast/amenities only when useful and verified. If no hotel supplied, each recommended hotel gets its own complete card and photo; label recommendations without implying reservations.
+
+## Attractions, dining, shopping — individual illustrated entries
+
+Every independently described/recommended attraction, museum, building, viewpoint, sub-attraction, shop, mall, market, shopping street, restaurant, café, bar and hotel has at least one correctly identified real photo beside its own entry. This applies also to Around Area, Tours and venue cards within Brief Sketch. A city’s general background mention or a cross-reference to an already illustrated entry is not a new venue card. Use a cross-reference for repeats; do not give an unillustrated new recommendation in a table or a run-in paragraph. Different branches require distinct identities and appropriate photos. Food/interior photos must demonstrably belong to the specific restaurant. One cityscape, a generic dish, chain logo or map cannot cover all entries.
+
+Register every venue card in `research/ENTRY_CATALOGUE.json`, and place `<!-- periplus-entry: entry_id -->` immediately under its unique H3–H6 heading. Catalogue fields: `id`, `category` (`attraction`, `dining`, `shopping`, `hotel`), `name`, exact Markdown `heading`, `photo_ids`. Each venue photo in `MEDIA_MANIFEST.json` has corresponding `entry_ids`; supplementary cover/transport photos need no fake venue association. Authentic sourced ticket or floor-plan graphics use `kind: illustration` and cannot satisfy a venue’s photograph requirement. These comments are internal publication metadata; never print them. A shared photo only counts for multiple entities when it visibly depicts them, its attribution identifies them, and it is placed in each corresponding card. For composite centres, the centre photo does not automatically cover a tenant restaurant.
+
+Manually reconcile the full manuscript against the catalogue, including tables and nested facilities. Machine checks verify registered cards, associations and location of photos; they cannot prove no venue was omitted from the catalogue or that a photo depicts the correct branch. Record reconciliation and rights/subject review in QUALITY_REPORT. Missing any required photo blocks FINAL; disclose acquisition/licensing obstacles instead of replacing photos with URLs or deleting requested content.
+
+## Tours — experiences
+
+Organize by a coherent experience: craft workshop, tasting, onsen, festival, scenic railway ride, architecture interpretation, photography session or guided visit. Explain what the traveler actually does/sees/learns, distinctive atmosphere, season/time, meeting/start/end point, practical duration, provider/self-guided status, reservations, participation rules, accessibility, transport and weather alternative. Use the real event dates. A themed self-guided route is allowed if its experience is developed; do not simply recycle a list of museums or label an ordinary geographical transfer as a tour. Illustrate every new venue introduced; use precise cross-references for venues already covered.
+
+## Tickets & Prices — products and discounts
+
+Put destination/regional transport passes, attraction passes, combined tickets and discounts here, following the reference. Describe each named product individually: operator, coverage map/illustration where licensed, adult/child price, validity dates/duration, eligibility, reservation/supplements, excluded services/venues, purchase/activation/refund and official URL. Include applicable combination and facility discounts, not just railway cards. Explain worthwhile use with actual covered-ride/admission arithmetic. IC cards are payment tools, not automatic discounts; distinguish them clearly.
+
+Do not produce a trip budget, per-person cost total, daily spending estimate, taxi/meal allowance or hotel-cost forecast unless the traveler explicitly requests a budget. Individual fares, admission and published menu prices remain useful in their relevant entries. Avoid duplicating this catalogue: `Tourist Travel Pass & Ticket` can introduce the ticket system and direct the reader to the `Tickets & Prices` product cards. Preserve the reference’s functional grouping; sibling H2s are permitted when needed for a genuine three-level TOC.

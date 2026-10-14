@@ -64,4 +64,4 @@ The schema is the **union** of three user-authored Seven Ninths brochures. Do no
 - Store source coverage in the working coverage log. Do not place the raw private DOCX files in a distributable Skill.
 
 
-**v2.4 adaptation:** `Arrival & Departure` is a mode-agnostic wrapper (flight/train/bus/ferry/drive/mixed); legacy Flight heading is included only if an actual flight segment exists. `Accommodation` honors supplied hotel details as travel anchor, else recommends unbooked hotels. Photographs and maps are embedded physical deliverables, not links. H1/H2 require new pages.
+**Current operational contract:** `Arrival & Departure` is a mode-agnostic wrapper (flight/train/bus/ferry/drive/mixed); legacy Flight heading is included only if an actual flight segment exists. `Accommodation` honors supplied hotel details as travel anchor, else recommends unbooked hotels. Photographs and maps are embedded physical deliverables, not links. H1/H2 require new pages.

@@ -5,6 +5,8 @@ description: Automatically research and generate a complete, source-traceable Se
 
 # PERIPLUS — Automatic Travel Brochure Generator
 
+**Release: 2.5.0.** Read the canonical `VERSION` file. Skill instructions, metadata and bundled examples are English-only. This authoring policy does not restrict traveler input: accept Chinese and other languages, default generated guide narration to Simplified Chinese (`zh-CN`), and honor explicit output-language requests.
+
 *Know the Place. Shape the Journey.*
 
 ## Mission, not a skeleton
@@ -22,25 +24,25 @@ Do not stop after kickoff. Do not ask the user to copy stage prompts or run ever
 3. **Genuine content:** no blank sections, merely generic attraction lists, repeated filler prose, copied template markers, or draft text passed off as finished chapters.
 4. **Language-independent input and customizable output:** Accept invocation in ANY natural language or a mixture, including Chinese, English, Japanese and other languages. Default guide narrative to Simplified Chinese unless the user specifies another output language. Never require English prompts or translate away user preferences. EVERY major place/landmark/station/restaurant/hotel/route must display a Chinese + English name; for Japan ALSO provide Japanese script, verified kana pronunciation, and Hepburn romanization. For other countries show local script and verified pronunciation where available. See `references/multilingual_names_and_pronunciation.md`.
 5. **DOCX + PDF always by default:** both mandatory final deliverables; internal Markdown is not default output. A user may explicitly request additional/alternate formats.
-6. **Real embedded visual assets (mandatory):** Research and download attributable real photographs and geographically accurate source-grounded area/access maps, then embed the actual image files into DOCX and PDF. Maintain `research/MEDIA_MANIFEST.json` with source URLs, creator, license, attribution, and local paths. Links alone, dummy images, diagrammatic wallpaper, or empty map placeholders do not count. Every distinct area Map A/B/... needs a real associated map image. See `references/media_acquisition_and_maps.md`.
+6. **Real embedded visual assets (mandatory):** Research and download attributable real photographs and geographically accurate source-grounded area/access maps, then embed the actual image files into DOCX and PDF. Require at least one specific real photo for EVERY attraction, nested venue, shopping venue, dining venue and hotel, beside its own entry; maps do not count as photos. Register every venue card with an immediately adjacent hidden `periplus-entry` marker and maintain `research/ENTRY_CATALOGUE.json` for per-entry coverage and `research/MEDIA_MANIFEST.json` with source URLs, creator, license, attribution, entry IDs and local paths. Links alone, dummy images, diagrammatic wallpaper, or empty map placeholders do not count. Every distinct area Map A/B/... needs a real associated map image. See `references/media_acquisition_and_maps.md`.
 7. **Heading pagination:** EVERY level-1 and EVERY level-2 heading starts a NEW page in Word AND PDF, not just the first section. Place substantive introduction text between consecutive H1/H2 headings to avoid heading-only pages; Heading 3 can flow normally.
 8. **Legacy brochure page layout:** follow the COVER + genuine 3-level auto-updatable, page-numbered `Content` table of contents + brand header on EVERY page + current/total page-number footer, matching the FORMAT (not trip facts) of the three original Word brochures. Check stable TOC page numbers in both DOCX and PDF. See `references/legacy_layout_contract.md`.
 9. **Attribution & logistics:** preserve researched transport routes, airport transfers, station/exit information, source URLs, retrieval dates and uncertainty labels, including feasible outbound and return legs for independent Around Area same-day excursions.
 10. **Typography:** Oswald is the default Western/English font for cover, headings, body Latin text, header, TOC, captions and page numbers; Chinese and Japanese stay on a readable CJK font. In PDF, verify Oswald is really used/embedded; no silent substitution. If Oswald is absent on the generating computer, report installation requirement and block FINAL. Do not distribute font files.
 11. **Completion gate:** conduct factual/source, structural and visual audits of the generated DOCX and PDF before delivery. If research or export is unavailable, disclose the blocker; never claim a final guide has been produced.
 
-**Required inputs are destination, inclusive trip dates, and outbound/return journey legs (ANY transport mode, flight not mandatory), including **outbound origin (去程出发点)** and **return final destination (回程最终目的地)**. They may be DIFFERENT. Hotel information is an independent optional input.** Everything else (including the rules above, researching sources, output formats, headings, local-language names, Around Area criterion and QA) is the Skill's responsibility, not a prompt that must be pasted every time. Accommodation and custom preferences are optional.
+**Required inputs are destination, inclusive trip dates, and outbound/return journey legs (ANY transport mode, flight not mandatory), including **outbound origin (starting point)** and **return final destination (final endpoint)**. They may be DIFFERENT. Hotel information is an independent optional input.** Everything else (including the rules above, researching sources, output formats, headings, local-language names, Around Area criterion and QA) is the Skill's responsibility, not a prompt that must be pasted every time. Accommodation and custom preferences are optional.
 
 **Minimal valid invocation:**
 
 ```text
 $periplus
-目的地：京都，日本
-时间：2026-11-05 至 2026-11-11
-去程：铁路，东京站 → 京都站（车次待查）
-返程：铁路，京都站 → 大阪站（车次待查；终点不同于去程起点）
-住宿：京都某酒店，地址或名称
-偏好：建筑、博物馆、铁路、摄影，尽量少走路
+Destination: Kyoto, Japan
+Dates: 2026-11-05 through 2026-11-11
+Outbound: rail, Tokyo Station -> Kyoto Station (recommend a suitable service)
+Return: rail, Kyoto Station -> Osaka Station (recommend a service; final endpoint differs from the origin)
+Accommodation: supplied hotel name/address, if known
+Preferences: architecture, museums, railways, photography, minimal walking
 ```
 
 Service numbers in examples are placeholders, not verified bookings.
@@ -50,8 +52,8 @@ Service numbers in examples are placeholders, not verified bookings.
 **Core input parameters** — accepted in ANY human natural language (including mixed-language input), or in `examples/trip_request.json` / `references/request.schema.json`:
 
 - `destination` — main destination (city/region, optional country), required.
-- `start_date`, `end_date` — inclusive calendar dates `YYYY-MM-DD`, required for trip mode. Use destination-local clock times.
-- `journey.outbound`, `journey.return` — **required transport legs**, accepting `flight`, `rail`, `bus`, `ferry`, `drive`, `mixed` or `other`; provide known service/route/boarding and arrival points, time/date and intermediate segments where applicable. Flight numbers are NEVER universally required. **`journey.outbound.origin` and `journey.return.destination` are mandatory endpoints**, which can be resolved from supplied booking data when unambiguous; never silently assume a symmetrical round trip. If an essential endpoint cannot be resolved, ask only for that endpoint. For an unbooked service, research viable options and mark status correctly; do not fabricate ticket confirmation.
+- Dates — accept one `start_date` + `end_date`, or `date_ranges: [{start_date, end_date}, …]` with any number of inclusive destination-local periods. Preserve every segment; do not schedule gaps or interpret envelope bounds as continuous stay. See `references/filename_and_date_periods.md`.
+- `journey.outbound`, `journey.return` — **required transport legs**, accepting `flight`, `rail`, `bus`, `ferry`, `drive`, `mixed` or `other`; provide known service/route/boarding and arrival points, time/date and intermediate segments where applicable. Flight numbers are NEVER universally required. **`journey.outbound.origin` and `journey.return.destination` are mandatory endpoints**, which can be resolved from supplied booking data when unambiguous; never silently assume a symmetrical round trip. If an essential endpoint cannot be resolved, ask only for that endpoint. When a specific service is missing, recommend actual date-specific flight/train/bus/ferry services with identifiers (or operator + route + departure when officially unnumbered), exact local departure/arrival and sources. Select them only after preceding activities, immigration/baggage, terminal distances and boarding cutoffs are allowed for. Compare all sensible transport modes rather than capping alternatives at one or two. Maintain `research/TRANSPORT_PLAN.json`; see `references/service_selection.md`. Distinguish recommendations from bookings; do not fabricate ticket confirmation.
 - `hotel` — independent structured optional input: hotel name, local/English name, address, telephone, check-in/out, booking status and any reference. Use it as the travel base, not an accommodation suggestion. If absent, research and recommend hotels and clearly mark them UNBOOKED.
 - `customization` — optional interests, required sights, pace, mobility/walking limit, photography, architecture, museums, shopping, food, budget, companions, hotel / neighborhood, preferred excursions, exclusions, accessibility, language, and output formats. Any freeform constraints also apply.
 
@@ -59,26 +61,30 @@ User-provided booked transport schedules and lodging are planning anchors, while
 
 The user need supply **no research sources, maps, fixed prompts, booking links, knowledge files or templates**. Those are Skill responsibilities. Optional traveler preferences are enhancements, not blockers.
 
+## Reader contract
+
+Use the attached brochure as the reference for uncertain format, scope and entry depth, while independently verifying current destination facts. Read `references/reader_contract.md`. Keep internal reasoning/compliance narratives out of the guide. Around Area titles use destination names, without repeated “one-day round trip” suffixes. Accommodation needs a specific hotel photo AND access map. Tours focus on experiences. Tickets & Prices contains destination passes, combination tickets and discounts; do not generate a budget unless explicitly requested.
+
 ## Mandatory publication defaults
 
 - **Default deliverables are both DOCX and PDF**, with identical content and English filenames. Markdown is an internal authoring/research intermediary, not a default delivered artifact. Only include `.md` as a user-facing export when explicitly requested.
 - Put the exact text **Seven Ninths Travel Brochure** in the recurring page **header of every page**, including the cover unless the user explicitly requests a cover exception; keep page numbers in the footer. Never use a floating cover-only logo instead of a real Word section header.
 - Hard page break before every `Heading 1` AND `Heading 2`, verified in rendered PDF as well as DOCX. Include real embedded licensed photographs and maps with photo credits and map/source attribution, never external-only media references.
 - Preserve headings and multilingual Chinese/English/Japanese glyphs, local-script readings and Hepburn romanization, long-form narrative, active hyperlinks, legible tables and accessible consistent page margins. Include a real Word TOC field with complete Heading 1–3 entries, dotted leaders and verified ACTUAL page numbers, clickable in DOCX/PDF; do not use a plain-text list of headings without page numbers. PDF must be derived from the approved DOCX so content matches.
-- Source research manuscript: `exports/Seven_Ninths_Travel_Brochure.md` for reproducible assembly. Final deliverables: `exports/Seven_Ninths_Travel_Brochure.docx` and `.pdf`. This internal `.md` may remain on disk without being treated as a default user-facing download.
+- Source research manuscript: `exports/Seven_Ninths_Travel_Brochure.md` for reproducible assembly. Final DOCX/PDF filenames MUST follow `YYYY.Country.City.MMDD-MMDD[.MMDD-MMDD…]`, e.g. `exports/2026.Japan.Tokyo.0711-0712.0717-0719.docx` and matching `.pdf`. Include every date segment with no fixed segment count. Use verified English country/city labels, ASCII filenames only. Read `references/filename_and_date_periods.md` for normalization and cross-year naming; the exporter must write the actual names, not just relabel links. This internal `.md` may remain on disk without being treated as a default user-facing download.
 - **The guide is not FINAL until both requested output formats exist, contain the recurring header, can be opened, and their rendered pages are visually checked.** If export tools are unavailable, explicitly fail the requested format(s) rather than pretending the Markdown intermediary satisfies them.
 - To publish in an agent filesystem, invoke `python scripts/export_brochure.py --project <trip-project>` after the manuscript is complete; it generates DOCX and PDF automatically. Default dependencies are `python-docx`, `markdown-it-py`, `Pillow`, `pymupdf` and LibreOffice (for DOCX→PDF). They can be installed locally as needed; do not claim PDF without a working renderer.
 
 ## Direct agent invocation — required happy path
 
 1. Extract parameters from the user's message. If sufficient, **begin execution immediately**, no extra approval or template-only output.
-2. Read `references/multilingual_names_and_pronunciation.md`, `references/legacy_layout_contract.md`, `references/content_specifications.md`, `references/around_area.md`, `references/source_protocol.md`, `references/itinerary_engine.md`, and `references/delivery_qa.md`; consult `assets/Seven_Ninths_Master_Skeleton.md` and `references/coverage_matrix.md` to preserve every inherited section.
+2. Read `references/filename_and_date_periods.md`, `references/reader_contract.md`, `references/kobe_reference_contract.md` and `references/service_selection.md` first; inspect any user-supplied reference for unclear presentation choices. Read `references/multilingual_names_and_pronunciation.md`, `references/legacy_layout_contract.md`, `references/content_specifications.md`, `references/around_area.md`, `references/source_protocol.md`, `references/itinerary_engine.md`, and `references/delivery_qa.md`; consult `assets/Seven_Ninths_Master_Skeleton.md` and `references/coverage_matrix.md` to preserve every inherited section.
 3. Write normalized `request.json` and maintain `TASKS.md` + `research/EVIDENCE_LEDGER.md` and progress files in a dedicated output folder. If file tools are unavailable, still research and write complete substantive deliverable in the best supported response format; say which artifact format cannot be generated.
 4. Perform live research in domain batches and write intermediate notes **as you go**, with timestamp/source URLs. Prioritize official municipal/transport/venue sites, then reputable tourism and other sources; triangulate material conflicts. **A skill is instructions, not a live-data database**: use actual retrieval/search tools. If none are available, state the specific research limitation rather than manufacturing verified facts.
 5. Produce detailed and complete destination compendium: History; Geography + Administrative Region + Climate; Population; Religion; Politics; Economy by sectors; Education; Culture (Language & Dialect / Localism, Travel, Literature & Art, Art & Craft, Architecture, Museum, Events & Festivals, Delicacy / Diet & Cuisine, Media, Sports, Subculture); Transportation including Railways, Metro, Bus, Road/Highway, Port, Airport, International Exchange where relevant.
 6. Research **core attractions individually** rather than giving a top-ten list. Provide local-language names, reasons to visit, address, venue hours/closure/ticket, access, photography tips where relevant, and citations. Group attractions into geographic Map A/B/C/etc areas. Identify **Around Area** as *nearby different destinations possible as a one-day trip with departure from AND return to the principal base on the same calendar date*. It is not a synonym or alias. Test outbound/return schedules, meaningful onsite duration, cutoff and fallback; see `references/around_area.md`.
 7. Compose ARRIVAL-to-hotel and hotel-to-DEPARTURE logistics in the actual requested modes (rail, bus, ferry, drive, flight, or multimodal), route alternatives, and a grounded daily itinerary. Include day-specific closure/seasonality and plausible walking/transit, photo time, rest and dining, plus bad-weather alternatives. Explicitly distinguish confirmed user flight information from researched options and live availability.
-8. Fill restaurant/café/bar and supermarket/store/market categories, passes/tickets/IC cards, tourist centers, money, embassies, emergency numbers, official transport links, and full bibliography. Keep Seven Ninths branding. **No blank section headings, no bracketed placeholders or generic “to be researched.”** Sections genuinely irrelevant to a small destination may briefly explain that with evidence rather than disappear.
+8. Write Tours as distinctive themed experiences, not duplicated geographic attraction lists. Fill individually illustrated restaurant/café/bar and supermarket/store/market categories, passes/tickets/IC cards, tourist centers, money, embassies, emergency numbers, official transport links, and full bibliography. Keep Seven Ninths branding. **No blank section headings, no bracketed placeholders or generic “to be researched.”** Sections genuinely irrelevant to a small destination may briefly explain that with evidence rather than disappear.
 9. Assemble a complete researched BODY manuscript at `exports/Seven_Ninths_Travel_Brochure.md` containing only real chapter prose, headings, tables, figures and map links. **Do not manually write a COVER or Content/TOC page in Markdown**: the exporter creates the legacy cover and a genuine 3-level numbered clickable Word/PDF Contents. Include research citation URLs adjacent to operational facts and numbered source list. **Always generate DOCX + PDF by default**, with `Seven Ninths Travel Brochure` in the page header; render/inspect both, maintain `research/QUALITY_REPORT.md`, and report an explicit export failure rather than falling back silently to Markdown.
 10. Run `scripts/validate.py` if files exist, repair structural failures, then run `scripts/export_brochure.py` and check requested DOCX/PDF. Publish **only when the complete brochure and requested formatted files exist**; report remaining items honestly (e.g., schedules yet to be released by operators) as discreet verification notes, not hidden invented information.
 
@@ -94,12 +100,12 @@ If the Skill is installed for Codex, call it simply (no repeated execution requi
 
 ```text
 $periplus
-目的地：京都，日本
-日期：2026-11-05 至 2026-11-11
-去程：新干线（东京 → 京都）
-返程：新干线（京都 → 东京）
-住宿：已订酒店及地址（可选）
-偏好：建筑、摄影、博物馆
+Destination: Kyoto, Japan
+Dates: 2026-11-05 through 2026-11-11
+Outbound: Shinkansen, Tokyo Station -> Kyoto Station
+Return: Shinkansen, Kyoto Station -> Tokyo Station
+Accommodation: booked hotel name and address (optional)
+Preferences: architecture, photography, museums
 ```
 
 Or fill `examples/trip_request.json` and run the noninteractive wrapper once:
@@ -122,12 +128,13 @@ The script invokes **multiple Codex agent executions automatically** for researc
 
 ## Files
 
+- `references/filename_and_date_periods.md` and `scripts/trip_dates.py` — unlimited date-period input, active-day coverage, English country/city filenames
 - `references/request.schema.json` — normalized input shape
 - `prompts/` — autonomous generation phases for command-line runner
 - `scripts/generate.py` — one-call Codex CLI orchestration
 - `scripts/export_brochure.py` — generate DOCX + matching PDF with a verified auto-updatable three-level Content/TOC field, actual page numbers, branded page headers and PAGE/NUMPAGES footers
 - `references/media_acquisition_and_maps.md` — genuine visual assets, OSM/licensing and map specifications
 - `scripts/media_utils.py` — image provenance/embedding acceptance gate
-- `scripts/validate.py` — structural, evidence, completeness, journey-endpoint, and media checks
+- `scripts/validate.py` — structural, evidence, completeness and flight anchoring checks
 - `references/` — content, route, round-trip, evidence and QA rules, plus `multilingual_names_and_pronunciation.md` and `legacy_layout_contract.md`
 - `assets/Seven_Ninths_Master_Skeleton.md` — section taxonomy reference, not deliverable

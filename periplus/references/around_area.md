@@ -23,6 +23,10 @@ No universal mileage threshold: geographical proximity does **not** guarantee ea
 
 A user's declared time/energy/walking restrictions override default categories. Never infer that a trip is accessible merely because the train ride is short.
 
+## Publication voice
+
+Keep eligibility definitions and calculations in research notes. Use destination-only H3 titles, e.g. `Hirosaki`. Publish concrete outbound/return directions, visit options and practical missed-connection advice; do not repeat "one-day round trip" in every title or explain the skill’s classification policy. The following record is INTERNAL research data, not text to paste into the guide.
+
 ## Required excursion record
 
 ```markdown

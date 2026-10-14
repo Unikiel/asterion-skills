@@ -1,46 +1,48 @@
-# Periplus — 多语言地名、标牌和发音规范（强制）
+# Periplus — Multilingual Place Names, Signage and Pronunciation (Mandatory)
 
-## 核心原则
+## Core principles
 
-- 用户可以**使用任何语言**提出请求：中文、英语、日语、韩语、法语、混合语言均接受。原样理解自由文本和地名，不要因提示词语言而改变请求的含义。
-- **默认攻略叙述语言是简体中文（zh-CN）**，但若用户指定其他输出语言，全部正文、章节说明、清单和行程表都按其指定语言输出；运行指令、README 和样例使用的语言不应改变这个默认。
-- **所有重要可定位实体都必须有中文和英文两个名称**（景点、神社寺庙、博物馆、美术馆、街区、购物中心、餐厅、酒店、车站、机场、月台/出入口、线路、周边一日游目的地）。当相关名称不是正式翻译时，标注“说明性译名/音译”，不要冒充官方英文名称。
-- **日本目的地同时保留可供现场辨认的日文原名＋假名读音＋ Hepburn 罗马字**。不能可靠核对读音时，标“读音待核”，不猜测汉字人名/地名的读法；不要给已有官方读音的地名随意改写拼法。
-- 日本以外仍须保留**当地文字、适用的标准转写/音标**（如果能可靠查到）。不会读的不能杜撰音标。
+- Users may submit requests in **any language**, including Chinese, English, Japanese, Korean, French or mixed-language text. Interpret free text and place names faithfully; the prompt language must not change the request's meaning.
+- **The default guide narrative language is Simplified Chinese (zh-CN)**. If the user specifies another output language, use it throughout the narrative, chapter explanations, lists and schedules. The language of skill instructions, README files and examples does not change this default. Skill documentation and bundled examples are written in English; generated guides still support Chinese input and output.
+- **All important locatable entities must have Chinese and English names**: attractions, shrines/temples, museums, art galleries, districts, shopping centres, restaurants, hotels, stations, airports, platforms/exits, lines and nearby excursion destinations. Label nonofficial translations as descriptive translations or transliterations, in the guide's narrative language; never present them as official English names.
+- **Japanese destinations also retain the original Japanese name, verified kana pronunciation and Hepburn romanization**, allowing identification on site. If pronunciation cannot be reliably verified, mark it as pronunciation pending in the guide's language; never guess readings of personal or place-name kanji. Do not arbitrarily rewrite established official readings.
+- Outside Japan, retain **local script and the applicable standard transliteration/phonetic notation** when reliably sourced. Never invent pronunciation notation.
 
-## 标准记录格式（建议最小版本）
+## Standard record format (recommended minimum)
 
-**京都站 / Kyoto Station**  
-日文：京都駅（きょうとえき，*Kyōto-eki*）  
-问路时给工作人员看：**京都駅**  
-类别：铁路枢纽 ｜ 所在地：京都市 ｜ 可用线路：按实际核对
+The following English documentation examples use descriptive placeholders for non-English script. Replace placeholders with researched names and readings in the generated guide; never print placeholders in final output.
 
-**清水寺 / Kiyomizu-dera Temple**  
-日文：清水寺（きよみずでら，*Kiyomizu-dera*）  
-向路人展示：**清水寺**（附实际地址，以便辨别同名目的地）
+**[Chinese name] / Kyoto Station**\
+Japanese: [official Japanese name] ([verified kana], *Kyoto-eki in verified Hepburn spelling*)\
+Show staff: **[official Japanese name]**\
+Category: railway hub | Location: Kyoto City | Available lines: independently verified
 
-> 以上仅示例命名格式，时间、班次、地址、交通路线必须在执行旅行任务时另行查询核验。
+**[Chinese name] / Kiyomizu-dera Temple**\
+Japanese: [official Japanese name] ([verified kana], *Kiyomizu-dera*)\
+Show a local resident: **[official Japanese name]** (include the actual address to distinguish similarly named destinations)
 
-## 输出布局硬规则
+> These examples illustrate naming format only. Dates, services, addresses and routes require independent verification when executing a travel task.
 
-1. 景点正文三级标题：`### 中文名称 / English Name`；紧接独立行：`**日文原名：** …（ふりがな / Rōmaji）`。非日本地名改为当地官方文字＋核实的读音。
-2. 车站、公交站、线路、酒店及餐厅在表格中同时使用中文 + English，不可只写中文。
-3. 交通路线按顺序列出官方站名/线路名，尤其入口、站台、方向、换乘位置、出站口；并排显示中文和当地文字，必要时包含官方英文标牌。
-4. 为重点景点和转乘复杂的交通枢纽提供小型**问路卡**：中文意思、可向现场出示的当地文字、可靠的罗马音读法、地址或最近站。示例：
-   - 中文：请问怎么去京都站？
-   - 日本語：すみません、京都駅にはどう行けばいいですか。
-   - Romaji：Sumimasen, Kyōto-eki ni wa dō ikeba ii desu ka?
-   - 给工作人员看：**京都駅**
-5. 图片/地图标签至少中文/英文，日文原标牌在日本必须保留，图中文字清晰可辨。
-6. 重复同一名称时首次提供全量读音，之后在短段落可使用中英双语缩写；**不可只在附录给名称对照，正文、日程和路线也须标注**。
-7. 任何翻译名、日文读音或罗马字有歧义时，采用官方景点、铁路运营商、城市或权威地图的名称核对；记录出处。
+## Mandatory output layout
 
-## 研究证据
+1. Attraction H3 headings: `### [Chinese name] / English Name`, followed immediately by a separate `**Original Japanese name:** [official script] ([verified kana] / [Hepburn romanization])` line. Render field labels in the requested narrative language. For non-Japanese places, use local official script and verified pronunciation instead.
+2. Tables show Chinese + English for stations, bus stops, lines, hotels and restaurants; never use Chinese alone.
+3. Routes list official station/line names in sequence, particularly entrances, platforms, direction, interchange locations and exits. Show Chinese beside local script; include official English signage when needed.
+4. Supply small **ask-for-directions cards** for key attractions and complex transfer hubs: Chinese meaning, local-script text that can be shown on site, verified romanized pronunciation, and address or nearest station. Example card structure:
+   - Chinese: [Chinese translation of "How do I get to Kyoto Station?"]
+   - Japanese: [verified natural Japanese question asking directions to Kyoto Station]
+   - Romaji: [verified Hepburn rendering of that same Japanese question]
+   - Show staff: **[official Japanese station name]**
+5. Image/map labels include at least Chinese/English; retain original Japanese signage for Japanese destinations. Text must be clearly legible.
+6. Provide full pronunciation at first mention; subsequent short paragraphs may use Chinese/English shortened names. **An appendix alone is insufficient: the body, schedule and routes also require multilingual labels.**
+7. Resolve ambiguous translated names, Japanese readings or romanization using the official attraction, rail operator, municipality or authoritative map, and record the source.
 
-对名称记录优先使用官方景区、交通运营商、政府旅游网站，以及官方英文页面。英语名称并非都存在官方译名；必要时注明按中文释义生成的英文名称，不伪装官方译名。优先显示日本日文汉字、假名和罗马字而不是只保留不通用的英文意译。
+## Research evidence
 
-## 审核
+Prioritize official attractions, transport operators, government tourism sites and official English pages for name records. Not every entity has an official English translation. Where needed, identify an English name derived from the Chinese meaning as a descriptive translation rather than an official name. Prefer displaying Japanese kanji, kana and romanization over retaining only an uncommon English semantic translation.
 
-- 抽检首批至少 10 个或全部（若少于 10 个）核心景点：中文＋英文＋日文/本地名＋可核实的读音齐全。
-- 抽检 Airport, Hotel, Railway, Attraction, Around Area, Restaurant & Café, Shopping 每个章节中至少一个地点，必须同样执行多语言规则。
-- PDF 字体必须支持中文、英文、日文、假名和长音标；目视检查是否乱码、文字重叠、缺字。
+## Audit
+
+- Check at least the first 10 core attractions, or all if fewer than 10: Chinese + English + Japanese/local name + reliably sourced pronunciation must be complete.
+- Check at least one entity in each Airport, Hotel, Railway, Attraction, Around Area, Restaurant & Cafe and Shopping section against the same multilingual rules.
+- PDF fonts must support Chinese, English, Japanese, kana and long-vowel marks. Visually inspect for corruption, overlapping text and missing glyphs.

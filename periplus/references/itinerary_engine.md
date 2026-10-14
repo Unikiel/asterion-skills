@@ -1,5 +1,7 @@
 # Itinerary, Transport, Maps and Logistics
 
+Read `filename_and_date_periods.md`; plan only active days in each date_ranges segment, not gap days. Preserve per-period accommodation and journey facts.
+
 ## Planning order
 
 1. Fix **outbound origin (where the traveler starts)**, **return final destination (where traveler ends)**, main stay **base**, stay date(s), arrivals/departures, immovable reservations and user walking/energy preferences. Outbound origin and return destination can differ; never force a round-trip symmetry.
@@ -8,6 +10,8 @@
 4. Build a feasible daily route, integrating opening days, queues, last-entry, meal/rest breaks, photography light, transfers, station exits, baggage, and route contingency.
 5. Put chosen dates/time windows in Schedule. The detailed Catalogue then expands the stops in the same geographical order, preserving map references.
 6. Re-evaluate when rain, closures or transit changes invalidate assumptions.
+
+Read `service_selection.md` for specific service selection, multimodal comparisons and predecessor buffers. Publish concise travel directions; keep calculation and taxonomy notes internal.
 
 ## Time model
 
@@ -48,9 +52,9 @@ Real door-to-door ≈ walk to station + ticket/security margin
 - `Tours` = thematic and seasonal ways to combine experiences, within the main city or a qualified nearby excursion.
 
 
-## 多语言标注与三级目录（固定要求）
+## Multilingual labels and three-level contents (mandatory)
 
-用户请求语言不限，攻略默认简体中文。每个重要地点、景点、交通站和路线必须中文＋英文；日本还须含日文原名、假名发音及罗马字；不能核实的读音不得编造。参照 `multilingual_names_and_pronunciation.md`。最终 DOCX/PDF 的目录需 Heading 1–3、真实页码与可点击链接；参照 `legacy_layout_contract.md`。
+Requests may use any language, including Chinese; guide narrative defaults to Simplified Chinese. Every important place, attraction, transport station and route needs Chinese + English. Japanese destinations also need original Japanese names, verified kana pronunciation and romanization; never invent unverified readings. See `multilingual_names_and_pronunciation.md`. Final DOCX/PDF contents require Heading 1-3, actual page numbers and clickable links; see `legacy_layout_contract.md`. The English language of skill documentation and examples does not change generated-guide defaults.
 
 
 **Entry and exit modes:** outbound/return travel may be flight, rail, bus, ferry, driving or multimodal; connect chosen hotel (when given) or proposed accommodation base to both termini. Never require airport transfers when the user takes the train.

@@ -1,47 +1,48 @@
-# Seven Ninths Travel Brochure — 老攻略版式合同
+# Seven Ninths Travel Brochure — Historical Layout Contract
 
-版式依据用户亲自提供的三份 Word 攻略，而非借用当年旧行程、旧票价或目的地资料：
+The layout is based on three Word guides personally supplied by the user; their old itineraries, fares and destination facts are not reused:
 - `2024.Japan.Nagoya.0323-0328.docx`
 - `2025.Japan.Kobe.1002-1007.docx`
 - `2026.Japan.Tokyo.0501-0504.docx`
 
-## 必须继承的出版形式
+## Required inherited publication format
 
-1. **A4、竖向长篇手册**，非 PPT 型旅游海报、单页景点列表，也不能变成博客排版。
-2. **独立封面**：上方/中央国名 `JAPAN`、目的地大字、`YYYY.MM.DD – YYYY.MM.DD` 日期范围，使用克制黑白设计＋日系红色强调，正文不复用老攻略图片或内容。
-3. **封面后紧接 Content/目录**：**三级章节**（Heading 1–3），左侧层级缩进、点状引导线、右侧**真实页码**，多页目录允许自动延伸。
-4. 旧三份 DOCX 内均包含 `TOC \\o "1-3" \\h \\z \\u` 字段，且 TOC1/2/3 均有页码；Periplus 要生成真正可在 Word 更新的 TOC 字段，同时在导出的 DOCX 和 PDF 中预先填入核验过的目录页码，不依赖用户打开 Word 后手工“更新域”。
-5. **固定页眉**：`Seven Ninths Travel Brochure`，每一页；加细分隔线。**页脚**中央 `当前页 / 总页数`，各页有效。
-6. **正文结构与标题层级**：只继承三份旧攻略中的栏目与层级；目的地事实、航班、时刻表、信息来源都必须重新研究，不能复用旧内容。
-7. 景点、交通、酒店必须按需包含真实照片、真实地图/站台图和表格；**实际图片和地图必须获取并嵌入 DOCX/PDF**（不能只放外部链接）；标注版权及来源；无合法真实图时阻止 FINAL 并报告问题。
-8. 内容默认简体中文，实体名称中英双语并附当地官方名字与读音；具体参见 `multilingual_names_and_pronunciation.md`。
-9. **西文英文字体默认为 Oswald**（封面、标题、正文拉丁字母、页眉、目录、图注和数字）；中文/日文使用合适的 CJK 字体。DOCX 必须声明 Oswald，PDF 必须实际使用 Oswald；若转换电脑未安装，应报告阻塞并提示从官方渠道安装，不得静默替换或随 Skill 打包字体。字体回退不得出现方框缺字。
-10. **DOCX→PDF 后逐页检查**页眉、目录页码、跳转及页脚。PDF页码应与目录实际页面一致，Word TOC 可再更新。
+1. **A4 portrait long-form handbook**, not a presentation-style travel poster, single-page attraction list or blog layout.
+2. **Separate cover**: country name such as `JAPAN` above/centrally, large destination title and `YYYY.MM.DD - YYYY.MM.DD` date periods (retain every separate period without merging gaps). Use restrained black/white design with a Japanese-style red accent. Do not reuse old-guide images or content in the body.
+3. **Content/table of contents directly after the cover**: **three heading levels** (Heading 1-3), hierarchical left indentation, dot leaders and right-aligned **actual page numbers**. Allow automatic continuation over multiple pages.
+4. All three historical DOCX files contain a `TOC \\o "1-3" \\h \\z \\u` field with page numbers in TOC1/2/3. Periplus must generate a genuine Word-updatable TOC field and prepopulate verified TOC page numbers in the exported DOCX and PDF, without requiring the reader to open Word and manually update fields.
+5. **Recurring header**: `Seven Ninths Travel Brochure` on every page, with a thin separator rule. Centre the **footer** `current page / total pages`, effective on all pages.
+6. **Body structure and heading hierarchy**: inherit only the sections and hierarchy of the three historical guides. Independently research destination facts, flights, timetables and sources; do not reuse old content.
+7. Every attraction, nested facility, shopping venue, restaurant/cafe/bar and hotel needs at least one corresponding genuine photograph. Transport includes genuine photographs, geographic/platform maps and tables where useful. **Acquire and physically embed images/maps in DOCX and PDF**, not merely external links, with copyright/source attribution. If legally usable genuine media cannot be acquired, block FINAL and report the obstacle.
+8. Narrative defaults to Simplified Chinese; entity names are Chinese/English plus local official names and pronunciation. See `multilingual_names_and_pronunciation.md`.
+9. **Oswald is the default Latin/English font** for cover, headings, Latin body text, header, TOC, captions and numerals. Use suitable CJK fonts for Chinese/Japanese. DOCX must declare Oswald and PDF must actually use it. If unavailable on the conversion host, report the block and advise installation from official sources; do not silently substitute or bundle font files with the skill. Font fallback must not create missing-glyph boxes.
+10. **Inspect every page after DOCX-to-PDF conversion**, including headers, TOC page numbers, navigation and footers. TOC numbers must match actual PDF pages; the Word TOC remains updateable.
 
-## 章节架构
+## Chapter architecture
 
 - Arrival & Departure
 - Accommodation
-- Brief Sketch（History / Geography / Climate / Population / Religion / Politics / Economy / Education / Culture / Transportation / ...）
-- Attractions & Schedule（Maps A–P ... / Schedule）
-- Sightseeing & Adventure（Primary City / Around Area [同日往返的附近目的地] / Tours）
-- Delicacy & Shopping（Restaurant & Café & Bar / Supermarket & Store & Market）
-- Recommends & Tips（Tourist Travel Pass & Ticket / Tourist Center / Tickets & Prices / Practical Information / Currency / Embassy / Important Numbers / Useful links）
+- Brief Sketch (History / Geography / Climate / Population / Religion / Politics / Economy / Education / Culture / Transportation / ...)
+- Attractions & Schedule (Maps A-P ... / Schedule)
+- Sightseeing & Adventure (Primary City / Around Area [nearby destinations with same-day return] / Tours)
+- Delicacy & Shopping (Restaurant & Cafe & Bar / Supermarket & Store & Market)
+- Recommends & Tips (Tourist Travel Pass & Ticket / Tourist Center / Tickets & Prices / Practical Information / Currency / Embassy / Important Numbers / Useful links)
 
-栏目标题可以保留原有英文，内部正文按用户指定语言输出。地名不要因为章节使用英文而丢失中英日三种标注。
+Section headings may retain their inherited English labels while narrative uses the requested language. English chapter labels do not remove Chinese/English/Japanese place-name requirements.
 
-## DOCX 输出约束
+## DOCX output constraints
 
-- 正文由真正的 `Heading 1/2/3` 样式编码，Word 的“导航窗格”和 PDF 书签能够导航。
-- 内置`TOC`字段负责 Word 后续更新，**必须同时拥有经过排版稳定性复核的静态缓存页码**供 DOCX/PDF 即时阅读。
-- 拒绝未带数字页码的手工目录、带 `000` 的缓存、只有 `Contents` 的空页、以及和正文错位的页码。
-- 目录不应包含封面的大字标题本身；目录标题 `Content` 不应重复进入目录。
+- Encode the body with genuine `Heading 1/2/3` styles, enabling the Word Navigation Pane and PDF bookmarks.
+- The built-in `TOC` field supports subsequent Word updates and **must also contain static cached page numbers checked after pagination stabilizes**, allowing immediate DOCX/PDF reading.
+- Reject manual contents without numeric pages, `000` caches, empty pages containing only `Contents`, and TOC numbers misaligned with the body.
+- Exclude large cover titles from the TOC. The `Content` heading must not list itself.
 
+### Strict pagination
 
-### 严格分页
+Every `Heading 1` and every `Heading 2`, regardless of position, must set `page_break_before=True`; `Heading 3` need not start a new page. Supply substantial content beneath Heading 1 before Heading 2 to avoid isolated title-only pages. Confirm by rendering every page.
 
-每一个 `Heading 1` 和每一个 `Heading 2`，不论位置，必须设置 `page_break_before=True`；`Heading 3` 不强制另页。保证一级标题之下先有实质内容再出现二级标题，避免仅有标题的孤页。逐页渲染确认。
+### Publication media
 
-### 正式媒体
+Acquire genuine photographs and regional geographic maps, with captions/credits, following `references/media_acquisition_and_maps.md`. Follow historical layout examples, but **do not copy old-file photographs as evidence about a new destination**.
 
-按 `references/media_acquisition_and_maps.md` 取得真实图片、真实地区地图并写图注/署名。版式参考三份旧版攻略，但**不复制旧文件照片作为新目的地事实**。
+Final filenames follow `filename_and_date_periods.md`: year.English-country.English-city.all-date-periods.docx / .pdf, with no fixed period count.

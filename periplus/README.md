@@ -1,74 +1,60 @@
-# Periplus v2.4.1 — 任意语言输入 · 中文默认输出 · 中英日地名与读音 · 老攻略版式
+# Periplus v2.5.0
 
-**输入目的地、日期、去程起点、返程终点及去程/返程交通方式（飞机/火车/巴士/轮船/自驾/组合均可）及可选住宿酒店、偏好。** 不用重复研究、排版、目录、校验等规则。输入可用中文、英语、日语或其他语言；正文默认简体中文，明确要求可改为其他语言。
+Automatically research and publish a complete Seven Ninths Travel Brochure. All skill documentation and bundled examples are English. Traveler requests may be written in Chinese, English, Japanese or any other language. Generated narration defaults to Simplified Chinese (`zh-CN`) and follows an explicitly requested alternative language.
 
-**必备产物：DOCX + PDF**，保留旧版 Nagoya/Kobe/Tokyo 三份攻略的 A4 封面风格、`Content` 真正的三级带页码目录、`Seven Ninths Travel Brochure` 每页页眉、`N / Total` 页脚。仅参照它们的**版式**，绝不复用当年的景点事实和时刻表。
-
-**地点标注永久规则：** 中文 + English；日本还显示日文原名、核实的假名及罗马字，方便向站务人员展示和发音。机场、铁路线路、车站、景点、餐厅、酒店、Around Area 同样适用。
-
-## 一句话使用
+## Request example
 
 ```text
 $periplus
-目的地：京都，日本
-日期：2026-11-05 到 2026-11-11
-去程：新干线，东京站 → 京都站
-回程：新干线，京都站 → 大阪站（返程终点可以不同）
-住宿：已预订酒店名称及地址（可选）
-偏好：现代建筑、铁路、博物馆、摄影、少走路
+Destination: Kyoto, Japan
+Dates: 2026-11-05 through 2026-11-11
+Outbound: Shinkansen, Tokyo Station -> Kyoto Station
+Return: Shinkansen, Kyoto Station -> Osaka Station
+Accommodation: supplied hotel name and address, if known
+Preferences: modern architecture, railways, museums, photography, minimal walking
 ```
 
-也可用英语、日语等任意自然语言提供相同参数。车次只是语法示例，并非已确认时刻、车票或预订。
+Do not require service numbers. Research specific date-applicable services, allow preceding arrival/activity and immigration/baggage/terminal/boarding buffers, and compare sensible transport modes. Treat supplied bookings as anchors without inventing availability. Outbound origin and final return destination are mandatory and may differ. Hotel information is optional.
 
-## 安装到本地 Codex
+## Publication contract
 
-本目录是 Asterion Skills 仓库中的 Periplus 2.4.1。集合级说明见仓库根目录 [README](../README.md)。把完整的 `periplus/` 目录复制到 Windows `%USERPROFILE%\.codex\skills\periplus\`，macOS/Linux `~/.codex/skills/periplus/`。若已有包含 `periplus/SKILL.md` 的 ZIP，也可用同目录的 `install_codex.ps1` 或 `install_codex.sh`；见 `INSTALL.md`。ChatGPT 账户的安装需通过其支持的 Skill 导入操作执行。
+- Generate DOCX and a matching PDF by default. Keep the complete historical section taxonomy, substantive destination background and detailed venue catalogues.
+- Preserve A4 cover, genuine clickable three-level page-numbered Content, `Seven Ninths Travel Brochure` header on every page and current/total footer. Start H1 and H2 on new pages.
+- Use Oswald for Western text and readable CJK fonts for Chinese/Japanese. Verify real PDF fonts; font files are not bundled.
+- Every attraction, nested facility, shopping venue, dining venue and hotel needs a corresponding licensed real photo in its own card. Hotels also need a separate access map. Register and reconcile ENTRY_CATALOGUE and MEDIA_MANIFEST.
+- Embed actual geographic maps for every Map A/B/etc. URLs alone do not count. Keep credits and reuse permissions.
+- Keep internal reasoning out of the guide. Around Area titles use destination names. Tours emphasize distinctive experiences. Tickets & Prices covers passes, combinations and discounts, not a default trip budget.
+- Display Chinese + English place names; in Japan also show Japanese script, verified kana and Hepburn readings. This generated-content requirement does not change the English-only skill source policy.
+- Accept any number of date periods. Schedule active days only and preserve every period in the final English filename.
 
-## 本地一键执行（可选）
-
-```powershell
-python scripts/generate.py --destination Kyoto --country Japan --start 2026-11-05 --end 2026-11-11 --outbound-mode rail --outbound-origin "Tokyo Station" --outbound-destination "Kyoto Station" --outbound "Nozomi 123" --return-mode rail --return-origin "Kyoto Station" --return-destination "Osaka Station" --return-service "Nozomi 456" --hotel "Booked Hotel" --custom "铁路、博物馆、摄影、少走路" --out .\trips
-```
-
-需要已经配置联网研究权限的 Codex CLI，以及 `python-docx`、`markdown-it-py`、`pymupdf`、`Pillow`、LibreOffice 才能导出并验收真实 DOCX/PDF。
-
-`Around Area` 是离主目的地足够近、能**同日出发、当日返回**的周边一日游，不是主目的地的别名。
-
-## 目录（示意）
+For Tokyo stays on July 11-12 and July 17-19, the actual outputs are:
 
 ```text
-periplus/
-  SKILL.md
-  README.md
-  agents/openai.yaml
-  references/multilingual_names_and_pronunciation.md
-  references/legacy_layout_contract.md
-  references/*.md
-  prompts/01-07_*.md
-  assets/Seven_Ninths_Master_Skeleton.md
-  references/media_acquisition_and_maps.md
-  scripts/generate.py
-  scripts/export_brochure.py
-  scripts/fetch_media.py
-  scripts/map_from_geojson.py
-  scripts/media_utils.py
-  scripts/validate.py
-  scripts/test_skill.py
+2026.Japan.Tokyo.0711-0712.0717-0719.docx
+2026.Japan.Tokyo.0711-0712.0717-0719.pdf
 ```
 
-这是可安装的 Skill 代码包，不会从本对话自动写入你电脑或账号。联网端到端真实目的地攻略需要在用户的 Codex 环境进行测试。
+Read `references/filename_and_date_periods.md` for cross-year rules. The stable internal manuscript is `exports/Seven_Ninths_Travel_Brochure.md`; explicitly requested public Markdown uses the same date-based filename as other outputs.
 
+## Install and run
 
+See `INSTALL.md`. The ZIP contains a `periplus/` folder. Install that folder into the local Codex skills directory or use the bundled platform installer. Local installation does not install runtime dependencies or register a skill in a different account.
 
-## 出版交付强制条件
+From the installed skill directory:
 
-- **必须内嵌实际真实照片 + 真实地图**（包括每个 Map A/B 等区域），不能把网页图片链接当插图。媒体来源、作者与版权条件写入 `research/MEDIA_MANIFEST.json`，每张图有标注。
-- **一级、二级标题各自都从新页面开始**；三级标题不断页。
-- 使用酒店入参作为主要住宿与换乘基点；无酒店时仅推荐未预订的酒店。
-- `Arrival & Departure` 接受各类交通，而非必须飞机。
-- 发行前执行真实媒体与DOCX/PDF页码、页眉、目录及换页 QA。
-媒体辅助脚本：`scripts/fetch_media.py` 可下载已确认许可的真实照片/官方地图；`scripts/map_from_geojson.py` 可用经过核实的真实地理 GeoJSON 数据制作区域地图。缺乏真实素材时不会用地图 URL 或虚构插图冒充成品。
+```bash
+python scripts/generate.py --version
+python scripts/generate.py --request examples/trip_request.json --out ./trips
+```
 
-## 英文字体与端点默认规范
+The generator runs the research and writing phases through a configured Codex CLI. It needs working web-research access. Publication requires Python `python-docx`, `markdown-it-py`, `Pillow`, `pymupdf` and LibreOffice. `--dry-run` initializes diagnostics only and never produces a completed guide. Resume using `--resume --project PATH`.
 
-西文英文字体固定使用 **Oswald**（封面、页眉、目录、标题、正文与数字）；中文使用 Noto Sans CJK SC 等可读 CJK 字体。PDF 导出前请在执行机器上安装 Oswald，导出程序会核验 PDF 字体，未安装则报错阻止 FINAL（Skill ZIP 不包含任何字体文件）。**去程起点** `journey.outbound.origin` 与**返程最终目的地** `journey.return.destination` 必填，不假设相同。
+## Release checks
+
+`VERSION` is the canonical skill release number. Project records include the skill and schema versions. The release tests cover multilingual acceptance, default Chinese output, per-entry media, connection margins, English filenames, arbitrary date periods and orchestration. Run:
+
+```bash
+python -m unittest discover -s scripts -p 'test_*.py'
+```
+
+Independent source/rights verification and every-page rendered visual review remain required; test fixtures and structural validation do not establish real travel facts.
