@@ -36,7 +36,7 @@ Local (e.g., Japanese) name, English/Chinese name where available; type; reason 
 
 ### Hotels / arrival
 
-Carrier and line, terminal/platform/bus stop, station exit, travel times, fares, time-zone, changing train instructions, payment and baggage. Hotel check-in/out, desk/floor, entrance quirks and access map.
+Support each actual entry/exit mode (flight, rail, bus, ferry, driving, mixed) and each segment; show terminal/platform/bus stop, station exit, travel times, fares, time-zone, changes, payment and baggage. If `request.hotel` exists, treat its supplied name/address and check-in/out as core anchors; hotel desk/floor, entrance quirks and genuine embedded access map. If no hotel exists, offer clearly unbooked recommendations.
 
 ### Dining and shopping
 
@@ -65,3 +65,12 @@ Themes/season, itinerary of stops, admission, event timing, booking rules and li
 ## 多语言标注与三级目录（固定要求）
 
 用户请求语言不限，攻略默认简体中文。每个重要地点、景点、交通站和路线必须中文＋英文；日本还须含日文原名、假名发音及罗马字；不能核实的读音不得编造。参照 `multilingual_names_and_pronunciation.md`。最终 DOCX/PDF 的目录需 Heading 1–3、真实页码与可点击链接；参照 `legacy_layout_contract.md`。
+
+
+## Visual obligations
+
+Real, source-verified licensed photos and actual sourced geographic maps must be downloaded to `photos/` and `maps/` and embedded inline in the manuscript, DOCX, and PDF. Multiple regional map illustrations are mandatory; minimum visual counts depend on trip length (see `media_acquisition_and_maps.md`). A citation hyperlink is not an image.
+
+## Pagination obligations
+
+Heading 1 and Heading 2 MUST start on fresh pages. Write narrative directly below Heading 1 before the next Heading 2 to avoid title-only pages.

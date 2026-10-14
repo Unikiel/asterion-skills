@@ -3,19 +3,40 @@
   "country": "Japan",
   "start_date": "2026-11-05",
   "end_date": "2026-11-11",
-  "flights": {
-    "outbound": {"flight_number": "REPLACE_WITH_OUTBOUND_FLIGHT_NUMBER", "status": "booked"},
-    "return": {"flight_number": "REPLACE_WITH_RETURN_FLIGHT_NUMBER", "status": "booked"}
+  "journey": {
+    "outbound": {
+      "mode": "rail",
+      "service": "EXAMPLE_NOT_VERIFIED_No.123",
+      "origin": "Tokyo Station",
+      "destination": "Kyoto Station",
+      "reservation_status": "planned"
+    },
+    "return": {
+      "mode": "rail",
+      "service": "EXAMPLE_NOT_VERIFIED_No.456",
+      "origin": "Kyoto Station",
+      "destination": "Osaka Station",
+      "reservation_status": "planned"
+    }
   },
-  "hotel": null,
+  "hotel": {
+    "name": "EXAMPLE_BOOKED_HOTEL_REPLACE",
+    "address": "REPLACE_WITH_BOOKED_HOTEL_ADDRESS",
+    "check_in": "2026-11-05",
+    "check_out": "2026-11-11",
+    "status": "planned"
+  },
   "customization": {
-    "interests": ["architecture", "photography", "museums", "railways", "coffee"],
-    "must_visit": [],
-    "avoid": [],
-    "pace": "balanced",
-    "walking_limit": "Prefer short walks with convenient rail access",
+    "interests": [
+      "architecture",
+      "railways",
+      "photography"
+    ],
+    "walking_limit": "尽量减少步行",
     "language": "zh-CN",
-    "formats": ["docx", "pdf"],
-    "notes": "Give qualified Around Area same-day round trips and rain-friendly alternatives."
+    "formats": [
+      "docx",
+      "pdf"
+    ]
   }
 }

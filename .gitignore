@@ -1,6 +1,7 @@
 /docs/superpowers/
 bigbang/SHA256SUMS.txt
 bigbang/MERGE_AUDIT.md
+debug.log
 
 # Amber Kernel Python runtime
 amber-kernel/**/__pycache__/

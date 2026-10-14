@@ -1,14 +1,4 @@
 interface:
-  display_name: Periplus
-  short_description: 任意语言输入，自动编写含多语言地名及读音的完整旅行攻略
-  default_prompt: 使用 $periplus，按我提供的目的地、日期、往返航班和可选偏好，自动研究并生成 Seven Ninths Travel Brochure。默认中文
-    DOCX 与 PDF，章节齐全、三级带页码目录、固定页眉；重要地名中英双语，日本附原名、假名与罗马字。无需我重复默认规则。
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
-policy:
-  products:
-  - chatgpt
-  - codex
-  - api
-  - atlas
-  allow_implicit_invocation: true
+  display_name: "Periplus"
+  short_description: "任意语言输入，自动编写含多语言地名及读音的完整旅行攻略"
+  default_prompt: "使用 $periplus，按我提供的目的地、日期、去返程实际交通方式、可选酒店信息和偏好，自动研究并生成 Seven Ninths Travel Brochure。默认中文 DOCX 与 PDF，章节齐全、三级带页码目录、固定页眉，一级与二级标题强制换页，嵌入真实图片及区域地图；重要地名中英双语，日本附原名、假名与罗马字。无需我重复默认规则。"

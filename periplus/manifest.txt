@@ -1,3 +1,4 @@
+manifest.txt
 INSTALL.md
 README.md
 SKILL.md
@@ -20,10 +21,14 @@ references/coverage_matrix.md
 references/delivery_qa.md
 references/itinerary_engine.md
 references/legacy_layout_contract.md
+references/media_acquisition_and_maps.md
 references/multilingual_names_and_pronunciation.md
 references/request.schema.json
 references/source_protocol.md
 scripts/export_brochure.py
+scripts/fetch_media.py
 scripts/generate.py
+scripts/map_from_geojson.py
+scripts/media_utils.py
 scripts/test_skill.py
 scripts/validate.py

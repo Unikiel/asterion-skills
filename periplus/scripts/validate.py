@@ -53,10 +53,31 @@ def assess(project: Path, mode: str):
     for category in TRACKED:
         if not any(category.casefold() in h for h in header_names):
             errors.append("Missing inherited historical subcategory: " + category)
-    for name, val in (("outbound", request.get("flights", {}).get("outbound", {}).get("flight_number", "")),
-                      ("return", request.get("flights", {}).get("return", {}).get("flight_number", ""))):
-        if not val or str(val).upper() not in text.upper():
-            errors.append(f"Request {name} flight absent from final brochure: {val}")
+    journey = request.get("journey", {})
+    if not journey and request.get("flights"):
+        journey = {key:{"mode":"flight", "service":request["flights"].get(key,{}).get("flight_number","")}
+                   for key in ("outbound", "return")}
+    for key in ("outbound", "return"):
+        leg = journey.get(key, {})
+        if not leg.get("mode"):
+            errors.append(f"Missing {key} journey mode")
+        if key == "outbound":
+            start = str(leg.get("origin") or "").strip()
+            if not start or start.casefold() not in text.casefold():
+                errors.append(f"Outbound origin absent from brochure: {start or '[missing]'}")
+        else:
+            end = str(leg.get("destination") or "").strip()
+            if not end or end.casefold() not in text.casefold():
+                errors.append(f"Return final destination absent from brochure: {end or '[missing]'}")
+        marker = str(leg.get("service") or leg.get("route") or "").strip()
+        if marker and marker.casefold() not in text.casefold():
+            errors.append(f"Journey {key} service/route missing in brochure: {marker}")
+    hotel = request.get("hotel")
+    if hotel and (hotel.get("name") or hotel.get("address")):
+        for key in ("name", "address"):
+            value = str(hotel.get(key) or "").strip()
+            if value and value.casefold() not in text.casefold():
+                errors.append(f"User-provided hotel {key} omitted from brochure: {value}")
     try:
         start = date.fromisoformat(request["start_date"])
         end = date.fromisoformat(request["end_date"])
@@ -92,6 +113,11 @@ def assess(project: Path, mode: str):
         words = len(text.split())
         if len(text) < 7000 or len(re.findall(r"\w", text, re.UNICODE)) < 4500:
             errors.append(f"Brochure too brief for completed compendium: {len(text)} characters, {cjk} Han characters")
+        try:
+            from media_utils import audit_media
+            errors.extend(audit_media(project, text, request))
+        except ImportError:
+            errors.append("Media validator unavailable")
         links = set(re.findall(r"https?://[^\s\]>]+", text))
         if len(links) < 8:
             errors.append(f"Too few attributable URLs in published brochure: {len(links)} (expected >=8)")

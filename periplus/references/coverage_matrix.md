@@ -5,7 +5,7 @@ The schema is the **union** of three user-authored Seven Ninths brochures. Do no
 | Canonical section | 2024 Nagoya | 2025 Kobe | 2026 Tokyo | Periplus rule |
 |---|:---:|:---:|:---:|---|
 | Cover + Contents | ✓ | ✓ | ✓ | Cover metadata, navigable TOC, numbered regional maps |
-| Arrival & Departure / Flight | ✓ | ✓ | ✓ | Arrival + return leg, local times, terminal specifics |
+| Arrival & Departure / Flight | ✓ | ✓ | ✓ | Historic brochures used flights; NEW skill accepts all travel modes, flight optional |
 | Airport railway / airport bus | Railway | Airport Bus | Railway | Transport modality is configurable, preserve both |
 | Accommodation | ✓ | ✓ | ✓ | Hotel contacts, station access, hotel-to-platform logistics |
 | Brief Sketch + History | ✓ | ✓ | ✓ | Research city history, region-specific period subdivisions |
@@ -62,3 +62,6 @@ The schema is the **union** of three user-authored Seven Ninths brochures. Do no
 - A brochure is a knowledge reference and actionable travel guide, not a transport booking system.
 - Historical brochures are useful **structure exemplars**, not trusted sources for current ticket prices, transport timetables, institutional officeholders or opening schedules.
 - Store source coverage in the working coverage log. Do not place the raw private DOCX files in a distributable Skill.
+
+
+**v2.4 adaptation:** `Arrival & Departure` is a mode-agnostic wrapper (flight/train/bus/ferry/drive/mixed); legacy Flight heading is included only if an actual flight segment exists. `Accommodation` honors supplied hotel details as travel anchor, else recommends unbooked hotels. Photographs and maps are embedded physical deliverables, not links. H1/H2 require new pages.

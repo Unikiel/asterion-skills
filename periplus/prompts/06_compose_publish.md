@@ -4,7 +4,7 @@ This is a full-writing phase, not a scaffold phase. Read all existing research f
 
 Preserve all top-level sections, in order:
 1. Do NOT manually author a cover or Content/TOC in the Markdown manuscript: the DOCX/PDF exporter creates the legacy cover and a real three-level page-numbered clickable Content section;
-2. Arrival & Departure (both flights and actual airport access);
+2. Arrival & Departure (actual outbound and return mode(s), flight only when applicable, station/port/terminal transfer and hotel access);
 3. Accommodation (booked or clearly recommended);
 4. Brief Sketch (full researched country/city history, geography, population, politics, economy, education, language, culture, transport, etc);
 5. Attractions & Schedule (Area Maps and every travel date schedule);
@@ -13,7 +13,7 @@ Preserve all top-level sections, in order:
 8. Recommends & Tips (Tourist Travel Pass & Ticket, Tourist Center, Tickets & Prices, Practical Information, Currency, Embassy, Important Numbers, Useful links);
 9. Source bibliography and any discreet dated verification caveats.
 
-DO NOT just copy the master skeleton into the published output! Remove all bracket placeholders, TODOs, instructional metadata and dummy lists. Write actual factual paragraphs for every applicable chapter, tables only for genuinely tabular material, and complete substantive entries for each recommended attraction, dining/retail venue and excursion. Retain Japanese/local names. Provide source links with time-sensitive claims; do not invent a map or photo, instead link grounded map services if actual assets absent.
+DO NOT just copy the master skeleton into the published output! Remove all bracket placeholders, TODOs, instructional metadata and dummy lists. Write actual factual paragraphs for every applicable chapter, tables only for genuinely tabular material, and complete substantive entries for each recommended attraction, dining/retail venue and excursion. Retain Japanese/local names. Provide source links with time-sensitive claims; NEVER substitute bare hyperlinks for real photographs or maps. Embed downloaded, legally reusable genuine JPEG/PNG photographs from `photos/` and actual geographic map images from `maps/` using local-file Markdown image syntax and captions/credits; require complete research/MEDIA_MANIFEST.json. If missing, report blockers and do not mark FINAL.
 
 This should read like the user's substantial Nagoya/Kobe/Tokyo compendia, not a thin one-page itinerary. For large destinations, draft over multiple writing passes to avoid truncation—preserve and extend existing prose rather than leaving sections empty. Never mark brochure complete simply because the file exists.
 
@@ -30,3 +30,12 @@ After writing, create `research/QUALITY_REPORT.md` with completeness-by-section,
 ### 版式交接约定
 
 **Markdown 只写真实正文和章节标题**；不要输出 `# COVER`、`# Content`、手工目录、点引导线或页码，也不要复制 `assets` 里的模板占位符。`scripts/export_brochure.py` 会依据 `request.json` 自动生成封面及带页码的三级目录。正文中保留经过核实的多语言名称和读音，供出版器保持原样。
+
+
+### Final-format mandatory layout tests
+
+- `Heading 1` AND `Heading 2` each starts a new printed page, even if adjacent to previous heading; include meaningful section introduction to avoid title-only pages.
+- Use **Oswald** for ALL western/English text in headings, paragraphs, the running header, cover and the three-level TOC, with readable CJK font for Chinese/Japanese and real-PDF font verification (not substituted).
+- `Content` is the three-level clickable table of contents with actual verified page numbers; running header exact `Seven Ninths Travel Brochure`.
+- Photos and maps **MUST physically appear** in both DOCX/PDF. Real media must be documented with source, photographer/creator, license and caption. External-only links, generated decorative images, blank maps are blockers.
+- Hotel in request is treated as confirmed only when status=booked; hotel recommendation only if not specified. Outbound and return modes need not be flights.

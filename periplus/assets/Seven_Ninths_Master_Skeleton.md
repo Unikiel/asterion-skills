@@ -2,6 +2,8 @@
 
 > **注意：仅作为内容章节分类参考，不得复制本模板作为最终文稿。** 封面与带页码的三级目录由 DOCX/PDF 导出脚本生成，最终正文稿里不要再写 `# COVER` 和 `# Content`。地名必须中文 + English；日本还需日文原名、假名和罗马字。
 
+> 排版强制规则：**Heading 1 与 Heading 2 必须新起一页**；各地图区域和重要景点必须嵌入真实、来源可追溯的图片 / 地图（不是URL占位）。去返程实际交通方式不限；已提供酒店时应直接使用。
+
 > 基于既有 **Nagoya 2024 / Kobe 2025 / Tokyo 2026** 三份攻略整理出的统一骨架。  
 > 目标：保留三份文档中出现过的所有一级、二级与功能性模块，并将重复出现的内容抽象为可复用模板。  
 > 原文中使用的栏目名尽量保留，例如 `Around Aera`。
@@ -28,7 +30,7 @@
 
 ## Arrival - `[YYYYMMDD]`
 
-### Flight
+### Flight（仅当实际使用飞机）
 
 - 航班 / Airline & Flight No.:
 - 机型 / Aircraft:
@@ -41,6 +43,16 @@
 - 飞行时长:
 - 时差:
 - 备注: `※所有时间为当地时间`
+
+### Primary Journey — Rail / Bus / Ferry / Drive / Mixed（选择实际使用方式）
+
+- 交通方式与班次 / Travel Mode & Service:
+- 出发点（中文/英文/当地名称）:
+- 到达点（中文/英文/当地名称）:
+- 出发与抵达当地时间:
+- 车站、站台、码头、巴士站、停车点:
+- 运营商、换乘、预订状态及行李信息:
+- 真实来源的站台/地理地图图像（本地 JPG/PNG，含图注与出处）:
 
 ### Airport / Station Transfer
 
@@ -91,6 +103,18 @@
 
 ## Departure - `[YYYYMMDD]`
 
+> 与 Arrival 同样支持 Rail / Bus / Ferry / Drive / Mixed；不得强制飞行方式。
+
+### Primary Journey — Rail / Bus / Ferry / Drive / Mixed（选择实际使用方式）
+
+- 交通方式与班次 / Travel Mode & Service:
+- 出发点（中文/英文/当地名称）:
+- 到达点（中文/英文/当地名称）:
+- 出发与抵达当地时间:
+- 车站、站台、码头、巴士站、停车点:
+- 运营商、换乘、预订状态及行李信息:
+- 真实来源的站台/地理地图图像（本地 JPG/PNG，含图注与出处）:
+
 ### Airport / Station Transfer
 
 > 结构同 Arrival，按实际交通方式填写。
@@ -128,7 +152,7 @@
 - 行程时长:
 - 备注:
 
-### Flight
+### Flight（仅当实际使用飞机）
 
 - 航班 / Airline & Flight No.:
 - 机型 / Aircraft:
@@ -145,6 +169,8 @@
 ---
 
 # Accommodation
+
+> 已提供 `request.hotel` 时直接以用户酒店为住宿与路线中心；没有时才研究推荐，且不得暗示已预订。
 
 - Hotel Name:
 - Japanese Name:
@@ -532,6 +558,8 @@
 > 按地理区域拆分地图。每张地图建议对应一组高度相关的景点。
 
 ### Map A – `[AREA / DISTRICT]`
+
+> 必须实际内嵌真实地图 JPEG/PNG，图注注明地图来源、使用许可、地理数据来源。
 
 - 覆盖区域:
 - 地图:

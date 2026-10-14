@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-if [ "$#" -ne 1 ]; then echo "Usage: bash install_codex.sh ./periplus-skill-v2.3.0.zip"; exit 2; fi
+if [ "$#" -ne 1 ]; then echo "Usage: bash install_codex.sh ./periplus-skill-v2.4.0.zip"; exit 2; fi
 zipfile="$1"
 if [ ! -f "$zipfile" ]; then echo "ZIP not found: $zipfile"; exit 2; fi
 tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT

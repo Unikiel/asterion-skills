@@ -6,7 +6,7 @@
     "destination",
     "start_date",
     "end_date",
-    "flights"
+    "journey"
   ],
   "properties": {
     "destination": {
@@ -38,9 +38,12 @@
           "$ref": "#/$defs/flight"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "deprecated": true,
+      "description": "Legacy compatibility; normalized to journey with mode=flight if journey omitted."
     },
     "hotel": {
+      "description": "User-provided hotel information, independently optional. An omitted hotel triggers researched recommendations, not imaginary bookings.",
       "type": [
         "object",
         "null"
@@ -49,7 +52,26 @@
         "name": {
           "type": "string"
         },
+        "name_en": {
+          "type": "string"
+        },
+        "name_local": {
+          "type": "string"
+        },
         "address": {
+          "type": "string"
+        },
+        "postal_code": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string",
+          "format": "uri"
+        },
+        "reservation_reference": {
           "type": "string"
         },
         "check_in": {
@@ -57,8 +79,20 @@
         },
         "check_out": {
           "type": "string"
+        },
+        "status": {
+          "enum": [
+            "booked",
+            "planned",
+            "recommendation",
+            "unknown"
+          ]
+        },
+        "notes": {
+          "type": "string"
         }
-      }
+      },
+      "additionalProperties": true
     },
     "customization": {
       "type": "object",
@@ -145,6 +179,41 @@
         }
       },
       "additionalProperties": true
+    },
+    "journey": {
+      "type": "object",
+      "description": "Arrival and departure can each use any mode, including multimodal legs.",
+      "required": [
+        "outbound",
+        "return"
+      ],
+      "properties": {
+        "outbound": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/journey_leg"
+            },
+            {
+              "required": [
+                "origin"
+              ]
+            }
+          ]
+        },
+        "return": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/journey_leg"
+            },
+            {
+              "required": [
+                "destination"
+              ]
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
     }
   },
   "$defs": {
@@ -186,6 +255,118 @@
             "planned",
             "unspecified"
           ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "journey_leg": {
+      "type": "object",
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "flight",
+            "rail",
+            "bus",
+            "ferry",
+            "drive",
+            "mixed",
+            "other"
+          ]
+        },
+        "service": {
+          "type": "string",
+          "description": "Optional flight/train/ferry number, operator or route name; not required if unknown"
+        },
+        "operator": {
+          "type": "string"
+        },
+        "route": {
+          "type": "string"
+        },
+        "origin": {
+          "type": "string",
+          "description": "Physical point where this journey leg starts; mandatory on outbound. Do not assume outbound origin matches return destination."
+        },
+        "destination": {
+          "type": "string",
+          "description": "Physical final point of this journey leg; mandatory on return. May differ from outbound origin."
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "departure_local_time": {
+          "type": "string"
+        },
+        "arrival_local_time": {
+          "type": "string"
+        },
+        "departure_terminal": {
+          "type": "string"
+        },
+        "arrival_terminal": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
+        },
+        "boarding_point": {
+          "type": "string"
+        },
+        "reservation_status": {
+          "enum": [
+            "booked",
+            "planned",
+            "unknown"
+          ]
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/journey_segment"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "journey_segment": {
+      "type": "object",
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "flight",
+            "rail",
+            "bus",
+            "ferry",
+            "drive",
+            "walk",
+            "taxi",
+            "other"
+          ]
+        },
+        "service": {
+          "type": "string"
+        },
+        "origin": {
+          "type": "string"
+        },
+        "destination": {
+          "type": "string"
+        },
+        "departure_local_time": {
+          "type": "string"
+        },
+        "arrival_local_time": {
+          "type": "string"
         }
       },
       "additionalProperties": true

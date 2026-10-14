@@ -17,6 +17,8 @@ import subprocess
 import tempfile
 
 BRAND = "Seven Ninths Travel Brochure"
+WESTERN_FONT = "Oswald"
+EAST_ASIAN_FONT = "Noto Sans CJK SC"
 ROOT_NAME = "Seven_Ninths_Travel_Brochure"
 MAIN_SECTIONS = {
     "Arrival & Departure", "Accommodation", "Brief Sketch", "Attractions & Schedule",
@@ -84,7 +86,7 @@ def external_link(par, txt, url):
     r.append(pr); t = OxmlElement('w:t'); t.text = txt; r.append(t); x.append(r); par._p.append(x)
 
 
-def style_font(style, western='Times New Roman', east='Noto Sans CJK SC', size=10, color=None):
+def style_font(style, western=WESTERN_FONT, east=EAST_ASIAN_FONT, size=10, color=None):
     from docx.shared import Pt
     from docx.oxml.ns import qn
     style.font.name = western; style.font.size = Pt(size)
@@ -133,13 +135,19 @@ def inline(par, token, manuscript):
                 if k == 'code_inline': r.font.name = 'Consolas'
         elif k == 'image':
             uri = child.attrGet('src') or ''
+            if re.match(r'https?://', uri):
+                raise ValueError(f'External image not downloaded/embedded: {uri}. Store a real licensed asset locally and record provenance in MEDIA_MANIFEST.json')
             alternatives = [manuscript.parent / uri, manuscript.parent.parent / uri]
-            pic = next((f for f in alternatives if f.is_file() and f.suffix.lower() in ('.jpg', '.jpeg', '.png')), None)
-            if pic:
-                try: par.add_run().add_picture(str(pic), width=Cm(15.8))
-                except Exception: par.add_run(f'图片：{child.content or pic.name}（见源资料）')
-            elif re.match(r'https?://', uri): external_link(par, child.content or '图片来源', uri)
-            else: raise FileNotFoundError(f'Manuscript references an image that does not exist: {uri}')
+            pic = next((f for f in alternatives if f.is_file() and f.suffix.lower() in ('.jpg', '.jpeg', '.png', '.webp')), None)
+            if pic is None: raise FileNotFoundError(f'Missing embedded photo/map file: {uri}')
+            from PIL import Image
+            with Image.open(pic) as im:
+                w,h=im.size
+                if w < 600 or h < 400: raise ValueError(f'Illustration too small to print: {pic.name} ({w}x{h})')
+                if im.format not in ('PNG','JPEG'): raise ValueError(f'Convert image to PNG/JPEG for Word: {pic.name}')
+            max_w,max_h = 15.8, 17.0
+            scale = min(max_w / w, max_h / h)
+            par.add_run().add_picture(str(pic), width=Cm(w*scale), height=Cm(h*scale))
         elif k == 'softbreak': par.add_run(' ')
         elif k == 'hardbreak': par.add_run('\n')
 
@@ -175,6 +183,8 @@ def write_docx(markdown: Path, dest: Path, *, request=None, page_map=None):
     sec.top_margin = Cm(2.2); sec.bottom_margin = Cm(2.0)
     sec.header_distance = Cm(0.85); sec.footer_distance = Cm(1.05)
     style_font(doc.styles['Normal'], size=10.5)
+    # English / Latin defaults must also apply to bullet, table, footer and TOC text.
+    style_font(doc.styles['Default Paragraph Font'], size=10.5)
     doc.styles['Normal'].paragraph_format.line_spacing = 1.2
     doc.styles['Normal'].paragraph_format.space_after = Pt(5)
     for lev, sz in ((1, 19), (2, 14), (3, 11.5), (4, 10.5)):
@@ -189,7 +199,7 @@ def write_docx(markdown: Path, dest: Path, *, request=None, page_map=None):
         st.paragraph_format.left_indent = Cm((lev-1)*0.53)
         st.paragraph_format.keep_together = True
     h = sec.header.paragraphs[0]; h.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r = h.add_run(BRAND); r.bold = False; r.font.name = 'Times New Roman'; r.font.size = Pt(9)
+    r = h.add_run(BRAND); r.bold = False; r.font.name = WESTERN_FONT; r.font.size = Pt(9)
     hpr = h._p.get_or_add_pPr(); borders = OxmlElement('w:pBdr'); bottom = OxmlElement('w:bottom')
     bottom.set(qn('w:val'), 'single'); bottom.set(qn('w:sz'), '5'); bottom.set(qn('w:color'), '777777')
     borders.append(bottom); hpr.append(borders)
@@ -204,19 +214,19 @@ def write_docx(markdown: Path, dest: Path, *, request=None, page_map=None):
     top = doc.add_paragraph(); top.paragraph_format.space_before = Pt(145)
     top.alignment = WD_ALIGN_PARAGRAPH.CENTER
     dot = top.add_run('●  '); dot.font.color.rgb = RGBColor(210, 9, 25); dot.font.size = Pt(23)
-    r = top.add_run(ctry); r.font.size = Pt(33); r.font.bold = True; r.font.name = 'Times New Roman'
+    r = top.add_run(ctry); r.font.size = Pt(33); r.font.bold = True; r.font.name = WESTERN_FONT
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_before = Pt(16)
-    rr = p.add_run(city); rr.font.size = Pt(33); rr.font.bold = True; rr.font.name = 'Times New Roman'
+    rr = p.add_run(city); rr.font.size = Pt(33); rr.font.bold = True; rr.font.name = WESTERN_FONT
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_before = Pt(16)
-    rr = p.add_run(dates); rr.font.size = Pt(14); rr.font.name = 'Times New Roman'
+    rr = p.add_run(dates); rr.font.size = Pt(14); rr.font.name = WESTERN_FONT
     doc.add_page_break()
 
     # Three-level TOC with cached real page numbers, Word updatable TOC field,
     # dot leaders and internal bookmarks. Static cache works in headless PDF.
     t = doc.add_paragraph()
-    label = t.add_run('Content'); label.font.name = 'Times New Roman'
+    label = t.add_run('Content'); label.font.name = WESTERN_FONT
     label.font.color.rgb = RGBColor(25, 25, 25); label.font.bold = True; label.font.size = Pt(21)
     t.paragraph_format.space_after = Pt(11)
     toc_field_open(doc.add_paragraph())
@@ -238,7 +248,7 @@ def write_docx(markdown: Path, dest: Path, *, request=None, page_map=None):
             level = min(4, int(tok.tag[1])); current = doc.add_heading(level=level)
             if pos in heading_ids:
                 bookmark(current, heading_ids[pos])
-                if heading_ids[pos] == 0: current.paragraph_format.page_break_before = True
+                if level in (1, 2): current.paragraph_format.page_break_before = True
         elif typ == 'paragraph_open':
             if cell is not None:
                 current = cell.paragraphs[0] if not cell.paragraphs[0].text else cell.add_paragraph()
@@ -290,6 +300,16 @@ def pdf_from_docx(docx: Path, dest: Path):
         header = ' '.join(b[4].replace('\n',' ') for b in page.get_text('blocks') if b[1] < 95)
         if BRAND not in header: absent.append(i+1)
     if absent: raise RuntimeError(f'Running header missing from PDF page(s): {absent[:10]}')
+    # Cross-format typography gate. A DOCX can declare Oswald but the PDF may
+    # silently substitute Noto/Liberation when Oswald is missing on this machine.
+    font_names = {str(entry[3]).lower() for page in pdf for entry in page.get_fonts()}
+    if not any('oswald' in name for name in font_names):
+        raise RuntimeError(
+            'PDF font verification failed: Oswald is not used. Install Oswald on '
+            'the PDF conversion machine (fonts.google.com/specimen/Oswald), '
+            'refresh the font cache / restart LibreOffice, then export again. '
+            'Do not silently substitute another western font.'
+        )
     return pdf
 
 
@@ -346,6 +366,9 @@ def export_project(project: Path, formats=None):
         pdf.close(); pages = observed
     else:
         raise RuntimeError('TOC pagination did not stabilize after 4 iterations')
+    # Publication invariant: real images and maps must be physically embedded, not just linked.
+    from media_utils import verify_published_media
+    verify_published_media(project, source, docx, pdf_file)
     results = []
     if 'docx' in formats: results.append(docx)
     if 'pdf' in formats: results.append(pdf_file)
