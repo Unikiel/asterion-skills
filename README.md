@@ -86,7 +86,7 @@ references are deferred rather than rewritten blindly. See
 
 ### <a id="skill-periplus"></a>🧭 Periplus
 
-Periplus 2.6.0 researches a destination and writes a complete Seven Ninths
+Periplus 2.7.0 researches a destination and writes a complete Seven Ninths
 Travel Brochure in the same request. The required inputs are the destination,
 the trip dates, the outbound origin, the return destination, and the outbound
 and return transport. Each leg may be flight, rail, bus, ferry, driving, or a
@@ -107,7 +107,8 @@ Its workflow supports:
 - Date-applicable services, with arrival, immigration, baggage, and boarding buffers
 - Every Master Skeleton heading, kept at its original spelling, level, and order
 - A licensed photo card for every attraction, nested facility, shop, restaurant, and hotel
-- A separate hotel access map, plus a real map for each area
+- High-resolution Google Maps screenshots for each area map and hotel access map, kept at native resolution in the PDF
+- A bibliography limited to destination and Around Area travel resources, with image-source links kept beside the pictures and in the media manifest
 - Same-day Around Area excursions titled by destination name
 - A day-by-day itinerary for the active dates, anchored to the supplied journey and hotel when given
 - Finished DOCX and PDF named from the year, country, city, and every date period
@@ -206,8 +207,10 @@ asterion-skills/
         ├── generate.py
         ├── export_brochure.py
         ├── fetch_media.py
+        ├── capture_google_maps.py
         ├── map_from_geojson.py
         ├── media_utils.py
+        ├── publication_policy.py
         ├── reader_qa.py
         ├── skeleton_audit.py
         ├── trip_dates.py
@@ -418,14 +421,14 @@ python amber-kernel/scripts/run_tests.py
 
 ## 🧭 Periplus output model
 
-A finished Periplus 2.6.0 run produces a trip project whose public files are named from the year, country, city, and every date period:
+A finished Periplus 2.7.0 run produces a trip project whose public files are named from the year, country, city, and every date period:
 
 - `2026.Japan.Tokyo.0711-0712.0717-0719.docx`
 - `2026.Japan.Tokyo.0711-0712.0717-0719.pdf`
 
 The internal manuscript stays at `exports/Seven_Ninths_Travel_Brochure.md`. A public Markdown copy uses the same date-based filename only when the traveler asks for Markdown.
 
-The guide keeps the historical Seven Ninths cover, which has no running header or footer. Content pages have a clickable three-level contents table with real page numbers, the centered header **Seven Ninths Travel Brochure**, and a current/total page footer. Each level-1 chapter starts a new page. Level-2 headings continue in the page flow. Venue titles are English first, then Chinese. Each catalogue entry has its own licensed photo. Hotels also have an access map, and each area has a geographic map. Credits live in `research/MEDIA_MANIFEST.json`. English text uses Oswald. Planning notes and quality reports stay in `research/`.
+The guide keeps the historical Seven Ninths cover, which has no running header or footer. Content pages have a clickable three-level contents table with real page numbers, the centered header **Seven Ninths Travel Brochure**, and a current/total page footer. Each level-1 chapter starts a new page. Level-2 headings continue in the page flow. Venue titles are English first, then Chinese. Each catalogue entry has its own licensed photo. Area maps and hotel access maps are native Google Maps screenshots, and the PDF keeps those pixels. The end-of-guide link list covers destination and Around Area travel resources. Image credits stay beside each picture and in `research/MEDIA_MANIFEST.json`. English text uses Oswald. Planning notes and quality reports stay in `research/`.
 
 Working files may include a normalized request, a task record, an evidence ledger, an entry catalogue, and a quality report. A supplied booked hotel is the travel base. Hotel and transport recommendations stay labeled as unbooked.
 
@@ -458,9 +461,10 @@ keep observed vault conventions distinguishable from adopted ones.
 
 When proposing changes to Periplus, keep autonomous brochure generation, the
 locked Master Skeleton headings, source traceability, one licensed photo per
-catalogue entry, date-period filenames, and the DOCX plus PDF completion gate.
-Do not turn a missing journey endpoint, an unreadable source, or a failed
-export into invented facts or a claimed final guide.
+catalogue entry, native Google Maps screenshots, date-period filenames, and
+the DOCX plus PDF completion gate. Do not turn a missing journey endpoint, an
+unreadable source, or a failed export into invented facts or a claimed final
+guide.
 
 ## 📄 License
 

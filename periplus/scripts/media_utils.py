@@ -164,8 +164,14 @@ def audit_media(project, text, request):
                 im.verify()
             with Image.open(file) as im:
                 w,h=im.size
-            minw,minh=(850,500) if a['kind']=='map' else (700,450)
-            if w<minw or h<minh:errors.append(f'Low-resolution {a["kind"]}: {a["file"]} {w}x{h}')
+            minw,minh=(2000,1200) if a['kind']=='map' else (700,450)
+            if a['kind']=='photo':
+                from publication_policy import audit_photo_resolution
+                errors.extend(audit_photo_resolution(a,(w,h)))
+            elif w<minw or h<minh:errors.append(f'Low-resolution {a["kind"]}: {a["file"]} {w}x{h}')
+            if a['kind']=='map':
+                from publication_policy import audit_map_capture
+                errors.extend(audit_map_capture(a,(w,h)))
         except (OSError,ImportError) as ex:
             errors.append(f'Unusable image {a["file"]}: {ex}')
         if not re.match(r'https?://',a['source_url']):
@@ -179,6 +185,8 @@ def audit_media(project, text, request):
             if not str(a.get('map_id','')).strip():errors.append(f'Map lacks Map ID: {a["file"]}')
             if not (a.get('map_data_source') or a.get('source_url')):errors.append(f'Map data provenance absent: {a["file"]}')
         by_file[a['file']]=a
+    from publication_policy import audit_final_reference_links
+    errors.extend(audit_final_reference_links(text,assets))
     used_set={path for _,path in used}
     for path in used_set:
         if path not in by_file:errors.append(f'Embedded image not registered with provenance: {path}')
@@ -242,6 +250,19 @@ def verify_published_media(project, manuscript_path, docx_path, pdf_path):
         digest=hashlib.sha256((project/a['file']).read_bytes()).hexdigest()
         if digest not in medias:missing.append(a['file'])
     if missing:raise RuntimeError(f'Actual images not embedded in DOCX: {missing}')
+    small=[a for a in assets if a.get('kind')=='photo' and a.get('print_width_cm')]
+    if small:
+        from docx import Document
+        doc=Document(docx_path)
+        for asset in small:
+            original=(project/asset['file']).read_bytes();widths=[]
+            for shape in doc.inline_shapes:
+                for blip in shape._inline.xpath('.//a:blip'):
+                    from docx.oxml.ns import qn
+                    rid=blip.get(qn('r:embed'))
+                    if rid and doc.part.related_parts[rid].blob==original:widths.append(shape.width/360000)
+            if not widths or any(w>asset['print_width_cm']+.01 for w in widths):
+                raise RuntimeError('Small original printed larger than its verified limit in DOCX: '+asset['file'])
     import fitz
     pdf=fitz.open(str(pdf_path))
     try:
@@ -250,5 +271,12 @@ def verify_published_media(project, manuscript_path, docx_path, pdf_path):
         count=sum(len(p.get_image_info()) for p in pdf)
         if count<len(assets):
             raise RuntimeError(f'PDF seems to be missing actual embedded photos/maps ({count} instances, expected >={len(assets)})')
+        from publication_policy import audit_pdf_map_resolution
+        map_errors=audit_pdf_map_resolution(assets,[i for p in pdf for i in p.get_image_info()])
+        if map_errors:raise RuntimeError('; '.join(map_errors))
+        for asset in small:
+            native=asset['native_resolution'];placements=[i for p in pdf for i in p.get_image_info() if [i['width'],i['height']]==native]
+            if not placements or any((i['bbox'][2]-i['bbox'][0])*2.54/72>asset['print_width_cm']+.02 for i in placements):
+                raise RuntimeError('Small native photo actual PDF print width failed: '+asset['file'])
     finally:pdf.close()
     verify_heading_pagination(docx_path,pdf_path)

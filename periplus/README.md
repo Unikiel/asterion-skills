@@ -1,4 +1,4 @@
-# Periplus v2.6.0
+# Periplus v2.7.0
 
 Automatically research and publish a complete Seven Ninths Travel Brochure. All skill documentation and bundled examples are English. Traveler requests may be written in Chinese, English, Japanese or any other language. Generated narration defaults to Simplified Chinese (`zh-CN`) and follows an explicitly requested alternative language.
 
@@ -67,3 +67,11 @@ Before FINAL, verify compulsory Skeleton coverage and per-entry photo coverage w
 - Keep H1 chapter page breaks but let H2 flow like the Kobe reference; restore the reference cover and exclude it from running header/footer numbering.
 - Strengthen embedded-photo per-entry, geographic map, and no-internal-reasoning gates; unfulfilled items block FINAL.
 - Synchronize `SKILL.md`, README/INSTALL/version metadata, reference contracts, prompts, publication code, and release tests.
+
+## v2.7.0 - Map and final-link policy (2026-10-15)
+
+- Require authentic high-resolution Google Maps browser screenshots for all area and hotel maps, native capture metadata, visible attribution and final-size readability.
+- Limit end-of-guide links to destination and Around Area travel resources. Keep image sources and licensing evidence internal; preserve required adjacent credits.
+- Add browser capture helper and deterministic acceptance checks for map provenance and image-only bibliography links.
+- Preserve native screenshot pixels in both final formats; reject PDF export downsampling.
+- Enforce actual print size for small native photo insets (>=240 ppi) rather than artificially enlarging them to a pixel threshold; verify physical placement in both final formats.

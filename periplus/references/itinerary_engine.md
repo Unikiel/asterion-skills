@@ -42,7 +42,7 @@ Real door-to-door ≈ walk to station + ticket/security margin
 - Show true spatial relationships, regional groupings and major stations, not a decorative illustration.
 - Each map has: ID (Map A/B/...), region name, all labeled attraction IDs, transit hub(s), optional food/shopping and source note.
 - Geographic locations must be grounded in validated geocodable names/addresses or coordinates from evidence. Do not guess street addresses/latitudes/travel minutes.
-- The agent MUST acquire/render and embed genuine geographic map images in `maps/` for Map A/B/... and include source/license details in `research/MEDIA_MANIFEST.json`. Map URL links are supplementary only; missing embedded maps block publication. See `media_acquisition_and_maps.md`.
+- The agent MUST capture and embed high-resolution Google Maps screenshots in `maps/` for Map A/B/... and include source/license details in `research/MEDIA_MANIFEST.json`. Map URL links are supplementary only; missing embedded maps block publication. See `media_acquisition_and_maps.md`.
 - Keep maps and day schedule consistent; the table of maps should reference the detailed attraction IDs.
 
 ## Separate indexes

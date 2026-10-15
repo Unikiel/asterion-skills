@@ -44,3 +44,7 @@ Use stable citation links near facts in published markdown; internal evidence ID
 - Paraphrase the source documents; do not copy entire earlier brochures into the published output.
 - Images: only use correctly licensed/user-provided material; credit creator/source/license if required. A link to a photo is not itself a reuse license.
 - Never package flight booking references, passport numbers, private contact details or payment information in a reusable public Skill.
+
+## Reader-facing link selection (mandatory)
+
+The final References / Bibliography / Useful Links list contains only useful destination and Around Area travel resources: attraction and hotel official pages, local history/culture, transport, tickets, booking and relevant visitor services. Remove links whose sole purpose is image sourcing, downloading or licensing, including photo repositories, direct image files, stock catalogues, map-production tools and generic terms pages. A venue page that also supplied a photograph may remain only when it independently supports useful travel facts; mark source_is_travel_resource: true in that asset record after reviewing the page. Keep full image sources, download URLs, creator, terms and retrieval dates in research/MEDIA_MANIFEST.json and EVIDENCE_LEDGER.md. Keep legally required credits adjacent to each image; include a license-required link only in that caption, never in the final reference list. Do not add an Image Sources / Image and Map Credits link appendix. Audit both final DOCX and PDF link destinations after export.

@@ -166,7 +166,11 @@ class EntryCoverageTests(unittest.TestCase):
             asset.update(source_url='https://commons.wikimedia.org/wiki/File:Internal_QA.png',
                          creator='QA author', license='CC0', attribution='CC0', subject=asset['id'])
             target = self.project / asset['file']; target.parent.mkdir(exist_ok=True)
-            Image.new('RGB', (900, 600), (70, 90, 120)).save(target)
+            size=(900,600)
+            if asset['kind']=='map':
+                asset.update(provider='Google Maps',capture_method='browser_screenshot',capture_url='https://www.google.com/maps/@40,140,16z',viewport_css=[1000,700],device_scale_factor=2,screenshot_pixels=[2000,1400],captured_on='2026-10-15',attribution_visible=True,print_readability_checked=True)
+                size=(2000,1400)
+            Image.new('RGB', size, (70, 90, 120)).save(target)
             if asset['id'] not in ('museum_photo', 'hotel_photo'):
                 text += f'\n![{asset["id"]}](../{asset["file"]})\n'
         self.audit()  # Write the catalogue; full audit below reads it itself.

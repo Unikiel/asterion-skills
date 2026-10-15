@@ -145,10 +145,19 @@ def inline(par, token, manuscript):
             from PIL import Image
             with Image.open(pic) as im:
                 w,h=im.size
-                if w < 600 or h < 400: raise ValueError(f'Illustration too small to print: {pic.name} ({w}x{h})')
                 if im.format not in ('PNG','JPEG'): raise ValueError(f'Convert image to PNG/JPEG for Word: {pic.name}')
+            print_limit=None
+            if w<700 or h<450:
+                manifest_path=manuscript.parent.parent/'research/MEDIA_MANIFEST.json'
+                records=json.loads(manifest_path.read_text(encoding='utf8')).get('assets',[]) if manifest_path.exists() else []
+                asset=next((a for a in records if (manuscript.parent.parent/a.get('file','')).resolve()==pic.resolve()),None)
+                from publication_policy import audit_photo_resolution
+                if not asset or asset.get('kind')!='photo' or audit_photo_resolution(asset,(w,h)):
+                    raise ValueError(f'Image too small for the planned print size: {pic.name} ({w}x{h})')
+                print_limit=asset.get('print_width_cm')
             # Keep photos useful beside venue prose; full maps need more vertical room.
             max_w,max_h = 15.8, (12.5 if "maps" in pic.parts else 9.0)
+            if print_limit:max_w=min(max_w,print_limit)
             par.paragraph_format.keep_together = True
             par.paragraph_format.keep_with_next = True
             scale = min(max_w / w, max_h / h)
@@ -306,6 +315,7 @@ def write_docx(markdown: Path, dest: Path, *, request=None, page_map=None):
                 fonts = OxmlElement('w:rFonts'); pr.insert(0, fonts)
             for key in ('ascii', 'hAnsi', 'cs'): fonts.set(qn('w:' + key), WESTERN_FONT)
             fonts.set(qn('w:eastAsia'), EAST_ASIAN_FONT)
+    compression=OxmlElement('w:doNotAutoCompressPictures');compression.set(qn('w:val'),'true');doc.settings._element.append(compression)
     dest.parent.mkdir(parents=True, exist_ok=True); doc.save(dest)
     return toc
 

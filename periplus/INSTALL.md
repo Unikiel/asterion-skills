@@ -1,17 +1,17 @@
-# Periplus v2.6.0 — Installation and execution
+# Periplus v2.7.0 — Installation and execution
 
 ## Local Codex installation
 
-Download `Periplus_Skill_v2.6.0.zip`. The archive contains a `periplus/` folder. Install that folder into `%USERPROFILE%\.codex\skills\periplus\` on Windows or `~/.codex/skills/periplus/` on macOS/Linux. Restart the local Codex client to refresh skills.
+Download `Periplus_Skill_v2.7.0.zip`. The archive contains a `periplus/` folder. Install that folder into `%USERPROFILE%\.codex\skills\periplus\` on Windows or `~/.codex/skills/periplus/` on macOS/Linux. Restart the local Codex client to refresh skills.
 
 Alternatively, extract the archive and use its bundled installer on your own computer, passing the original ZIP path:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\periplus\install_codex.ps1 -Zip .\Periplus_Skill_v2.6.0.zip
+powershell -ExecutionPolicy Bypass -File .\periplus\install_codex.ps1 -Zip .\Periplus_Skill_v2.7.0.zip
 ```
 
 ```bash
-bash ./periplus/install_codex.sh ./Periplus_Skill_v2.6.0.zip
+bash ./periplus/install_codex.sh ./Periplus_Skill_v2.7.0.zip
 ```
 
 The installers back up an existing local skill before replacing it and verify that SKILL.md exists. They do not install a configured Codex CLI, website-research access, Python dependencies, fonts or LibreOffice, and do not start a travel-research run.
@@ -44,4 +44,4 @@ Check the canonical package version:
 python scripts/generate.py --version
 ```
 
-The expected result is `Periplus 2.6.0`. Skill release and schema version are recorded in project.json; the Git commit identifies the exact saved source revision separately.
+The expected result is `Periplus 2.7.0`. Skill release and schema version are recorded in project.json; the Git commit identifies the exact saved source revision separately.

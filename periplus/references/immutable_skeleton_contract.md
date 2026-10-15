@@ -1,4 +1,4 @@
-# Immutable Master Skeleton and publication integrity contract — v2.6.0
+# Immutable Master Skeleton and publication integrity contract — v2.7.0
 
 ## Source precedence
 
@@ -12,7 +12,7 @@
 - For a category with no local counterpart (e.g., no metro), retain its exact heading and give a short visitor-useful factual description. Do not substitute internal explanations about the skeleton. Do not create fake attractions or services for the sake of a category.
 - Transport-leg-specific fields (Flight, Railway, Airport Bus, Ferry, etc.) are populated only when the actual trip or a viable alternate involves that mode; never invent nonexistent schedules. Arrival and Departure remain mandatory and identify the supplied origin and final endpoint. Preserve their labels, with actual dates substituted.
 - The master Skeleton's working appendices (booking checklist, media checklist, audit) are mandatory **internal records** stored under `research/` and `TASKS.md`; they MUST NEVER appear as content pages, appendices, captions, introduction or editorial narration in the traveler-facing guide.
-- At least Maps A–J are prepared as geographic areas or separate functional geographic panels when relevant. Each published Map needs a real geographic embedded image with accurate venue identifiers and sources. Do not create blank or synthetic pseudo-maps. If geographically meaningful areas cannot be mapped from real sources, mark FINAL blocked and request a scope decision; do not quietly remove the headings.
+- At least Maps A–J are prepared as geographic areas or separate functional geographic panels when relevant. Each published Map needs a high-resolution Google Maps browser screenshot with accurate venue identifiers and visible Google/data-provider attribution. Do not create blank or synthetic pseudo-maps. If geographically meaningful areas cannot be mapped from real sources, mark FINAL blocked and request a scope decision; do not quietly remove the headings.
 - Fixed section labels remain English. Titles of named places, monuments, stations, museums, accommodation, restaurants, shops and markets are English first followed by Chinese (when available). Do not rename established formal English names or pretend a descriptive translation is official. Japanese locations additionally receive original script, verified kana and Hepburn romanization in the body record. All traveler-facing prose defaults to Simplified Chinese, allowing quotations, other languages and local text.
 - `Around Area` is the sole permitted normalized spelling. It must always denote a genuine same-day out-and-back excursion from the primary base.
 

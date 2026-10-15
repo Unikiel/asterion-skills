@@ -31,7 +31,7 @@ class ReleaseTests(unittest.TestCase):
     def test_version_visible_and_consistent(self):
         self.assertEqual((ROOT/'VERSION').read_text().strip(),SKILL_VERSION)
         for name in ['SKILL.md','README.md','INSTALL.md']:
-            self.assertIn(SKILL_VERSION,(ROOT/name).read_text())
+            self.assertIn(SKILL_VERSION,(ROOT/name).read_text(encoding='utf8'))
         actual=subprocess.check_output([sys.executable,str(ROOT/'scripts/generate.py'),'--version'],text=True).strip()
         self.assertEqual(actual,'Periplus '+SKILL_VERSION)
     def test_chinese_input_default_and_override(self):

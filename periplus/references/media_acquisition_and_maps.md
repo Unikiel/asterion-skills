@@ -9,16 +9,19 @@ Every attraction, nested facility, dining venue, shopping venue and hotel must h
 ## Photos — acquisition
 
 1. Discover genuine destination / attraction / hotel / architecture photos from official tourism/venue sites or reusable repositories (e.g. Wikimedia Commons) and verify that the actual photo depicts the named subject. Prefer original, high resolution >= 700×450. Avoid watermark/stock preview, vague results or mismatched objects. Use genuine photo, not AI-generated imagery.
+
+   A correctly licensed native original below 700x450 may be used as a genuinely small inset only when it is at least 300x200, prints at >=240 ppi without enlarging pixel data, and is visually clear at the actual print size. Record native_resolution, print_width_cm and small_print_reviewed: true. The exporter must enforce that width and final QA must verify the actual DOCX and PDF placement; an artificially enlarged file cannot qualify. This reconciles the preference for large originals with sharp small photographs, while maintaining complete venue coverage.
 2. Confirm permitted publication/reuse terms. **A publicly accessible image is not automatically licensed for redistribution**. If attribution or license terms cannot be established, use another image. For user-provided images, mark `license: user-provided` and retain privacy considerations. Do not bypass website restrictions.
 3. Download image bytes to `photos/` as `.jpg` or `.png` (not just a URL). Maintain correct orientation, aspect ratio, copyright/creator attribution, link to originating item and retrieval record; avoid duplicate photos or spurious geotags.
-4. In the manuscript, place `![English + Chinese attraction name, photographer/source](../photos/attraction.jpg)` near the relevant entry and an immediately adjacent print caption credit and linked source.
+4. In the manuscript, place `![English + Chinese attraction name, photographer/source](../photos/attraction.jpg)` near the relevant entry and an immediately adjacent print caption with the required creator/copyright/license credit. Store the image-source link in the internal manifest, not in the final bibliography. Include a caption link only where its license expressly requires one.
 
-## Maps — real cartographic assets
+## Maps - mandatory high-resolution Google Maps screenshots
 
-1. At least one genuine sourced area/map image PER displayed `Map A`, `Map B`, ... section. This must reflect **actual geography** with recognizable street/transit network, orientation/scale when available, and labeled relevant points/stations. Also include actual accommodation access / airport-station interchange maps if operationally necessary.
-2. Preferred: official city/railway/venue maps with reuse permission. Otherwise render cartography from verified OSM or another legally usable geographic data layer. Cite source/provider and required attribution (e.g. `© OpenStreetMap contributors` and ODbL details where relevant). Check tile use policies; do not bulk download, scrape, remove attribution, or imply a coordinate plotting grid is a real street map. A pure text list, Google Maps hyperlink, or decorative graphic is not a map image.
-3. Save geographically accurate maps to `maps/map_a.png` etc (>=850×500). Map with pins must match source-verified coordinates and geography. Use larger maps or multiple panels when labels would not print legibly.
-4. Each `Map A` chapter embeds its map immediately: `![Map A - Chinese area name / Central Area, base map and annotation sources](../maps/map_a.png)`; add a source/attribution caption and map legend. Repeat for every displayed regional map. Also keep online map URLs as OPTIONAL supplements to embedded real map.
+1. Every displayed Map A/B/... area, hotel access map and other necessary geographic panel MUST embed an actual screenshot captured from Google Maps. A Google Maps hyperlink alone is insufficient. Do not download low-resolution map pictures, enlarge thumbnails, reconstruct the map from tiles, or silently substitute OSM, GSI, a coordinate grid or a schematic. If Google Maps cannot be loaded or its intended use is not permitted, record the specific blocker; do not mislabel another provider as Google.
+2. Use a fresh browser context, frame the relevant area, wait for roads, labels and points to finish loading, and capture at native device scale >=2. Target at least 2000x1200 physical pixels per panel. Higher pixel counts do not excuse tiny labels: inspect at the actual DOCX/PDF display size, and change viewport/zoom or split panels until station names, road names and relevant venues can be read. Never upscale an existing low-resolution capture to pass validation.
+3. Keep the Google logo, map/data-provider copyright and attribution visible and unobscured. Do not use Street View photographs as printable venue images. Check Google's current Geo Guidelines for the actual personal/public/commercial distribution scope; screenshots do not grant a blanket publication license. Never imply Google endorsement.
+4. Verify hotel, station entrance, venue and map extent against primary sources. Add helpful legends outside the screenshot or in permitted unobscuring annotations. Save lossless PNGs to maps/map_a.png etc. Every area embeds its own map immediately beneath the area introduction. Keep an optional live Google Maps directions link for travelers.
+5. Each map manifest record includes provider: Google Maps, capture_method: browser_screenshot, capture_url, captured_on, viewport_css, device_scale_factor, screenshot_pixels, attribution_visible: true, the exact attribution text and a print_readability_checked flag. Retain the screenshot provenance in research, rather than adding map-production/source links to the end-of-guide bibliography.
 
 ## Manifest — actual provenance
 
@@ -45,7 +48,16 @@ For every real asset, append a record to `research/MEDIA_MANIFEST.json`:
       "map_id": "Map A",
       "file": "maps/map_a.png",
       "source_url": "https://example.org/real-map-source",
-      "map_data_source": "OSM / municipal / railway verified cartography",
+      "map_data_source": "Google Maps browser-rendered map",
+      "provider": "Google Maps",
+      "capture_method": "browser_screenshot",
+      "capture_url": "https://www.google.com/maps/",
+      "viewport_css": [1000, 700],
+      "device_scale_factor": 2,
+      "screenshot_pixels": [2000, 1400],
+      "captured_on": "2026-10-15",
+      "attribution_visible": true,
+      "print_readability_checked": true,
       "creator": "Map creator / cartographic provider",
       "license": "Verified permitted reuse terms",
       "attribution": "Required cartography and map data credits",
@@ -64,6 +76,8 @@ Place a specific heading, photo, concise caption/credit, substantive description
 
 ## Publication gate
 
+Preserve native screenshot pixel dimensions in BOTH DOCX and PDF. Disable exporter downsampling, or losslessly embed the original screenshot into its existing PDF image object and verify unchanged page geometry, text, bookmarks and links. Inspect actual PDF image dimensions; high-resolution source files alone do not satisfy this rule. Never resample a reduced export upward.
+
 - `scripts/validate.py --mode final` checks manifest, local image existence/decoding/resolution, attribution/license/source fields, manuscript embedding refs, minimum asset counts, every registered entry’s own photo/reciprocal associations and Map A/B/... coverage. Manually reconcile all named venue cards against the inventory before release.
 - `scripts/export_brochure.py` embeds JPEG/PNG bytes in DOCX; remotely linked / nonexistent media raises an error. It then verifies actual image files inside DOCX, image instances in PDF and H1/H2 page breaks.
 - No FINAL badge/release if actual photos/maps are missing. If site licensing or web tools block all real image acquisition, report an explicit blocker rather than quietly substituting map links.
@@ -72,15 +86,4 @@ Place a specific heading, photo, concise caption/credit, substantive description
 ## Built-in deterministic media helpers
 
 - `python scripts/fetch_media.py --project <TRIP_DIR>` downloads explicitly researched, licensed image URLs recorded as `download_url` in the manifest. This is not web image discovery; the agent must first verify actual source and rights. No bulk scraping.
-- For maps when an official licensed raster image is unavailable: download accurately georeferenced and legally usable **real** GeoJSON features (roads, railway, park and river geometry), gather verified point coordinates, then call:
-
-```bash
-python scripts/map_from_geojson.py \
-  --geojson maps/source/area_a.geojson \
-  --pins maps/source/area_a_pins.json \
-  --output maps/map_a.png \
-  --title 'Map A — Downtown' \
-  --attribution '© OpenStreetMap contributors, ODbL (or appropriate provider)'
-```
-
-Pins JSON is a list of objects like `{"lat": 35.0, "lon": 135.0, "label": "Central Station"}` using **source-verified coordinates**. The map is an authentic rendering of actual geographic geometry; not an illustration substituting for missing spatial data. Record underlying GeoJSON source URL, map creator and data license in the media manifest. If the data are not verified, do not generate a fictional map.
+- `scripts/capture_google_maps.py --config <capture.json> --output-dir <maps>` captures Google Maps panels with Playwright in a new browser context. Install Playwright and a compatible browser only when needed. Each config item supplies id, url, output, viewport_css and device_scale_factor; optional browser_executable selects an installed browser. The script records capture metadata; an agent must still visually inspect labels, place identity, attribution and final print readability. `map_from_geojson.py` remains a legacy research utility and does not satisfy the current final-map contract.
