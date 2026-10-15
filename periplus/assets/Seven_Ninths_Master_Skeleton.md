@@ -1,10 +1,13 @@
 # Seven Ninths Travel Brochure — Master Markdown Skeleton
 
-> **Internal structural reference only: never copy this template into a finished brochure or publish a blank guide.** The DOCX/PDF exporter generates the cover and the three-level, page-numbered table of contents; omit `# COVER` and `# Content` from the final body manuscript. Generated brochures default to Simplified Chinese and accept Chinese, English, or mixed-language inputs. Place names in the generated guide require Chinese and English; Japanese destinations additionally require original Japanese writing, verified kana pronunciation, and Hepburn romanization. The skill and all template instructions, labels, and examples remain English.
+> All fixed topical headings here are compulsory and immutable in the generated manuscript. The display title for a named place or venue is always English first, then Chinese where available. The only approved historical spelling correction is `Around Area`. The appendix is compulsory as a private research/QA record and MUST NOT be inserted into the reader-facing guide. This source file is English-only; generated narration defaults to Simplified Chinese.
+
+
+> **Internal structural reference only: never copy this template into a finished brochure or publish a blank guide.** The DOCX/PDF exporter generates the cover and the three-level, page-numbered table of contents; omit `# COVER` and `# Content` from the final body manuscript. Generated brochures default to Simplified Chinese and accept Chinese, English, or mixed-language inputs. Place names in generated titles use English first, Chinese second where available; Japanese destinations additionally require original Japanese writing, verified kana pronunciation, and Hepburn romanization. The skill and all template instructions, labels, and examples remain English.
 
 > Require at least one corresponding photograph for every attraction, nested facility, shopping venue, restaurant, cafe, bar, and hotel. A map does not substitute for a photograph. Tours emphasize experiences and themes; Tickets & Prices covers passes, combined tickets, and combination discounts, never an estimated trip budget. Keep internal rules, eligibility labels, and reasoning monologues out of the reader-facing brochure. Nearby-area headings contain only place names.
 
-> Mandatory layout: **Heading 1 and Heading 2 start on a new page.** Embed actual source-traceable images and geographic maps for each mapped area and important attraction; URL placeholders are insufficient. Arrival and departure may use any actual mode or combination of modes. Use the user-specified hotel directly.
+> Mandatory layout: **Heading 1 chapters start on new pages, while Heading 2 and Heading 3 flow as in the Kobe original.** Embed actual source-traceable images and geographic maps for each mapped area and important attraction; URL placeholders are insufficient. Arrival and departure may use any actual mode or combination of modes. Use the user-specified hotel directly.
 
 > This unified skeleton derives from the existing **Nagoya 2024 / Kobe 2025 / Tokyo 2026** brochures.\
 > Preserve every first-level, second-level, and functional module inherited from those brochures, abstracting repeated content into a reusable structure.\
@@ -439,7 +442,7 @@
 
 ### Diet & Cuisine
 
-> A category name inherited from the Tokyo reference; it may be combined with `Delicacy`.
+> A category name inherited from the Tokyo reference; it must each retain their own heading with `Delicacy`.
 
 ### Media
 
@@ -849,7 +852,7 @@
 
 ---
 
-#### Travel Passes & Combination Offers
+#### Travel Passes
 
 ##### `[Pass / Ticket 1]`
 
@@ -949,7 +952,7 @@
 
 ---
 
-# Appendix / Working Notes (internal; do not publish blank checklists)
+# Appendix / Working Notes (INTERNAL QA DOCUMENT ONLY; never insert in published body)
 
 ## Booking & Reservation Checklist
 

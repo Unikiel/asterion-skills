@@ -184,6 +184,7 @@ def write_docx(markdown: Path, dest: Path, *, request=None, page_map=None):
     sec.left_margin = Cm(2.1); sec.right_margin = Cm(2.1)
     sec.top_margin = Cm(2.2); sec.bottom_margin = Cm(2.0)
     sec.header_distance = Cm(0.85); sec.footer_distance = Cm(1.05)
+    sec.different_first_page_header_footer = True  # Historic cover has no running header/footer.
     style_font(doc.styles['Normal'], size=10.5)
     # English / Latin defaults must also apply to bullet, table, footer and TOC text.
     style_font(doc.styles['Default Paragraph Font'], size=10.5)
@@ -223,6 +224,11 @@ def write_docx(markdown: Path, dest: Path, *, request=None, page_map=None):
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_before = Pt(16)
     rr = p.add_run(dates); rr.font.size = Pt(14); rr.font.name = WESTERN_FONT
+    # The cover is the unnumbered first page. Restart PAGE at zero so the
+    # following Content page displays 1 while NUMPAGES remains the PDF total.
+    cover_page_number = OxmlElement('w:pgNumType')
+    cover_page_number.set(qn('w:start'), '0')
+    sec._sectPr.append(cover_page_number)
     doc.add_page_break()
 
     # Three-level TOC with cached real page numbers, Word updatable TOC field,
@@ -236,7 +242,7 @@ def write_docx(markdown: Path, dest: Path, *, request=None, page_map=None):
         p = doc.add_paragraph(style=f'TOC {lev}')
         p.paragraph_format.tab_stops.add_tab_stop(Cm(16.4-(lev-1)*0.53), WD_TAB_ALIGNMENT.RIGHT, WD_TAB_LEADER.DOTS)
         internal_link(p, name, i)
-        p.add_run('\t' + str((page_map or {}).get(i, '000')))
+        p.add_run('\t' + str(max(1, (page_map or {}).get(i, 1) - 1) if (page_map or {}).get(i) else '000'))
     toc_field_close(doc.add_paragraph())
 
     # Markdown body with heading bookmarks, illustrations and linked sources.
@@ -250,7 +256,7 @@ def write_docx(markdown: Path, dest: Path, *, request=None, page_map=None):
             level = min(4, int(tok.tag[1])); current = doc.add_heading(level=level)
             if pos in heading_ids:
                 bookmark(current, heading_ids[pos])
-                if level in (1, 2): current.paragraph_format.page_break_before = True
+                if level == 1: current.paragraph_format.page_break_before = True
         elif typ == 'paragraph_open':
             if cell is not None:
                 current = cell.paragraphs[0] if not cell.paragraphs[0].text else cell.add_paragraph()
@@ -323,7 +329,7 @@ def pdf_from_docx(docx: Path, dest: Path):
     absent = []
     for i, page in enumerate(pdf):
         header = ' '.join(b[4].replace('\n',' ') for b in page.get_text('blocks') if b[1] < 95)
-        if BRAND not in header: absent.append(i+1)
+        if i > 0 and BRAND not in header: absent.append(i+1)
     if absent: raise RuntimeError(f'Running header missing from PDF page(s): {absent[:10]}')
     # Cross-format typography gate. A DOCX can declare Oswald but the PDF may
     # silently substitute Noto/Liberation when Oswald is missing on this machine.
@@ -373,6 +379,9 @@ def export_project(project: Path, formats=None):
     if not source.is_file(): raise FileNotFoundError(f'Missing researched manuscript: {source}')
     req_file = project/'request.json'
     request = json.loads(req_file.read_text(encoding='utf-8')) if req_file.is_file() else {}
+    from skeleton_audit import audit_skeleton
+    skeleton_errors = audit_skeleton(source.read_text(encoding='utf8'))
+    if skeleton_errors: raise RuntimeError('Immutable Skeleton QA failed: '+'; '.join(skeleton_errors[:12]))
     from reader_qa import audit_reader_text, audit_transport_plan
     problems = audit_reader_text(source.read_text(encoding='utf8'), request) + audit_transport_plan(project, source.read_text(encoding='utf8'), request)
     if problems: raise RuntimeError('Reader/transport QA failed: ' + '; '.join(problems[:12]))

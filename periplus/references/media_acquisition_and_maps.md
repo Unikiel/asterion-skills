@@ -11,7 +11,7 @@ Every attraction, nested facility, dining venue, shopping venue and hotel must h
 1. Discover genuine destination / attraction / hotel / architecture photos from official tourism/venue sites or reusable repositories (e.g. Wikimedia Commons) and verify that the actual photo depicts the named subject. Prefer original, high resolution >= 700×450. Avoid watermark/stock preview, vague results or mismatched objects. Use genuine photo, not AI-generated imagery.
 2. Confirm permitted publication/reuse terms. **A publicly accessible image is not automatically licensed for redistribution**. If attribution or license terms cannot be established, use another image. For user-provided images, mark `license: user-provided` and retain privacy considerations. Do not bypass website restrictions.
 3. Download image bytes to `photos/` as `.jpg` or `.png` (not just a URL). Maintain correct orientation, aspect ratio, copyright/creator attribution, link to originating item and retrieval record; avoid duplicate photos or spurious geotags.
-4. In the manuscript, place `![Chinese + English attraction name, photographer/source](../photos/attraction.jpg)` near the relevant entry and an immediately adjacent print caption credit and linked source.
+4. In the manuscript, place `![English + Chinese attraction name, photographer/source](../photos/attraction.jpg)` near the relevant entry and an immediately adjacent print caption credit and linked source.
 
 ## Maps — real cartographic assets
 

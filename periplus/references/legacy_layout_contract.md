@@ -11,7 +11,7 @@ The layout is based on three Word guides personally supplied by the user; their 
 2. **Separate cover**: country name such as `JAPAN` above/centrally, large destination title and `YYYY.MM.DD - YYYY.MM.DD` date periods (retain every separate period without merging gaps). Use restrained black/white design with a Japanese-style red accent. Do not reuse old-guide images or content in the body.
 3. **Content/table of contents directly after the cover**: **three heading levels** (Heading 1-3), hierarchical left indentation, dot leaders and right-aligned **actual page numbers**. Allow automatic continuation over multiple pages.
 4. All three historical DOCX files contain a `TOC \\o "1-3" \\h \\z \\u` field with page numbers in TOC1/2/3. Periplus must generate a genuine Word-updatable TOC field and prepopulate verified TOC page numbers in the exported DOCX and PDF, without requiring the reader to open Word and manually update fields.
-5. **Recurring header**: `Seven Ninths Travel Brochure` on every page, with a thin separator rule. Centre the **footer** `current page / total pages`, effective on all pages.
+5. **Recurring header**: `Seven Ninths Travel Brochure` centered above a thin separator on all pages AFTER the cover. The historical cover has its top horizontal line, but no running text header or page-number footer. Centre content/body footers with current / total counts excluding the cover.
 6. **Body structure and heading hierarchy**: inherit only the sections and hierarchy of the three historical guides. Independently research destination facts, flights, timetables and sources; do not reuse old content.
 7. Every attraction, nested facility, shopping venue, restaurant/cafe/bar and hotel needs at least one corresponding genuine photograph. Transport includes genuine photographs, geographic/platform maps and tables where useful. **Acquire and physically embed images/maps in DOCX and PDF**, not merely external links, with copyright/source attribution. If legally usable genuine media cannot be acquired, block FINAL and report the obstacle.
 8. Narrative defaults to Simplified Chinese; entity names are Chinese/English plus local official names and pronunciation. See `multilingual_names_and_pronunciation.md`.
@@ -28,7 +28,7 @@ The layout is based on three Word guides personally supplied by the user; their 
 - Delicacy & Shopping (Restaurant & Cafe & Bar / Supermarket & Store & Market)
 - Recommends & Tips (Tourist Travel Pass & Ticket / Tourist Center / Tickets & Prices / Practical Information / Currency / Embassy / Important Numbers / Useful links)
 
-Section headings may retain their inherited English labels while narrative uses the requested language. English chapter labels do not remove Chinese/English/Japanese place-name requirements.
+Structural section headings MUST retain their inherited English labels, spelling, order and depth; venue headings are English-first, with Chinese second where available, while the narrative is primarily Chinese. English chapter labels do not remove Chinese/English/Japanese place-name requirements.
 
 ## DOCX output constraints
 
@@ -37,9 +37,9 @@ Section headings may retain their inherited English labels while narrative uses 
 - Reject manual contents without numeric pages, `000` caches, empty pages containing only `Contents`, and TOC numbers misaligned with the body.
 - Exclude large cover titles from the TOC. The `Content` heading must not list itself.
 
-### Strict pagination
+### Reference-faithful pagination
 
-Every `Heading 1` and every `Heading 2`, regardless of position, must set `page_break_before=True`; `Heading 3` need not start a new page. Supply substantial content beneath Heading 1 before Heading 2 to avoid isolated title-only pages. Confirm by rendering every page.
+Set `page_break_before=True` for main `Heading 1` chapters. Do not automatically break before `Heading 2` or `Heading 3`: in the original Kobe guide multiple lower-level headings share pages and flow naturally. Keep headings attached to their following content and check for orphans. Confirm by rendering every page.
 
 ### Publication media
 

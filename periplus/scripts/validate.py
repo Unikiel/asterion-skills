@@ -109,6 +109,8 @@ def assess(project: Path, mode: str):
         if hit:
             errors.append("Unfilled skeleton placeholder: " + hit.group(0))
     if mode == "final":
+        from skeleton_audit import audit_skeleton
+        errors.extend(audit_skeleton(text))
         from reader_qa import audit_reader_text, audit_transport_plan
         errors.extend(audit_reader_text(text, request))
         errors.extend(audit_transport_plan(project, text, request))

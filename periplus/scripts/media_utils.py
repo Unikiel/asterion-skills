@@ -205,11 +205,11 @@ def verify_heading_pagination(docx_path,pdf_path):
     doc=Document(docx_path)
     headings=[]
     for p in doc.paragraphs:
-        if p.style.name not in ('Heading 1','Heading 2'):continue
+        if p.style.name != 'Heading 1': continue
         if not p.paragraph_format.page_break_before:
             raise RuntimeError(f'Missing new-page rule for {p.style.name}: {p.text}')
-        headings.append((1 if p.style.name=='Heading 1' else 2,p.text))
-    if not headings:raise RuntimeError('No Heading 1/2 found for page-break audit')
+        headings.append((1, p.text))
+    if not headings:raise RuntimeError('No Heading 1 found for page-break audit')
     pdf=fitz.open(str(pdf_path))
     try:
         outline=pdf.get_toc()

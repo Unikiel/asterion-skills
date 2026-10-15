@@ -22,6 +22,7 @@ references/content_specifications.md
 references/coverage_matrix.md
 references/delivery_qa.md
 references/filename_and_date_periods.md
+references/immutable_skeleton_contract.md
 references/itinerary_engine.md
 references/kobe_reference_contract.md
 references/legacy_layout_contract.md
@@ -37,9 +38,11 @@ scripts/generate.py
 scripts/map_from_geojson.py
 scripts/media_utils.py
 scripts/reader_qa.py
+scripts/skeleton_audit.py
 scripts/test_media_coverage.py
 scripts/test_package_release.py
 scripts/test_reader_qa.py
+scripts/test_skeleton_contract.py
 scripts/test_skill.py
 scripts/test_trip_dates.py
 scripts/trip_dates.py

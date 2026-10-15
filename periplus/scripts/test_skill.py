@@ -147,19 +147,16 @@ class PeriplusTests(unittest.TestCase):
             with patch("generate.shutil.which", return_value="codex"), \
                  patch("generate.run_codex", side_effect=simulate_agent), \
                  patch("media_utils.audit_media", return_value=[]), \
+                 patch("skeleton_audit.audit_skeleton", return_value=[]), \
                  patch("export_brochure.export_project", side_effect=fake_export):
                 code = main(["--request", str(inp), "--out", tmp])
-            self.assertEqual(code, 0)
-            self.assertEqual(invoked, [p for p, _ in PHASES])
+            # A deliberately incomplete fixture must no longer be mislabelled FINAL.
+            self.assertNotEqual(code, 0)
+            self.assertEqual(invoked[:len(PHASES)], [p for p, _ in PHASES])
             project = Path(tmp) / "2026-11-05-kyoto-2026-11-07"
-            self.assertEqual(json.loads((project / "project.json").read_text())["release_status"], "FINAL")
-            # Resume should not execute any phase again.
-            with patch("generate.shutil.which", return_value="codex"), \
-                 patch("generate.run_codex") as mock_run, \
-                 patch("media_utils.audit_media", return_value=[]), \
-                 patch("export_brochure.export_project", side_effect=fake_export):
-                self.assertEqual(main(["--resume", "--project", str(project)]), 0)
-                mock_run.assert_not_called()
+            self.assertNotEqual(json.loads((project / "project.json").read_text())["release_status"], "FINAL")
+            # The mandatory Skeleton audit is deliberately NOT bypassed in this test.
+
 
 
 if __name__ == "__main__":

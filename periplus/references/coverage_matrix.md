@@ -53,9 +53,9 @@ The schema is the **union** of three user-authored Seven Ninths brochures. Do no
 
 ## Legacy editorial label normalization
 
-- `Railways`, `Railways & Metro`, `Metro`, `Bus & Auto`, `Bus`, `Roads`, `Highway`: preserve the underlying transportation categories; use destination-specific grouping without eliminating one.
-- `Literature` / `Literature & Art`, `Delicacy` / `Diet & Cuisine`, `Events` / `Events & Festivals` may be unified if there is no content loss. The audit must acknowledge merged headings.
-- `Religion`, `International Exchange`, `Subculture`, `Art & Craft`, `Architecture`, `Museum` are NOT optional to silently skip. Mark **not applicable**, **not researched**, or **covered in a named section** explicitly.
+- `Railways`, `Railways & Metro`, `Metro`, `Bus & Auto`, `Bus`, `Roads`, `Highway`: preserve the underlying transportation categories; preserve EVERY inherited heading; explain factual absence of services instead of merging labels.
+- `Literature` / `Literature & Art`, `Delicacy` / `Diet & Cuisine`, `Events` / `Events & Festivals` must both retain their distinct historical headings; cross-reference rather than duplicate prose, and NEVER merge or delete a heading without user approval.
+- `Religion`, `International Exchange`, `Subculture`, `Art & Craft`, `Architecture`, `Museum` are NOT optional to silently skip. Keep each section as a visible heading; briefly state factual non-applicability where appropriate, with substantive researched content otherwise. Never replace a missing chapter with a research-status announcement.
 
 ## Editorial and source relationship
 
@@ -64,4 +64,4 @@ The schema is the **union** of three user-authored Seven Ninths brochures. Do no
 - Store source coverage in the working coverage log. Do not place the raw private DOCX files in a distributable Skill.
 
 
-**Current operational contract:** `Arrival & Departure` is a mode-agnostic wrapper (flight/train/bus/ferry/drive/mixed); legacy Flight heading is included only if an actual flight segment exists. `Accommodation` honors supplied hotel details as travel anchor, else recommends unbooked hotels. Photographs and maps are embedded physical deliverables, not links. H1/H2 require new pages.
+**Current operational contract:** `Arrival & Departure` is a mode-agnostic wrapper (flight/train/bus/ferry/drive/mixed); legacy Flight heading is included only if an actual flight segment exists. `Accommodation` honors supplied hotel details as travel anchor, else recommends unbooked hotels. Photographs and maps are embedded physical deliverables, not links. H1 starts new pages; H2 flows like the Kobe reference.

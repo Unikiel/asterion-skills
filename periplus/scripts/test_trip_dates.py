@@ -66,7 +66,7 @@ class TripDateTests(unittest.TestCase):
             root=Path(tmp);(root/'exports').mkdir();(root/'request.json').write_text(json.dumps(self.request()));(root/'exports/Seven_Ninths_Travel_Brochure.md').write_text('# Arrival & Departure\nFixture only')
             def writer(source,dest,**kwargs):dest.write_bytes(b'FORMAT_ROUTING_FIXTURE_ONLY');return []
             def converter(docx,dest):dest.write_bytes(b'FORMAT_ROUTING_FIXTURE_ONLY');return MagicMock()
-            with patch('export_brochure.write_docx',side_effect=writer),patch('export_brochure.pdf_from_docx',side_effect=converter),patch('export_brochure.outline_pages',return_value={}),patch('export_brochure.audit_toc'),patch('reader_qa.audit_reader_text',return_value=[]),patch('reader_qa.audit_transport_plan',return_value=[]),patch('media_utils.verify_published_media'):
+            with patch('export_brochure.write_docx',side_effect=writer),patch('export_brochure.pdf_from_docx',side_effect=converter),patch('export_brochure.outline_pages',return_value={}),patch('export_brochure.audit_toc'),patch('reader_qa.audit_reader_text',return_value=[]),patch('reader_qa.audit_transport_plan',return_value=[]),patch('media_utils.verify_published_media'),patch('skeleton_audit.audit_skeleton',return_value=[]):
                 outputs=export_project(root,['docx','pdf','md'])
             self.assertEqual([p.name for p in outputs],['2026.Japan.Tokyo.0711-0712.0717-0719.docx','2026.Japan.Tokyo.0711-0712.0717-0719.pdf','2026.Japan.Tokyo.0711-0712.0717-0719.md']);self.assertTrue(all(p.exists() for p in outputs));self.assertTrue((root/'exports/Seven_Ninths_Travel_Brochure.md').exists())
 

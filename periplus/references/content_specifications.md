@@ -26,7 +26,7 @@ Full taxonomic skeleton: `../assets/Seven_Ninths_Master_Skeleton.md`.
 - Culture: language/dialect, localism, travel, literature, art & craft, architecture, museums, events & festivals, food, media, sports and subculture.
 - Transportation: public transport, railway/subway, bus, roads/highway, port/ferry and airport as relevant, international exchange where sourced/pertinent.
 
-When a topic has little local relevance, mark `Not applicable — [specific reason]` in the internal coverage audit; do not delete the category from the inherited reference taxonomy. In published prose, avoid pointless empty headings and collapse aliases only when coverage is retained.
+When a topic has little local relevance, mark `Not applicable — [specific reason]` in the internal coverage audit; do not delete the category from the inherited reference taxonomy. In published prose, retain EVERY original heading exactly, even for overlapping historical labels. Where no local service exists, include one fact-based concise explanation under the preserved heading; never print checklist or QA language.
 
 ## Entry specifications
 
@@ -73,4 +73,4 @@ Real, source-verified licensed photos and actual sourced geographic maps must be
 
 ## Pagination obligations
 
-Heading 1 and Heading 2 MUST start on fresh pages. Write narrative directly below Heading 1 before the next Heading 2 to avoid title-only pages.
+Heading 1 chapters start on new pages; Heading 2 continues within normal page flow (as in the Kobe sample). Never create isolated heading-only pages.

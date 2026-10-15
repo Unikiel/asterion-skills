@@ -76,4 +76,4 @@ Requests may use any language, including Chinese; guide narrative defaults to Si
 - [ ] Arrival & Departure reflect ACTUAL outbound + return modes; flight is optional. Rail/coach/ferry/driving/mixed segments must be properly planned.
 - [ ] If `hotel` is supplied, brochure contains the exact provided name/address and hotel-to-terminal directions; if missing, recommendations are UNBOOKED.
 - [ ] Actual licensed/source-backed photographs and actual geographic map images in both DOCX/PDF, not just hyperlinks. `MEDIA_MANIFEST.json` complete and physical DOCX/PDF image audit passed.
-- [ ] Every Heading 1 and Heading 2 starts a new printed page; keep Heading 1 introduction substantial before the next Heading 2.
+- [ ] Each Heading 1 starts a new chapter page. Headings 2 and 3 flow naturally as in the Kobe reference; verify no orphaned headings or forced blank space.
